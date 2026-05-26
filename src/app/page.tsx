@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { GolferSwingSVG, FairwayDivider, FlagPinSVG, GolfBallSVG } from "./svgs";
 
 const jsonLd = {
@@ -27,13 +27,10 @@ const jsonLd = {
 };
 
 export default function Home() {
-  const [scrolled, setScrolled] = useState(false);
   const [scrollPct, setScrollPct] = useState(0);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 40);
       const h = document.documentElement.scrollHeight - window.innerHeight;
       setScrollPct(h > 0 ? (window.scrollY / h) * 100 : 0);
     };
@@ -60,98 +57,12 @@ export default function Home() {
 
   return (
     <>
-      {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Scroll progress */}
       <div className="scroll-bar" style={{ width: `${scrollPct}%` }} />
-
-      {/* ── NAV ── */}
-      <nav
-        className={`nav-glass fixed top-0 left-0 right-0 z-50 ${scrolled ? "scrolled" : ""}`}
-      >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <a href="#" className="flex items-center gap-3">
-            <Image
-              src="/images/logo.png"
-              alt="DEVEN"
-              width={40}
-              height={40}
-              className="rounded-sm"
-            />
-            <span
-              className="font-[family-name:var(--font-heading)] text-2xl font-light tracking-[0.3em] text-white"
-            >
-              DEVEN
-            </span>
-          </a>
-
-          <div className="hidden items-center gap-8 md:flex">
-            {["Home", "Collection", "About", "Contact"].map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="gold-link text-sm font-medium tracking-wider text-white/80 uppercase transition-colors hover:text-white"
-              >
-                {item}
-              </a>
-            ))}
-            <a
-              href="https://deveneapen.com/shop"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-gold rounded-none bg-deven-gold px-6 py-2.5 text-xs font-semibold tracking-[0.2em] text-deven-black uppercase transition-all hover:bg-deven-gold-light"
-            >
-              Shop Now
-            </a>
-          </div>
-
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="flex flex-col gap-1.5 md:hidden"
-            aria-label="Menu"
-          >
-            <span
-              className={`block h-0.5 w-6 bg-white transition-all duration-300 ${menuOpen ? "translate-y-2 rotate-45" : ""}`}
-            />
-            <span
-              className={`block h-0.5 w-6 bg-white transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`}
-            />
-            <span
-              className={`block h-0.5 w-6 bg-white transition-all duration-300 ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`}
-            />
-          </button>
-        </div>
-
-        {/* Mobile menu */}
-        <div
-          className={`mobile-menu fixed inset-0 top-0 z-40 flex flex-col items-center justify-center gap-8 bg-deven-black/98 md:hidden ${menuOpen ? "open" : ""}`}
-        >
-          {["Home", "Collection", "About", "Contact"].map((item, i) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              onClick={() => setMenuOpen(false)}
-              className="font-[family-name:var(--font-heading)] text-3xl font-light tracking-[0.2em] text-white uppercase"
-              style={{ animationDelay: `${i * 80}ms` }}
-            >
-              {item}
-            </a>
-          ))}
-          <a
-            href="https://deveneapen.com/shop"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setMenuOpen(false)}
-            className="btn-gold mt-4 bg-deven-gold px-10 py-3 text-sm font-semibold tracking-[0.2em] text-deven-black uppercase"
-          >
-            Shop Now
-          </a>
-        </div>
-      </nav>
 
       {/* ── HERO ── */}
       <section id="home" className="relative flex min-h-screen items-center justify-center overflow-hidden">
@@ -189,9 +100,7 @@ export default function Home() {
 
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
             <a
-              href="https://deveneapen.com/shop"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/shop"
               className="btn-gold bg-deven-gold px-10 py-4 text-sm font-semibold tracking-[0.25em] text-deven-black uppercase transition-all hover:bg-deven-gold-light"
             >
               Shop Latest Styles
@@ -204,27 +113,30 @@ export default function Home() {
             </a>
           </div>
 
-          {/* Animated golfer silhouette */}
           <div className="mt-16 opacity-60">
             <GolferSwingSVG />
           </div>
         </div>
 
-        {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-          <div className="flex flex-col items-center gap-2">
-            <span className="text-[10px] font-medium tracking-[0.3em] text-white/40 uppercase">
-              Scroll
+          <a href="#about" className="group flex flex-col items-center gap-2">
+            <span className="text-[10px] font-semibold tracking-[0.4em] text-deven-gold/60 uppercase transition-colors group-hover:text-deven-gold">
+              Tee Off
             </span>
-            <div className="h-10 w-px animate-pulse bg-gradient-to-b from-deven-gold to-transparent" />
-          </div>
+            <svg width="20" height="28" viewBox="0 0 20 28" fill="none" className="animate-bounce">
+              <circle cx="10" cy="6" r="5" stroke="rgba(201,160,84,0.5)" strokeWidth="1.5" fill="none" />
+              <circle cx="9" cy="5" r="0.8" fill="rgba(201,160,84,0.3)" />
+              <circle cx="11" cy="5" r="0.8" fill="rgba(201,160,84,0.3)" />
+              <circle cx="10" cy="7" r="0.8" fill="rgba(201,160,84,0.3)" />
+              <line x1="10" y1="12" x2="10" y2="26" stroke="rgba(201,160,84,0.3)" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+          </a>
         </div>
       </section>
 
-      {/* ── FAIRWAY DIVIDER ── */}
       <FairwayDivider from="deven-black" to="deven-linen" />
 
-      {/* ── PRE-ORDER SECTION ── */}
+      {/* ── PRE-ORDER ── */}
       <section id="about" className="relative overflow-hidden bg-deven-linen py-24 lg:py-32">
         <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-2 lg:gap-20">
           <div className="reveal from-left flex flex-col justify-center">
@@ -245,9 +157,7 @@ export default function Home() {
               logo.
             </p>
             <a
-              href="https://deveneapen.com/shop"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/shop"
               className="btn-gold mt-8 inline-block w-fit bg-deven-gold px-8 py-3.5 text-xs font-semibold tracking-[0.2em] text-deven-black uppercase transition-all hover:bg-deven-gold-light"
             >
               Shop Now
@@ -265,7 +175,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── BRAND LOGO SECTION ── */}
+      {/* ── BRAND LOGO ── */}
       <section className="relative overflow-hidden bg-deven-black py-24 lg:py-32">
         <div className="absolute inset-0 opacity-5">
           <div
@@ -330,9 +240,12 @@ export default function Home() {
               built for players who move with purpose.
             </p>
             <div className="mt-8">
-              <span className="inline-block rounded-full border border-deven-gold/40 px-6 py-2 text-xs font-semibold tracking-[0.2em] text-deven-gold uppercase">
+              <a
+                href="/shop"
+                className="inline-block rounded-full border border-deven-gold/40 px-6 py-2 text-xs font-semibold tracking-[0.2em] text-deven-gold uppercase transition-all hover:bg-deven-gold hover:text-deven-black"
+              >
                 Coming Soon
-              </span>
+              </a>
             </div>
           </div>
         </div>
@@ -413,11 +326,7 @@ export default function Home() {
                   className="object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-75"
                 />
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <svg
-                    className="h-8 w-8 text-white"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
+                  <svg className="h-8 w-8 text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                   </svg>
                 </div>
@@ -441,10 +350,7 @@ export default function Home() {
               Drop us a line!
             </p>
           </div>
-          <form
-            className="reveal space-y-6"
-            onSubmit={(e) => e.preventDefault()}
-          >
+          <form className="reveal space-y-6" onSubmit={(e) => e.preventDefault()}>
             <div className="grid gap-6 sm:grid-cols-2">
               <div className="float-field">
                 <input type="text" id="name" placeholder=" " required />
@@ -460,12 +366,7 @@ export default function Home() {
               <label htmlFor="phone">Phone</label>
             </div>
             <div className="float-field">
-              <textarea
-                id="message"
-                rows={5}
-                placeholder=" "
-                required
-              />
+              <textarea id="message" rows={5} placeholder=" " required />
               <label htmlFor="message">Message</label>
             </div>
             <button
@@ -511,15 +412,8 @@ export default function Home() {
 
       {/* ── FOOTER ── */}
       <footer className="relative bg-deven-black py-16">
-        {/* Golf course skyline SVG */}
         <div className="absolute top-0 left-0 right-0 -translate-y-full">
-          <svg
-            viewBox="0 0 1440 60"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full"
-            preserveAspectRatio="none"
-          >
+          <svg viewBox="0 0 1440 60" fill="none" className="w-full" preserveAspectRatio="none">
             <path
               d="M0 60V30C120 20 240 40 360 35C480 30 600 15 720 20C840 25 960 40 1080 35C1200 30 1320 15 1440 25V60H0Z"
               fill="#0a0a0a"
@@ -532,11 +426,11 @@ export default function Home() {
             <div>
               <div className="flex items-center gap-3">
                 <Image
-                  src="/images/logo.png"
+                  src="/images/logo-icon.png"
                   alt="DEVEN"
                   width={36}
                   height={36}
-                  className="rounded-sm"
+                  className="rounded-sm object-contain"
                 />
                 <span className="font-[family-name:var(--font-heading)] text-xl tracking-[0.3em] text-white">
                   DEVEN
@@ -555,15 +449,13 @@ export default function Home() {
               <div className="flex flex-col gap-2">
                 {[
                   { label: "Home", href: "#home" },
-                  { label: "Shop", href: "https://deveneapen.com/shop" },
+                  { label: "Shop", href: "/shop" },
                   { label: "Collection", href: "#collection" },
                   { label: "Contact", href: "#contact" },
                 ].map((link) => (
                   <a
                     key={link.label}
                     href={link.href}
-                    target={link.href.startsWith("http") ? "_blank" : undefined}
-                    rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
                     className="gold-link w-fit text-sm font-light text-white/50 transition-colors hover:text-white"
                   >
                     {link.label}
@@ -582,11 +474,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="group flex items-center gap-3 text-sm font-light text-white/50 transition-colors hover:text-white"
               >
-                <svg
-                  className="h-5 w-5 transition-colors group-hover:text-deven-gold"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
+                <svg className="h-5 w-5 transition-colors group-hover:text-deven-gold" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                 </svg>
                 @shopdeven
@@ -600,20 +488,10 @@ export default function Home() {
                 &copy; {new Date().getFullYear()} DEVEN. All Rights Reserved.
               </p>
               <div className="flex gap-6">
-                <a
-                  href="https://deveneapen.com/privacy-policy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs font-light text-white/30 transition-colors hover:text-white/60"
-                >
+                <a href="#" className="text-xs font-light text-white/30 transition-colors hover:text-white/60">
                   Privacy Policy
                 </a>
-                <a
-                  href="https://deveneapen.com/terms-and-conditions"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs font-light text-white/30 transition-colors hover:text-white/60"
-                >
+                <a href="#" className="text-xs font-light text-white/30 transition-colors hover:text-white/60">
                   Terms &amp; Conditions
                 </a>
               </div>

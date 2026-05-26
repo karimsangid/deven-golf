@@ -1,75 +1,57 @@
 export function GolferSwingSVG() {
+  const fill = "#c9a054";
+
+  const frames = [
+    // Frame 1: Address — standing over ball, club down
+    "M56 18a7 7 0 1 1 14 0a7 7 0 1 1-14 0 M60 26l-2 22-8 24-4 16 8 2 6-15 6 15 8-2-4-16-8-24z M52 32l-10 8-8 14 3 2 8-12 7-6z M74 32l10 8 8 14-3 2-8-12-7-6z M44 56l-6 18 4 1 5-17z M80 56l6 18-4 1-5-17z",
+    // Frame 2: Backswing — club going up behind
+    "M58 18a7 7 0 1 1 14 0a7 7 0 1 1-14 0 M62 26l-4 22-6 24-4 16 8 2 4-15 8 14 8-3-6-15-6-24z M54 32l-8 6-2-4 8-8z M72 32l6-2 8-18 10-10 2 3-9 12-8 16z M80 4l4-2 3 3-3 3z",
+    // Frame 3: Top of backswing — club behind head
+    "M58 18a7 7 0 1 1 14 0a7 7 0 1 1-14 0 M62 26l-4 22-6 24-4 16 8 2 4-15 8 14 8-3-6-15-6-24z M54 34l-6 4 2 6 6-4z M72 30l4-6 2-14-6-10 3-2 7 10 0 16-4 8z M72 0l-8-2 0 4 8 2z",
+    // Frame 4: Downswing / Impact — club striking
+    "M58 18a7 7 0 1 1 14 0a7 7 0 1 1-14 0 M60 26l-2 22-8 24-4 16 8 2 6-15 6 15 8-2-4-16-8-24z M52 34l-10 6-4 12 3 2 4-10 9-4z M74 34l8 4 4 12 4 18 3-1-3-18-4-12-6-4z M90 68l2 8-3 1-2-8z",
+    // Frame 5: Follow-through — classic finish
+    "M60 18a7 7 0 1 1 14 0a7 7 0 1 1-14 0 M64 26l-6 22-4 24-6 16 8 2 4-14 10 12 7-4-8-13-3-24z M56 34l-12 2-12-8-6-14 3-2 6 12 10 8 9-2z M76 34l4-2 2-4-2 4z M34 14l-8-6 2-3 8 6z",
+  ];
+
   return (
-    <svg
-      width="160"
-      height="160"
-      viewBox="0 0 200 200"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-label="Golfer swing silhouette"
-    >
-      {/* Solid filled golfer silhouette — follow-through pose */}
-      <g opacity="0.7">
-        {/* Head + cap */}
-        <ellipse cx="100" cy="32" rx="10" ry="11" fill="#c9a054" />
-        <path d="M90 28 Q100 22 112 28 L110 30 Q100 26 92 30Z" fill="#c9a054" />
-
-        {/* Neck */}
-        <path d="M96 42 L104 42 L103 46 L97 46Z" fill="#c9a054" />
-
-        {/* Torso — slightly rotated for follow-through */}
-        <path
-          d="M88 46 Q84 60 82 78 Q81 85 86 90 L114 88 Q118 82 116 72 Q114 58 110 46Z"
-          fill="#c9a054"
-        />
-
-        {/* Left arm (extended forward in follow-through) + club */}
-        <path
-          d="M88 52 Q78 56 68 50 Q60 46 54 38 L56 36 Q62 44 70 48 Q78 52 86 50Z"
-          fill="#c9a054"
-        />
-        {/* Club shaft */}
-        <line x1="54" y1="38" x2="32" y2="12" stroke="#c9a054" strokeWidth="2.5" strokeLinecap="round" />
-        {/* Club head */}
-        <path d="M28 10 Q30 6 36 8 L34 14 Q30 14 28 10Z" fill="#c9a054" />
-
-        {/* Right arm (tucked in follow-through) */}
-        <path
-          d="M110 52 Q114 58 112 66 Q110 70 106 68 Q108 60 108 54Z"
-          fill="#c9a054"
-        />
-
-        {/* Left leg (front, weight-bearing) */}
-        <path
-          d="M90 88 Q86 108 84 128 Q83 136 80 142 L76 156 Q74 162 78 164 L86 164 Q88 162 86 158 L86 144 Q88 136 90 128 Q92 112 96 90Z"
-          fill="#c9a054"
-        />
-
-        {/* Right leg (back, toe pivoted) */}
-        <path
-          d="M106 88 Q112 108 118 124 Q122 132 126 138 L130 148 Q132 152 130 154 L124 156 Q122 154 124 150 L120 138 Q116 128 112 118 Q108 106 104 90Z"
-          fill="#c9a054"
-        />
-
-        {/* Left shoe */}
-        <path d="M74 162 Q72 166 76 168 L88 168 Q90 166 88 164 L78 164Z" fill="#c9a054" />
-        {/* Right shoe (toe tip) */}
-        <path d="M122 154 Q120 158 124 158 L132 156 Q134 154 132 154Z" fill="#c9a054" />
-      </g>
-
-      {/* Golf ball on tee */}
-      <circle cx="82" cy="172" r="4" fill="rgba(255,255,255,0.5)" />
-      <line x1="82" y1="176" x2="82" y2="184" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
-
-      {/* Swing arc trail */}
-      <path
-        d="M54 38 Q40 20 50 8"
-        stroke="rgba(201,160,84,0.2)"
-        strokeWidth="1"
-        strokeDasharray="3 3"
-        fill="none"
-      />
-    </svg>
+    <div className="golfer-anim relative h-[140px] w-[140px]">
+      {frames.map((d, i) => (
+        <svg
+          key={i}
+          width="140"
+          height="140"
+          viewBox="-10 -10 120 110"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="absolute inset-0"
+          style={{
+            animation: `golfer-frame-${i} 2.5s ease-in-out infinite`,
+          }}
+          aria-hidden={i > 0}
+          aria-label={i === 0 ? "Animated golfer swing silhouette" : undefined}
+        >
+          <path d={d} fill={fill} fillRule="evenodd" />
+        </svg>
+      ))}
+      <style>{`
+        @keyframes golfer-frame-0 {
+          0%, 5% { opacity: 0.8; } 15%, 100% { opacity: 0; }
+        }
+        @keyframes golfer-frame-1 {
+          0%, 15% { opacity: 0; } 20%, 30% { opacity: 0.8; } 40%, 100% { opacity: 0; }
+        }
+        @keyframes golfer-frame-2 {
+          0%, 35% { opacity: 0; } 40%, 50% { opacity: 0.8; } 55%, 100% { opacity: 0; }
+        }
+        @keyframes golfer-frame-3 {
+          0%, 50% { opacity: 0; } 55%, 65% { opacity: 0.8; } 70%, 100% { opacity: 0; }
+        }
+        @keyframes golfer-frame-4 {
+          0%, 65% { opacity: 0; } 75%, 90% { opacity: 0.8; } 100% { opacity: 0; }
+        }
+      `}</style>
+    </div>
   );
 }
 

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Montserrat, Cormorant_Garamond } from "next/font/google";
+import Nav from "@/components/Nav";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -17,6 +18,10 @@ const cormorant = Cormorant_Garamond({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://deven-golf.vercel.app"),
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
   title: {
     default: "DEVEN | Premium Golf Apparel — Elevate Your Style",
     template: "%s | DEVEN Golf",
@@ -84,7 +89,10 @@ export default function RootLayout({
       lang="en"
       className={`${montserrat.variable} ${cormorant.variable} antialiased`}
     >
-      <body>{children}</body>
+      <body>
+        <Nav />
+        {children}
+      </body>
     </html>
   );
 }
