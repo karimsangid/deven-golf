@@ -1,54 +1,95 @@
 export function GolferSwingSVG() {
-  const fill = "#c9a054";
-
-  const frames = [
-    // Frame 1: Address — standing over ball, club down
-    "M56 18a7 7 0 1 1 14 0a7 7 0 1 1-14 0 M60 26l-2 22-8 24-4 16 8 2 6-15 6 15 8-2-4-16-8-24z M52 32l-10 8-8 14 3 2 8-12 7-6z M74 32l10 8 8 14-3 2-8-12-7-6z M44 56l-6 18 4 1 5-17z M80 56l6 18-4 1-5-17z",
-    // Frame 2: Backswing — club going up behind
-    "M58 18a7 7 0 1 1 14 0a7 7 0 1 1-14 0 M62 26l-4 22-6 24-4 16 8 2 4-15 8 14 8-3-6-15-6-24z M54 32l-8 6-2-4 8-8z M72 32l6-2 8-18 10-10 2 3-9 12-8 16z M80 4l4-2 3 3-3 3z",
-    // Frame 3: Top of backswing — club behind head
-    "M58 18a7 7 0 1 1 14 0a7 7 0 1 1-14 0 M62 26l-4 22-6 24-4 16 8 2 4-15 8 14 8-3-6-15-6-24z M54 34l-6 4 2 6 6-4z M72 30l4-6 2-14-6-10 3-2 7 10 0 16-4 8z M72 0l-8-2 0 4 8 2z",
-    // Frame 4: Downswing / Impact — club striking
-    "M58 18a7 7 0 1 1 14 0a7 7 0 1 1-14 0 M60 26l-2 22-8 24-4 16 8 2 6-15 6 15 8-2-4-16-8-24z M52 34l-10 6-4 12 3 2 4-10 9-4z M74 34l8 4 4 12 4 18 3-1-3-18-4-12-6-4z M90 68l2 8-3 1-2-8z",
-    // Frame 5: Follow-through — classic finish
-    "M60 18a7 7 0 1 1 14 0a7 7 0 1 1-14 0 M64 26l-6 22-4 24-6 16 8 2 4-14 10 12 7-4-8-13-3-24z M56 34l-12 2-12-8-6-14 3-2 6 12 10 8 9-2z M76 34l4-2 2-4-2 4z M34 14l-8-6 2-3 8 6z",
-  ];
-
   return (
-    <div className="golfer-anim relative h-[140px] w-[140px]">
-      {frames.map((d, i) => (
-        <svg
-          key={i}
-          width="140"
-          height="140"
-          viewBox="-10 -10 120 110"
+    <div className="relative h-[180px] w-[180px]">
+      <svg
+        width="180"
+        height="180"
+        viewBox="0 0 200 200"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-label="Animated golfer swing"
+      >
+        {/* Swing arc — draws itself in */}
+        <path
+          d="M60 30 Q20 60 30 110 Q40 140 80 160"
+          stroke="rgba(201,160,84,0.15)"
+          strokeWidth="1.5"
           fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="absolute inset-0"
-          style={{
-            animation: `golfer-frame-${i} 2.5s ease-in-out infinite`,
-          }}
-          aria-hidden={i > 0}
-          aria-label={i === 0 ? "Animated golfer swing silhouette" : undefined}
-        >
-          <path d={d} fill={fill} fillRule="evenodd" />
-        </svg>
-      ))}
+          strokeDasharray="220"
+          className="swing-arc"
+        />
+
+        {/* Golfer body — proper proportions, follow-through pose */}
+        <g className="golfer-body" opacity="0.75">
+          {/* Head */}
+          <circle cx="108" cy="42" r="12" fill="#c9a054" />
+          {/* Cap brim */}
+          <path d="M96 39 Q108 33 120 39 L118 41 Q108 36 98 41Z" fill="#b8903e" />
+
+          {/* Neck */}
+          <rect x="104" y="53" width="8" height="6" rx="2" fill="#c9a054" />
+
+          {/* Torso — rotated for follow-through */}
+          <path d="M94 59 C90 70 88 82 90 94 L92 98 L120 96 C122 84 122 72 118 59Z" fill="#c9a054" />
+
+          {/* Left arm — extended high (follow-through, club behind) */}
+          <path d="M96 64 L86 60 L74 50 L64 36 L60 28" stroke="#c9a054" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          {/* Club from left hand going behind */}
+          <line x1="60" y1="28" x2="42" y2="16" stroke="#c9a054" strokeWidth="3" strokeLinecap="round" className="club-shaft" />
+          {/* Club head */}
+          <rect x="36" y="10" width="10" height="5" rx="2" fill="#c9a054" transform="rotate(-30 41 12)" />
+
+          {/* Right arm — tucked across chest */}
+          <path d="M118 64 L114 72 L108 76" stroke="#c9a054" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          {/* Right hand/glove */}
+          <circle cx="106" cy="77" r="4" fill="#c9a054" />
+
+          {/* Left leg — weight forward, bent knee */}
+          <path d="M96 96 L90 118 L86 132 L82 148 L78 160" stroke="#c9a054" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          {/* Left shoe */}
+          <path d="M72 160 Q70 164 74 166 L86 166 Q88 164 86 162 L78 160Z" fill="#c9a054" />
+
+          {/* Right leg — back, toe pivoted */}
+          <path d="M114 96 L120 116 L128 134 L134 148" stroke="#c9a054" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          {/* Right shoe — toe down */}
+          <path d="M132 148 Q130 154 134 156 L142 152 Q144 150 140 148Z" fill="#c9a054" />
+        </g>
+
+        {/* Ball flying away — animated */}
+        <circle r="4" fill="rgba(255,255,255,0.7)" className="golf-ball-fly">
+          <animateMotion
+            dur="3s"
+            repeatCount="indefinite"
+            path="M90 158 Q120 120 160 80 Q180 60 190 40"
+            begin="0s"
+            keyPoints="0;0;0.1;1"
+            keyTimes="0;0.4;0.5;1"
+          />
+          <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.4;0.45;0.7;1" dur="3s" repeatCount="indefinite" />
+          <animate attributeName="r" values="4;4;4;2" keyTimes="0;0.4;0.7;1" dur="3s" repeatCount="indefinite" />
+        </circle>
+
+        {/* Ground line */}
+        <line x1="50" y1="168" x2="160" y2="168" stroke="rgba(201,160,84,0.12)" strokeWidth="1" />
+      </svg>
+
       <style>{`
-        @keyframes golfer-frame-0 {
-          0%, 5% { opacity: 0.8; } 15%, 100% { opacity: 0; }
+        .swing-arc {
+          animation: draw-arc 3s ease-in-out infinite;
         }
-        @keyframes golfer-frame-1 {
-          0%, 15% { opacity: 0; } 20%, 30% { opacity: 0.8; } 40%, 100% { opacity: 0; }
+        @keyframes draw-arc {
+          0% { stroke-dashoffset: 220; opacity: 0; }
+          20% { opacity: 0.5; }
+          50% { stroke-dashoffset: 0; opacity: 0.3; }
+          80% { stroke-dashoffset: 0; opacity: 0; }
+          100% { stroke-dashoffset: 220; opacity: 0; }
         }
-        @keyframes golfer-frame-2 {
-          0%, 35% { opacity: 0; } 40%, 50% { opacity: 0.8; } 55%, 100% { opacity: 0; }
+        .golfer-body {
+          animation: golfer-breathe 4s ease-in-out infinite;
         }
-        @keyframes golfer-frame-3 {
-          0%, 50% { opacity: 0; } 55%, 65% { opacity: 0.8; } 70%, 100% { opacity: 0; }
-        }
-        @keyframes golfer-frame-4 {
-          0%, 65% { opacity: 0; } 75%, 90% { opacity: 0.8; } 100% { opacity: 0; }
+        @keyframes golfer-breathe {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-1.5px); }
         }
       `}</style>
     </div>
