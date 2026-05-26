@@ -4,6 +4,28 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { GolferSwingSVG, FairwayDivider, FlagPinSVG, GolfBallSVG } from "./svgs";
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ClothingStore",
+  name: "DEVEN",
+  description:
+    "Premium golf apparel brand featuring the signature Rottweiler logo. Modern polos, hoodies, and the Madison Collection.",
+  url: "https://deveneapen.com",
+  image: "https://deven-golf.vercel.app/images/logo.png",
+  sameAs: ["https://instagram.com/shopdeven"],
+  brand: {
+    "@type": "Brand",
+    name: "DEVEN",
+    logo: "https://deven-golf.vercel.app/images/logo.png",
+  },
+  offers: {
+    "@type": "AggregateOffer",
+    priceCurrency: "USD",
+    availability: "https://schema.org/PreOrder",
+    description: "Spring 2026 Collection — Pre-Order Now",
+  },
+};
+
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [scrollPct, setScrollPct] = useState(0);
@@ -38,6 +60,12 @@ export default function Home() {
 
   return (
     <>
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       {/* Scroll progress */}
       <div className="scroll-bar" style={{ width: `${scrollPct}%` }} />
 

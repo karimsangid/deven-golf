@@ -16,23 +16,61 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "DEVEN | Premium Golf Apparel",
+  metadataBase: new URL("https://deven-golf.vercel.app"),
+  title: {
+    default: "DEVEN | Premium Golf Apparel — Elevate Your Style",
+    template: "%s | DEVEN Golf",
+  },
   description:
-    "Modern golf apparel blending style and comfort. Elevate your game with sleek designs and the signature Rottweiler logo.",
+    "DEVEN is a premium golf apparel brand featuring the signature Rottweiler logo. Shop modern polos, hoodies, and the Madison Collection — designed for style and comfort on and off the course.",
+  keywords: [
+    "golf apparel",
+    "premium golf clothing",
+    "golf polos",
+    "golf hoodies",
+    "Deven golf",
+    "Rottweiler logo golf",
+    "Madison Collection golf",
+    "modern golf fashion",
+    "golf wear",
+    "luxury golf brand",
+  ],
+  authors: [{ name: "DEVEN" }],
+  creator: "DEVEN",
   openGraph: {
-    title: "DEVEN | Premium Golf Apparel",
-    description: "Elevate Your Style",
+    title: "DEVEN | Premium Golf Apparel — Elevate Your Style",
+    description:
+      "Modern golf apparel with the signature Rottweiler logo. Shop the Spring 2026 collection and the upcoming Madison Collection.",
     url: "https://deveneapen.com",
     siteName: "DEVEN",
-    images: [{ url: "/images/logo.png", width: 1200, height: 630 }],
+    images: [
+      {
+        url: "/images/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "DEVEN Golf Apparel — Rottweiler Logo",
+      },
+    ],
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "DEVEN | Premium Golf Apparel",
-    description: "Elevate Your Style",
+    description:
+      "Elevate your style with sleek golf polos, hoodies, and the Madison Collection. Signature Rottweiler logo.",
     images: ["/images/logo.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 
