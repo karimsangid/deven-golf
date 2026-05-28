@@ -333,6 +333,56 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── COLOR MARQUEE — every colorway ── */}
+      <section className="overflow-hidden bg-deven-black py-20 lg:py-24">
+        <div className="reveal mx-auto mb-10 max-w-7xl px-6 text-center">
+          <span className="text-xs font-semibold tracking-[0.3em] text-deven-gold uppercase">
+            Every Colorway
+          </span>
+          <h2 className="mt-3 font-[family-name:var(--font-heading)] text-4xl font-light text-white sm:text-5xl">
+            Pick Your <span className="font-medium italic text-deven-gold">Mood</span>
+          </h2>
+        </div>
+        <div className="color-marquee-mask relative overflow-hidden">
+          <div className="color-marquee gap-4 px-2">
+            {[
+              "/images/color-yellow-a.jpg",
+              "/images/color-navy-a.jpg",
+              "/images/color-gray-a.jpg",
+              "/images/color-blue-a.jpg",
+              "/images/color-royal-a.jpg",
+              "/images/color-yellow-b.jpg",
+              "/images/color-gray-b.jpg",
+              "/images/color-yellow-c.jpg",
+              "/images/studio-hanger-yellow.jpg",
+              // duplicate set for seamless loop
+              "/images/color-yellow-a.jpg",
+              "/images/color-navy-a.jpg",
+              "/images/color-gray-a.jpg",
+              "/images/color-blue-a.jpg",
+              "/images/color-royal-a.jpg",
+              "/images/color-yellow-b.jpg",
+              "/images/color-gray-b.jpg",
+              "/images/color-yellow-c.jpg",
+              "/images/studio-hanger-yellow.jpg",
+            ].map((src, i) => (
+              <div
+                key={i}
+                className="relative h-72 w-52 flex-none overflow-hidden rounded-sm bg-deven-charcoal"
+              >
+                <Image
+                  src={src}
+                  alt=""
+                  fill
+                  sizes="208px"
+                  className="object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── INSTAGRAM ── */}
       <section className="bg-deven-black py-24 lg:py-28">
         <div className="mx-auto max-w-7xl px-6">
@@ -422,6 +472,55 @@ export default function Home() {
               Send Message
             </button>
           </form>
+        </div>
+      </section>
+
+      {/* ── DESIGNED WITH INTENTION — tech sketches ── */}
+      <section className="bg-deven-linen py-24 lg:py-32">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="reveal mb-14 text-center">
+            <span className="text-xs font-semibold tracking-[0.3em] text-deven-gold uppercase">
+              The Process
+            </span>
+            <h2 className="mt-3 font-[family-name:var(--font-heading)] text-4xl font-light text-deven-black sm:text-5xl">
+              Designed With{" "}
+              <span className="font-medium italic text-deven-green">Intention</span>
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-sm font-light text-deven-gray">
+              From Pantone swatch to finished garment. Every print placement,
+              every fabric weight — specified, sampled, and tuned.
+            </p>
+          </div>
+          <div className="stagger grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              { src: "/images/tech-sketch-navy.jpg", label: "Navy Blue · 534 C", sub: "Black print · Approved green eyes" },
+              { src: "/images/tech-sketch-babyblue.jpg", label: "Baby Blue · 278 C", sub: "Cool grey 10 · Approved green eyes" },
+              { src: "/images/tech-sketch-navy2.jpg", label: "Navy Spec Detail", sub: "4\" from neck seam · Bottom left print" },
+            ].map((s, i) => (
+              <div
+                key={i}
+                className="reveal card-lift overflow-hidden rounded-sm bg-white shadow-lg"
+              >
+                <div className="relative aspect-[4/3] bg-deven-linen">
+                  <Image
+                    src={s.src}
+                    alt={s.label}
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    className="object-contain p-4"
+                  />
+                </div>
+                <div className="border-t border-deven-light-gray p-5">
+                  <p className="text-xs font-semibold tracking-[0.2em] text-deven-gold uppercase">
+                    {s.label}
+                  </p>
+                  <p className="mt-2 text-sm font-light text-deven-gray">
+                    {s.sub}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
