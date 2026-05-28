@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { GolferSwingSVG, FairwayDivider, FlagPinSVG, GolfBallSVG } from "./svgs";
+import { FairwayDivider, FlagPinSVG, GolfBallSVG } from "./svgs";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -68,13 +68,13 @@ export default function Home() {
       <section id="home" className="relative flex min-h-screen items-center justify-center overflow-hidden">
         <div className="hero-bg absolute inset-0">
           <Image
-            src="/images/hero-bg.png"
-            alt="Deven golf apparel on the course"
+            src="/images/maryland-foursome.jpg"
+            alt="Deven Brand golfers on a Maryland course at sunset"
             fill
             priority
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/80" />
         </div>
 
         <div className="relative z-10 mx-auto flex max-w-6xl flex-col items-center px-6 text-center">
@@ -113,9 +113,6 @@ export default function Home() {
             </a>
           </div>
 
-          <div className="mt-16 opacity-60">
-            <GolferSwingSVG />
-          </div>
         </div>
 
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
@@ -165,42 +162,73 @@ export default function Home() {
           </div>
           <div className="reveal from-right img-zoom overflow-hidden rounded-sm shadow-2xl">
             <Image
-              src="/images/preorder-bg.png"
-              alt="Deven women's golf wear"
-              width={800}
-              height={600}
+              src="/images/women-lifestyle.jpg"
+              alt="Two women in Deven hoodies on a golf course"
+              width={1000}
+              height={750}
               className="h-full w-full object-cover"
             />
           </div>
         </div>
       </section>
 
-      {/* ── BRAND LOGO ── */}
-      <section className="relative overflow-hidden bg-deven-black py-24 lg:py-32">
-        <div className="absolute inset-0 opacity-5">
+      {/* ── BRAND STATEMENT — Deven's mission ── */}
+      <section id="manifesto" className="relative overflow-hidden bg-deven-black py-28 lg:py-36">
+        <div className="absolute inset-0 opacity-[0.04]">
           <div
             className="h-full w-full"
             style={{
               backgroundImage:
-                "repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(201,160,84,0.1) 20px, rgba(201,160,84,0.1) 21px)",
+                "repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(201,160,84,0.18) 20px, rgba(201,160,84,0.18) 21px)",
             }}
           />
         </div>
-        <div className="relative mx-auto flex max-w-4xl flex-col items-center px-6 text-center">
+
+        <div className="relative mx-auto flex max-w-3xl flex-col items-center px-6 text-center">
           <div className="reveal from-scale">
             <Image
-              src="/images/logo.png"
-              alt="DEVEN brand logo"
-              width={500}
-              height={400}
-              className="mx-auto w-full max-w-md"
+              src="/images/rott-shield-dark.jpg"
+              alt="DEVEN Rottweiler shield"
+              width={160}
+              height={160}
+              className="mx-auto h-32 w-32 rounded-sm object-contain"
             />
           </div>
-          <p className="reveal mt-10 max-w-lg text-base font-light leading-relaxed text-white/60">
-            The Rottweiler stands for strength, loyalty, and confidence on and
-            off the course. Every piece carries the mark.
-          </p>
-          <div className="reveal mt-8 flex items-center gap-6">
+
+          <div className="reveal mt-6 flex items-center gap-3">
+            <div className="h-px w-12 bg-deven-gold" />
+            <span className="font-[family-name:var(--font-heading)] text-2xl font-light tracking-[0.4em] text-white">
+              DEVEN
+            </span>
+            <div className="h-px w-12 bg-deven-gold" />
+          </div>
+          <span className="reveal mt-2 text-[10px] font-semibold tracking-[0.5em] text-deven-gold uppercase">
+            Brand
+          </span>
+
+          <h2 className="reveal mt-10 font-[family-name:var(--font-heading)] text-3xl font-light leading-tight text-deven-gold-light sm:text-4xl lg:text-5xl">
+            More than a game.
+            <br />
+            A lifestyle. A legacy.
+          </h2>
+
+          <div className="reveal my-8 h-px w-16 bg-deven-gold/40" />
+
+          <div className="reveal space-y-5 text-base font-light leading-relaxed text-white/70 sm:text-lg">
+            <p>
+              I&rsquo;m Deven. A golfer. A dreamer. A future business leader.
+            </p>
+            <p>
+              I created Deven Brand to build luxury golf apparel for athletes
+              who are driven to be the best&mdash;on and off the course.
+            </p>
+            <p>
+              This is for those who chase greatness and think beyond the
+              scorecard.
+            </p>
+          </div>
+
+          <div className="reveal mt-10 flex items-center gap-6">
             <div className="h-px w-16 bg-deven-gold/30" />
             <FlagPinSVG />
             <div className="h-px w-16 bg-deven-gold/30" />
@@ -213,10 +241,10 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-2 lg:gap-20">
           <div className="reveal from-left img-zoom order-2 overflow-hidden rounded-sm shadow-2xl lg:order-1">
             <Image
-              src="/images/product-shot.png"
-              alt="The Madison Collection"
-              width={700}
-              height={900}
+              src="/images/madison-collection.jpg"
+              alt="The Madison Collection — three models in Deven hoodies"
+              width={1200}
+              height={760}
               className="h-full w-full object-cover"
             />
           </div>
@@ -264,9 +292,9 @@ export default function Home() {
           </div>
           <div className="stagger grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { src: "/images/hero-bg.png", alt: "Men's polo collection" },
-              { src: "/images/collection.png", alt: "Putting green style" },
-              { src: "/images/preorder-bg.png", alt: "Women's golf hoodie" },
+              { src: "/images/mens-lookbook.jpg", alt: "Men's hoodie lookbook on the course" },
+              { src: "/images/women-putting.jpg", alt: "Women putting with Rottweiler flag" },
+              { src: "/images/polo-lookbook.jpg", alt: "Polo lookbook" },
             ].map((img, i) => (
               <div
                 key={i}
@@ -313,12 +341,12 @@ export default function Home() {
                 <Image
                   src={
                     [
-                      "/images/hero-bg.png",
-                      "/images/product-shot.png",
-                      "/images/collection.png",
-                      "/images/preorder-bg.png",
-                      "/images/logo.png",
-                      "/images/hero-bg.png",
+                      "/images/maryland-foursome.jpg",
+                      "/images/women-lifestyle.jpg",
+                      "/images/man-back-course.jpg",
+                      "/images/madison-collection.jpg",
+                      "/images/women-putting.jpg",
+                      "/images/mens-lookbook.jpg",
                     ][i]
                   }
                   alt={`Instagram post ${i + 1}`}
@@ -376,6 +404,39 @@ export default function Home() {
               Send Message
             </button>
           </form>
+        </div>
+      </section>
+
+      {/* ── PREMIUM PACKAGING ── */}
+      <section className="relative overflow-hidden bg-deven-cream py-24 lg:py-32">
+        <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-5 lg:gap-20">
+          <div className="reveal from-left order-2 flex flex-col justify-center lg:order-1 lg:col-span-2">
+            <span className="text-xs font-semibold tracking-[0.3em] text-deven-gold uppercase">
+              Every Detail
+            </span>
+            <h2 className="mt-3 font-[family-name:var(--font-heading)] text-4xl font-light leading-snug text-deven-black sm:text-5xl">
+              Built to{" "}
+              <span className="font-medium italic text-deven-green">Unbox</span>
+            </h2>
+            <div className="my-6 h-px w-16 bg-deven-gold" />
+            <p className="max-w-md text-base font-light leading-relaxed text-deven-gray">
+              Premium garment bag, branded gift sleeve, signature hangtag. The
+              Madison Collection arrives the way it should &mdash; like
+              something worth waiting for.
+            </p>
+            <p className="mt-4 max-w-md text-sm font-light italic text-deven-gray/80">
+              Timeless style. Made for every swing.
+            </p>
+          </div>
+          <div className="reveal from-right img-zoom order-1 overflow-hidden rounded-sm shadow-2xl lg:order-2 lg:col-span-3">
+            <Image
+              src="/images/premium-packaging.jpg"
+              alt="The Madison Collection — premium packaging"
+              width={1200}
+              height={1400}
+              className="h-full w-full object-cover"
+            />
+          </div>
         </div>
       </section>
 
