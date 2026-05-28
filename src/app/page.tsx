@@ -312,7 +312,7 @@ export default function Home() {
             {[
               { src: "/images/mens-lookbook.jpg", alt: "Men's hoodie lookbook on the course" },
               { src: "/images/women-putting.jpg", alt: "Women putting with Rottweiler flag" },
-              { src: "/images/polo-lookbook.jpg", alt: "Polo lookbook" },
+              { src: "/images/man-back-course.jpg", alt: "Solo on the course in gray Deven hoodie" },
             ].map((img, i) => (
               <div
                 key={i}
@@ -359,12 +359,12 @@ export default function Home() {
                 <Image
                   src={
                     [
-                      "/images/maryland-foursome.jpg",
-                      "/images/women-lifestyle.jpg",
-                      "/images/man-back-course.jpg",
-                      "/images/madison-collection.jpg",
-                      "/images/women-putting.jpg",
-                      "/images/mens-lookbook.jpg",
+                      "/images/polo-lookbook.jpg",
+                      "/images/product-yellow.jpg",
+                      "/images/brand-poster.jpg",
+                      "/images/product-gray.jpg",
+                      "/images/deven-lockup-tan.jpg",
+                      "/images/product-blue.jpg",
                     ][i]
                   }
                   alt={`Instagram post ${i + 1}`}
