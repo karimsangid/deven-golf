@@ -205,27 +205,28 @@ export default function Home() {
         <div className="relative mx-auto flex max-w-3xl flex-col items-center px-6 text-center">
           <div className="reveal from-scale">
             <Image
-              src="/images/deven-lockup-tan.jpg"
+              src="/images/rott-poster.png"
               alt="DEVEN Rottweiler logo with brand wordmark"
-              width={360}
-              height={360}
-              className="mx-auto h-48 w-48 rounded-sm object-contain sm:h-56 sm:w-56"
+              width={461}
+              height={310}
+              priority={false}
+              className="mx-auto h-auto w-full max-w-xs sm:max-w-sm"
             />
           </div>
 
-          <span className="reveal mt-6 text-[10px] font-semibold tracking-[0.5em] text-deven-gold uppercase">
+          <span className="reveal mt-3 text-[10px] font-semibold tracking-[0.5em] text-deven-gold uppercase">
             Brand
           </span>
 
-          <h2 className="reveal mt-10 font-[family-name:var(--font-heading)] text-3xl font-light leading-tight text-deven-gold-light sm:text-4xl lg:text-5xl">
-            More than a game.
+          <h2 className="reveal mt-10 font-[family-name:var(--font-heading)] text-4xl font-medium leading-[1.05] tracking-tight text-deven-cream sm:text-5xl lg:text-6xl">
+            MORE THAN A GAME.
             <br />
-            A lifestyle. A legacy.
+            A LIFESTYLE. A LEGACY.
           </h2>
 
-          <div className="reveal my-8 h-px w-16 bg-deven-gold/40" />
+          <div className="reveal my-8 h-px w-20 bg-deven-gold/60" />
 
-          <div className="reveal space-y-5 text-base font-light leading-relaxed text-white/70 sm:text-lg">
+          <div className="reveal space-y-5 text-base font-light leading-relaxed text-white/75 sm:text-lg">
             <p>
               I&rsquo;m Deven. A golfer. A dreamer. A future business leader.
             </p>
@@ -239,10 +240,14 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="reveal mt-10 flex items-center gap-6">
-            <div className="h-px w-16 bg-deven-gold/30" />
-            <FlagPinSVG />
-            <div className="h-px w-16 bg-deven-gold/30" />
+          <div className="reveal mt-12 w-full max-w-md">
+            <Image
+              src="/images/db-monogram.png"
+              alt="DB monogram"
+              width={963}
+              height={127}
+              className="h-auto w-full"
+            />
           </div>
         </div>
       </section>
