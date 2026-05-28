@@ -205,22 +205,15 @@ export default function Home() {
         <div className="relative mx-auto flex max-w-3xl flex-col items-center px-6 text-center">
           <div className="reveal from-scale">
             <Image
-              src="/images/rott-shield-dark.jpg"
-              alt="DEVEN Rottweiler shield"
-              width={160}
-              height={160}
-              className="mx-auto h-32 w-32 rounded-sm object-contain"
+              src="/images/deven-lockup-tan.jpg"
+              alt="DEVEN Rottweiler logo with brand wordmark"
+              width={360}
+              height={360}
+              className="mx-auto h-48 w-48 rounded-sm object-contain sm:h-56 sm:w-56"
             />
           </div>
 
-          <div className="reveal mt-6 flex items-center gap-3">
-            <div className="h-px w-12 bg-deven-gold" />
-            <span className="font-[family-name:var(--font-heading)] text-2xl font-light tracking-[0.4em] text-white">
-              DEVEN
-            </span>
-            <div className="h-px w-12 bg-deven-gold" />
-          </div>
-          <span className="reveal mt-2 text-[10px] font-semibold tracking-[0.5em] text-deven-gold uppercase">
+          <span className="reveal mt-6 text-[10px] font-semibold tracking-[0.5em] text-deven-gold uppercase">
             Brand
           </span>
 
