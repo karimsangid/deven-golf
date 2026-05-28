@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef } from "react";
-import { FairwayDivider, FlagPinSVG, GolfBallSVG } from "./svgs";
+import { GolferSwingSVG, FairwayDivider, FlagPinSVG, GolfBallSVG } from "./svgs";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -128,6 +128,9 @@ export default function Home() {
             </a>
           </div>
 
+          <div className="mt-16 opacity-70 drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
+            <GolferSwingSVG />
+          </div>
         </div>
 
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
