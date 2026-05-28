@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { FairwayDivider, FlagPinSVG, GolfBallSVG } from "./svgs";
 
 const jsonLd = {
@@ -27,15 +27,30 @@ const jsonLd = {
 };
 
 export default function Home() {
-  const [scrollPct, setScrollPct] = useState(0);
+  const scrollBarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const onScroll = () => {
+    let raf = 0;
+    let queued = false;
+    const update = () => {
+      queued = false;
       const h = document.documentElement.scrollHeight - window.innerHeight;
-      setScrollPct(h > 0 ? (window.scrollY / h) * 100 : 0);
+      const pct = h > 0 ? window.scrollY / h : 0;
+      if (scrollBarRef.current) {
+        scrollBarRef.current.style.transform = `scaleX(${pct})`;
+      }
+    };
+    const onScroll = () => {
+      if (queued) return;
+      queued = true;
+      raf = requestAnimationFrame(update);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    update();
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(raf);
+    };
   }, []);
 
   useEffect(() => {
@@ -49,7 +64,7 @@ export default function Home() {
           }
         });
       },
-      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+      { threshold: 0.12, rootMargin: "0px 0px -10% 0px" }
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
@@ -62,7 +77,7 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="scroll-bar" style={{ width: `${scrollPct}%` }} />
+      <div ref={scrollBarRef} className="scroll-bar" />
 
       {/* ── HERO ── */}
       <section id="home" className="relative flex min-h-screen items-center justify-center overflow-hidden">
