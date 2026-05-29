@@ -23,11 +23,11 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   title: {
-    default: "DEVEN | Premium Golf Apparel — Elevate Your Style",
+    default: "DEVEN | Premium Golf Apparel — More Than a Game",
     template: "%s | DEVEN Golf",
   },
   description:
-    "DEVEN is a premium golf apparel brand featuring the signature Rottweiler logo. Shop modern polos, hoodies, and the Madison Collection — designed for style and comfort on and off the course.",
+    "DEVEN is a premium golf apparel brand featuring the signature Rottweiler logo. Shop the Madison Collection — performance hoodies designed for the course and beyond. More than a game.",
   keywords: [
     "golf apparel",
     "premium golf clothing",
@@ -43,9 +43,9 @@ export const metadata: Metadata = {
   authors: [{ name: "DEVEN" }],
   creator: "DEVEN",
   openGraph: {
-    title: "DEVEN | Premium Golf Apparel — Elevate Your Style",
+    title: "DEVEN | Premium Golf Apparel — More Than a Game",
     description:
-      "Modern golf apparel with the signature Rottweiler logo. Shop the Spring 2026 collection and the upcoming Madison Collection.",
+      "Modern golf apparel with the signature Rottweiler logo. Shop the Madison Collection — six pieces for the season, more this fall.",
     url: "https://deveneapen.com",
     siteName: "DEVEN",
     images: [
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "DEVEN | Premium Golf Apparel",
     description:
-      "Elevate your style with sleek golf polos, hoodies, and the Madison Collection. Signature Rottweiler logo.",
+      "More than a game. Performance golf hoodies with the signature Rottweiler mark — the Madison Collection.",
     images: ["/images/logo.png"],
   },
   robots: {

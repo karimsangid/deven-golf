@@ -10,7 +10,6 @@
   --color-deven-linen: #faf8f4;
   --color-deven-green: #1a3c2a;
   --color-deven-green-light: #2d5a3f;
-  --color-deven-sage: #7a9b8a;
   --color-deven-gray: #6b6b6b;
   --color-deven-light-gray: #e5e5e5;
 
@@ -32,132 +31,22 @@ body {
   overflow-x: hidden;
 }
 
-/* Below-fold sections — skip paint until near viewport */
-section {
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 600px;
-}
-section#home { content-visibility: visible; }
-
 ::selection {
   background: var(--color-deven-gold);
   color: var(--color-deven-black);
 }
 
-/* ── Keyframes ── */
-@keyframes slow-zoom {
-  from { transform: scale(1); }
-  to { transform: scale(1.08); }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-@keyframes gold-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(201, 160, 84, 0.4); }
-  50% { box-shadow: 0 0 20px 4px rgba(201, 160, 84, 0.15); }
-}
-
-@keyframes marquee-scroll {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-50%, 0, 0); }
-}
-
-@keyframes flag-wave {
-  0%, 100% { transform: skewX(0deg) scaleX(1); }
-  25% { transform: skewX(3deg) scaleX(1.02); }
-  75% { transform: skewX(-2deg) scaleX(0.98); }
-}
-
-@keyframes ball-roll {
-  from { transform: translateX(-40px) rotate(0deg); opacity: 0; }
-  20% { opacity: 1; }
-  to { transform: translateX(0) rotate(720deg); opacity: 1; }
-}
-
-@keyframes swing-club {
-  0% { transform: rotate(-60deg); }
-  35% { transform: rotate(-65deg); }
-  55% { transform: rotate(5deg); }
-  75% { transform: rotate(50deg); }
-  90% { transform: rotate(35deg); }
-  100% { transform: rotate(-60deg); }
-}
-
-@keyframes ball-fly {
-  0%, 54% { opacity: 0; transform: translate(0, 0) scale(1); }
-  56% { opacity: 1; transform: translate(0, 0) scale(1); }
-  80% { opacity: 1; transform: translate(120px, -100px) scale(0.6); }
-  100% { opacity: 0; transform: translate(220px, -20px) scale(0.2); }
-}
-
-/* ── Scroll-reveal ── */
+/* ── Scroll-reveal (subtle, used sparingly) ── */
 .reveal {
   opacity: 0;
-  transform: translate3d(0, 24px, 0);
-  will-change: opacity, transform;
-  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(20px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.reveal.from-left { transform: translate3d(-32px, 0, 0); }
-.reveal.from-right { transform: translate3d(32px, 0, 0); }
-.reveal.from-scale { transform: scale(0.94) translateZ(0); }
 .reveal.visible {
   opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
-  will-change: auto;
+  transform: none;
 }
-
-.stagger > .reveal:nth-child(1) { transition-delay: 0ms; }
-.stagger > .reveal:nth-child(2) { transition-delay: 80ms; }
-.stagger > .reveal:nth-child(3) { transition-delay: 160ms; }
-.stagger > .reveal:nth-child(4) { transition-delay: 240ms; }
-.stagger > .reveal:nth-child(5) { transition-delay: 320ms; }
-.stagger > .reveal:nth-child(6) { transition-delay: 400ms; }
-
-/* ── Hero ── */
-.hero-bg {
-  animation: slow-zoom 24s ease-in-out infinite alternate;
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-/* ── Button shimmer ── */
-.btn-gold {
-  position: relative;
-  overflow: hidden;
-}
-.btn-gold::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%);
-  background-size: 200% 100%;
-  animation: shimmer 3s ease-in-out infinite;
-}
-
-/* ── Card lift ── */
-.card-lift {
-  transform: translate3d(0, 0, 0);
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-              box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.card-lift:hover {
-  transform: translate3d(0, -6px, 0);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.10);
-}
-
-/* ── Image zoom on hover ── */
-.img-zoom { overflow: hidden; isolation: isolate; }
-.img-zoom img {
-  transform: translate3d(0, 0, 0) scale(1);
-  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  backface-visibility: hidden;
-}
-.img-zoom:hover img { transform: translate3d(0, 0, 0) scale(1.06); }
 
 /* ── Gold underline links ── */
 .gold-link {
@@ -169,42 +58,79 @@ section#home { content-visibility: visible; }
   bottom: -2px;
   left: 0;
   width: 0;
-  height: 1.5px;
+  height: 1px;
   background: var(--color-deven-gold);
   transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.gold-link:hover::after { width: 100%; }
+.gold-link:hover::after {
+  width: 100%;
+}
 
-/* ── Glassmorphism nav ── */
+/* ── Nav ── */
 .nav-glass {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  background: rgba(10, 10, 10, 0.78);
-  border-bottom: 1px solid rgba(201, 160, 84, 0.12);
+  background: rgba(10, 10, 10, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   transition: background 0.3s ease, box-shadow 0.3s ease;
-  will-change: background-color;
 }
 .nav-glass.scrolled {
-  background: rgba(10, 10, 10, 0.94);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  background: rgba(10, 10, 10, 0.92);
+  box-shadow: 0 1px 24px rgba(0, 0, 0, 0.25);
 }
 
-/* ── Scroll progress bar ── */
-.scroll-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 2px;
-  width: 100%;
-  transform-origin: left center;
-  transform: scaleX(0);
-  background: linear-gradient(90deg, var(--color-deven-gold), var(--color-deven-gold-light));
-  z-index: 9999;
-  pointer-events: none;
+/* ── Size selector (PDP) ── */
+.size-pill {
+  border: 1px solid var(--color-deven-light-gray);
+  background: #fff;
+  padding: 0.7rem 0;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--color-deven-black);
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+.size-pill:hover {
+  border-color: var(--color-deven-black);
+}
+.size-pill.is-selected {
+  background: var(--color-deven-black);
+  border-color: var(--color-deven-black);
+  color: #fff;
+}
+
+/* ── PDP accordion (native <details>) ── */
+.pdp-acc summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 1.15rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-deven-black);
+}
+.pdp-acc summary::-webkit-details-marker {
+  display: none;
+}
+.pdp-acc summary::after {
+  content: "+";
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--color-deven-gray);
+  transition: transform 0.25s ease;
+}
+.pdp-acc[open] summary::after {
+  content: "–";
 }
 
 /* ── Floating form labels ── */
-.float-field { position: relative; }
+.float-field {
+  position: relative;
+}
 .float-field input,
 .float-field textarea {
   width: 100%;
@@ -246,34 +172,6 @@ section#home { content-visibility: visible; }
   transform: none;
 }
 
-/* ── Golfer silhouette swing ── */
-.golfer-swing .club {
-  transform-origin: 85% 95%;
-  animation: swing-club 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-.golfer-swing .ball {
-  animation: ball-fly 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-/* ── Color marquee ── */
-.color-marquee {
-  display: flex;
-  width: max-content;
-  animation: marquee-scroll 40s linear infinite;
-  will-change: transform;
-}
-.color-marquee:hover { animation-play-state: paused; }
-.color-marquee-mask {
-  mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
-}
-
-/* ── Flag ripple ── */
-.flag-cloth {
-  transform-origin: left center;
-  animation: flag-wave 2.5s ease-in-out infinite;
-}
-
 /* ── Mobile menu ── */
 .mobile-menu {
   transform: translateX(100%);
@@ -285,11 +183,14 @@ section#home { content-visibility: visible; }
 
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .hero-bg { animation: none; }
-  .reveal { opacity: 1; transform: none; }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
 }

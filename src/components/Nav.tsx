@@ -62,7 +62,7 @@ export default function Nav() {
           ))}
           <Link
             href="/shop"
-            className="btn-gold rounded-none bg-deven-gold px-6 py-2.5 text-xs font-semibold tracking-[0.2em] text-deven-black uppercase transition-all hover:bg-deven-gold-light"
+            className="bg-deven-gold px-6 py-2.5 text-xs font-semibold tracking-[0.2em] text-deven-black uppercase transition-colors hover:bg-deven-gold-light"
           >
             Shop Now
           </Link>
@@ -107,7 +107,7 @@ export default function Nav() {
         <Link
           href="/shop"
           onClick={() => setMenuOpen(false)}
-          className="btn-gold mt-4 bg-deven-gold px-10 py-3 text-sm font-semibold tracking-[0.2em] text-deven-black uppercase"
+          className="mt-4 bg-deven-gold px-10 py-3 text-sm font-semibold tracking-[0.2em] text-deven-black uppercase"
         >
           Shop Now
         </Link>
