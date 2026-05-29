@@ -76,16 +76,20 @@ export default function Home() {
             className="h-24 w-24 object-contain sm:h-28 sm:w-28"
           />
 
-          <h1 className="mt-8 font-[family-name:var(--font-heading)] text-5xl font-light leading-[1.05] tracking-wide text-white sm:text-7xl lg:text-8xl">
+          <span className="mt-7 text-[11px] font-semibold tracking-[0.45em] text-deven-gold uppercase">
+            Premium Athletic Apparel
+          </span>
+
+          <h1 className="mt-5 font-[family-name:var(--font-heading)] text-6xl font-medium uppercase leading-[0.92] tracking-tight text-white sm:text-7xl lg:text-8xl">
             More Than
             <br />
-            <span className="italic text-deven-gold">a Game</span>
+            a Game
           </h1>
 
           <div className="mt-8 h-px w-16 bg-deven-gold/70" />
 
           <p className="mt-7 max-w-md text-sm font-light leading-relaxed tracking-wide text-white/70 sm:text-base">
-            Premium golf apparel for those who think beyond the scorecard.
+            Performance apparel for athletes who think beyond the scorecard.
           </p>
 
           <Link
@@ -317,8 +321,8 @@ export default function Home() {
                 </span>
               </div>
               <p className="mt-4 max-w-xs text-sm font-light leading-relaxed text-white/40">
-                Premium golf apparel with the signature Rottweiler mark. More
-                than a game.
+                Premium performance apparel with the signature Rottweiler mark.
+                More than a game.
               </p>
             </div>
 

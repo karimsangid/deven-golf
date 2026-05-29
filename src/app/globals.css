@@ -79,6 +79,37 @@ body {
   box-shadow: 0 1px 24px rgba(0, 0, 0, 0.25);
 }
 
+/* ── Category tabs (shop) ── */
+.cat-tab {
+  position: relative;
+  padding-bottom: 0.4rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-deven-gray);
+  transition: color 0.2s ease;
+}
+.cat-tab::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: var(--color-deven-black);
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cat-tab:hover {
+  color: var(--color-deven-black);
+}
+.cat-tab.is-active {
+  color: var(--color-deven-black);
+}
+.cat-tab.is-active::after {
+  width: 100%;
+}
+
 /* ── Size selector (PDP) ── */
 .size-pill {
   border: 1px solid var(--color-deven-light-gray);

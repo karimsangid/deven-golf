@@ -8,9 +8,17 @@
 // and they drop straight in here — nothing else needs to change.
 // ─────────────────────────────────────────────────────────────────────────
 
+// Categories are the spine of the catalogue. DEVEN launches in Golf, but the
+// brand vision is a full athlete apparel house — adding "Training", "Tennis",
+// "Lifestyle", etc. later is purely a matter of tagging products with a new
+// category here. The shop + nav read categories dynamically, so the UI grows
+// on its own with no layout work.
+export type Category = "Golf" | "Training" | "Tennis" | "Lifestyle";
+
 export type Product = {
   slug: string;
   name: string;
+  category: Category;
   color: string; // colourway name
   swatch: string; // hex for the swatch dot
   price: number | null;
@@ -25,6 +33,7 @@ export const PRODUCTS: Product[] = [
   {
     slug: "the-madison",
     name: "The Madison",
+    category: "Golf",
     color: "Royal Blue",
     swatch: "#2f4fa0",
     price: 128,
@@ -36,6 +45,7 @@ export const PRODUCTS: Product[] = [
   {
     slug: "the-augusta",
     name: "The Augusta",
+    category: "Golf",
     color: "Stone Grey",
     swatch: "#9a9a9a",
     price: 128,
@@ -47,6 +57,7 @@ export const PRODUCTS: Product[] = [
   {
     slug: "the-legacy",
     name: "The Legacy",
+    category: "Golf",
     color: "Midnight Navy",
     swatch: "#1c2540",
     price: 128,
@@ -58,6 +69,7 @@ export const PRODUCTS: Product[] = [
   {
     slug: "the-meridian",
     name: "The Meridian",
+    category: "Golf",
     color: "Sky Blue",
     swatch: "#5b7fc4",
     price: 128,
@@ -68,6 +80,7 @@ export const PRODUCTS: Product[] = [
   {
     slug: "the-sundown",
     name: "The Sundown",
+    category: "Golf",
     color: "Butter Yellow",
     swatch: "#f2e9b8",
     price: 128,
@@ -78,6 +91,7 @@ export const PRODUCTS: Product[] = [
   {
     slug: "the-onyx",
     name: "The Onyx",
+    category: "Golf",
     color: "Black",
     swatch: "#111111",
     price: 128,
@@ -103,3 +117,17 @@ export const PRODUCT_DETAIL = {
 };
 
 export const SIZES = ["XS", "S", "M", "L", "XL", "XXL"] as const;
+
+// Preferred display order for categories as the brand expands beyond golf.
+const CATEGORY_ORDER: Category[] = ["Golf", "Training", "Tennis", "Lifestyle"];
+
+// Only the categories that actually have products, in display order. The shop
+// and nav use this — so new verticals appear automatically once tagged above,
+// and nothing empty is ever shown.
+export const CATEGORIES: Category[] = CATEGORY_ORDER.filter((c) =>
+  PRODUCTS.some((p) => p.category === c)
+);
+
+export function getProductsByCategory(category: Category): Product[] {
+  return PRODUCTS.filter((p) => p.category === category);
+}
