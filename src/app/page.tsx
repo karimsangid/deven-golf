@@ -66,15 +66,17 @@ export default function Home() {
         </div>
 
         <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-6 text-center">
-          {/* The mark — Rottweiler, green eyes */}
-          <Image
-            src="/images/logo-icon.png"
-            alt="DEVEN Rottweiler mark"
-            width={104}
-            height={104}
-            priority
-            className="h-24 w-24 object-contain sm:h-28 sm:w-28"
-          />
+          {/* The mark — Rottweiler, green eyes — framed so it reads on the dark hero */}
+          <div className="flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border border-deven-gold/50 sm:h-28 sm:w-28">
+            <Image
+              src="/images/logo-icon.png"
+              alt="DEVEN Rottweiler mark"
+              width={112}
+              height={112}
+              priority
+              className="h-full w-full scale-110 object-cover"
+            />
+          </div>
 
           <span className="mt-7 text-[11px] font-semibold tracking-[0.45em] text-deven-gold uppercase">
             Premium Athletic Apparel
@@ -223,7 +225,7 @@ export default function Home() {
             {[
               { src: "/images/mens-lookbook.jpg", alt: "Men's hoodie on the course" },
               { src: "/images/women-putting.jpg", alt: "Putting with the Rottweiler flag" },
-              { src: "/images/man-back-course.jpg", alt: "On the course in a DEVEN hoodie" },
+              { src: "/images/women-lifestyle.jpg", alt: "On the course in DEVEN hoodies" },
             ].map((img, i) => (
               <div
                 key={i}

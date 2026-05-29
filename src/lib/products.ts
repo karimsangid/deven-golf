@@ -24,6 +24,7 @@ export type Product = {
   price: number | null;
   image: string; // primary catalogue / hero image
   gallery?: string[]; // optional extra angles on the PDP
+  cleanImage?: boolean; // true once we have a clean studio shot; else show placeholder
   badge?: string; // e.g. "Coming Soon"
   available: boolean;
   blurb: string; // one-line, shown on the card + PDP intro
@@ -38,6 +39,7 @@ export const PRODUCTS: Product[] = [
     swatch: "#2f4fa0",
     price: 128,
     image: "/images/product-blue.jpg",
+    cleanImage: true,
     available: true,
     blurb:
       "The signature piece. A lightweight performance hoodie cut clean and worn easy — front and back.",
@@ -50,6 +52,7 @@ export const PRODUCTS: Product[] = [
     swatch: "#9a9a9a",
     price: 128,
     image: "/images/product-gray.jpg",
+    cleanImage: true,
     available: true,
     blurb:
       "Quiet, considered grey with the Rottweiler mark set proud across the chest.",
@@ -62,6 +65,7 @@ export const PRODUCTS: Product[] = [
     swatch: "#1c2540",
     price: 128,
     image: "/images/product-yellow.jpg", // file is mislabelled — this is the navy composite
+    cleanImage: true,
     available: true,
     blurb:
       "Deep navy with a tonal swing mark. The one you reach for on every round.",

@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { PRODUCTS, CATEGORIES, type Category } from "@/lib/products";
+import ProductMedia from "./ProductMedia";
 
 type Filter = Category | "All";
 
@@ -45,12 +45,10 @@ export default function ShopBrowser() {
           >
             {/* Full garment, contained — never cropped */}
             <div className="relative aspect-[4/5] overflow-hidden bg-deven-cream">
-              <Image
-                src={product.image}
-                alt={`${product.name} — ${product.color}`}
-                fill
+              <ProductMedia
+                product={product}
                 sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                className="object-contain p-5 transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                imgClassName="object-contain p-5 transition-transform duration-700 ease-out group-hover:scale-[1.04]"
               />
               {product.badge && (
                 <span className="absolute top-4 left-4 bg-deven-black px-3 py-1 text-[10px] font-semibold tracking-[0.2em] text-deven-gold uppercase">

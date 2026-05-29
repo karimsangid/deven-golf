@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PRODUCTS, getProduct, PRODUCT_DETAIL } from "@/lib/products";
 import ProductActions from "./ProductActions";
+import ProductMedia from "../ProductMedia";
 
 export function generateStaticParams() {
   return PRODUCTS.map((p) => ({ slug: p.slug }));
@@ -65,13 +65,11 @@ export default async function ProductPage({
             {/* ── Gallery — full garment, never cropped ── */}
             <div>
               <div className="relative aspect-[4/3] overflow-hidden bg-deven-cream">
-                <Image
-                  src={product.image}
-                  alt={`${product.name} — ${product.color}`}
-                  fill
+                <ProductMedia
+                  product={product}
                   priority
                   sizes="(min-width: 1024px) 50vw, 100vw"
-                  className="object-contain p-4"
+                  imgClassName="object-contain p-4"
                 />
                 {product.badge && (
                   <span className="absolute top-4 left-4 bg-deven-black px-4 py-1.5 text-[10px] font-semibold tracking-[0.2em] text-deven-gold uppercase">
@@ -166,12 +164,10 @@ export default async function ProductPage({
               {others.slice(0, 5).map((o) => (
                 <Link key={o.slug} href={`/shop/${o.slug}`} className="group">
                   <div className="relative aspect-square overflow-hidden bg-deven-cream">
-                    <Image
-                      src={o.image}
-                      alt={o.name}
-                      fill
+                    <ProductMedia
+                      product={o}
                       sizes="(min-width: 1024px) 20vw, 50vw"
-                      className="object-contain p-3 transition-transform duration-500 group-hover:scale-105"
+                      imgClassName="object-contain p-3 transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
                   <p className="mt-3 text-sm font-medium text-deven-black">
