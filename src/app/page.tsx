@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { PRODUCTS } from "@/lib/products";
 
 const jsonLd = {
@@ -25,6 +25,9 @@ const jsonLd = {
 const featured = PRODUCTS.filter((p) => p.available).slice(0, 3);
 
 export default function Home() {
+  const [joined, setJoined] = useState(false);
+  const [sent, setSent] = useState(false);
+
   useEffect(() => {
     const els = document.querySelectorAll(".reveal");
     const io = new IntersectionObserver(
@@ -116,21 +119,14 @@ export default function Home() {
             A lifestyle. A legacy.
           </h2>
           <div className="my-8 h-px w-12 bg-deven-gold/60" />
-          <p className="max-w-xl text-base font-light leading-relaxed text-deven-gray">
-            DEVEN was built for athletes driven to be their best — on the course
-            and off it. Clean lines, premium fabric, and the signature
-            Rottweiler mark. For those who chase greatness and think beyond the
-            scorecard.
+          <p className="max-w-xl text-lg font-light leading-relaxed text-deven-black">
+            I&rsquo;m Deven. A golfer. A dreamer. A future business leader.
           </p>
-          <div className="mt-10 w-full max-w-xs">
-            <Image
-              src="/images/db-monogram.png"
-              alt="DB monogram"
-              width={963}
-              height={127}
-              className="h-auto w-full opacity-90"
-            />
-          </div>
+          <p className="mt-5 max-w-xl text-base font-light leading-relaxed text-deven-gray">
+            I created DEVEN to build luxury golf apparel for athletes who are
+            driven to be the best — on and off the course.
+          </p>
+          <div className="mt-12 h-px w-24 bg-deven-gold/50" />
         </div>
       </section>
 
@@ -251,18 +247,35 @@ export default function Home() {
             Join the Club
           </h3>
           <p className="mt-3 text-sm font-light text-white/50">
-            Be first to the drops. Ten percent off your first piece.
+            Be first to every drop. New pieces and early access, straight to
+            your inbox.
           </p>
-          <div className="mt-8 flex w-full max-w-md flex-col gap-3 sm:flex-row">
-            <input
-              type="email"
-              placeholder="Email address"
-              className="flex-1 border border-white/15 bg-transparent px-5 py-3.5 text-sm text-white outline-none transition-colors placeholder:text-white/30 focus:border-deven-gold"
-            />
-            <button className="bg-deven-gold px-8 py-3.5 text-xs font-semibold tracking-[0.2em] text-deven-black uppercase transition-colors hover:bg-deven-gold-light">
-              Subscribe
-            </button>
-          </div>
+          {!joined ? (
+            <form
+              className="mt-8 flex w-full max-w-md flex-col gap-3 sm:flex-row"
+              onSubmit={(e) => {
+                e.preventDefault();
+                setJoined(true);
+              }}
+            >
+              <input
+                type="email"
+                required
+                placeholder="Email address"
+                className="flex-1 border border-white/15 bg-transparent px-5 py-3.5 text-sm text-white outline-none transition-colors placeholder:text-white/30 focus:border-deven-gold"
+              />
+              <button
+                type="submit"
+                className="bg-deven-gold px-8 py-3.5 text-xs font-semibold tracking-[0.2em] text-deven-black uppercase transition-colors hover:bg-deven-gold-light"
+              >
+                Subscribe
+              </button>
+            </form>
+          ) : (
+            <p className="mt-8 text-sm font-light tracking-wide text-deven-gold">
+              You&rsquo;re on the list. Watch your inbox for the next drop.
+            </p>
+          )}
         </div>
       </section>
 
@@ -277,31 +290,55 @@ export default function Home() {
               Contact
             </h2>
           </div>
-          <form
-            className="reveal space-y-5"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <div className="grid gap-5 sm:grid-cols-2">
-              <div className="float-field">
-                <input type="text" id="name" placeholder=" " required />
-                <label htmlFor="name">Name</label>
-              </div>
-              <div className="float-field">
-                <input type="email" id="email" placeholder=" " required />
-                <label htmlFor="email">Email</label>
-              </div>
-            </div>
-            <div className="float-field">
-              <textarea id="message" rows={4} placeholder=" " required />
-              <label htmlFor="message">Message</label>
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-deven-black py-4 text-xs font-semibold tracking-[0.25em] text-white uppercase transition-colors hover:bg-deven-green sm:w-auto sm:px-12"
+          {!sent ? (
+            <form
+              className="reveal space-y-5"
+              onSubmit={(e) => {
+                e.preventDefault();
+                setSent(true);
+              }}
             >
-              Send Message
-            </button>
-          </form>
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div className="float-field">
+                  <input type="text" id="name" placeholder=" " required />
+                  <label htmlFor="name">Name</label>
+                </div>
+                <div className="float-field">
+                  <input type="email" id="email" placeholder=" " required />
+                  <label htmlFor="email">Email</label>
+                </div>
+              </div>
+              <div className="float-field">
+                <textarea id="message" rows={4} placeholder=" " required />
+                <label htmlFor="message">Message</label>
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-deven-black py-4 text-xs font-semibold tracking-[0.25em] text-white uppercase transition-colors hover:bg-deven-green sm:w-auto sm:px-12"
+              >
+                Send Message
+              </button>
+            </form>
+          ) : (
+            <div className="reveal border border-deven-gold/30 bg-deven-cream px-8 py-10 text-center">
+              <p className="font-[family-name:var(--font-heading)] text-2xl font-light text-deven-black">
+                Thank you.
+              </p>
+              <p className="mx-auto mt-3 max-w-sm text-sm font-light leading-relaxed text-deven-gray">
+                Your message is on its way — we&rsquo;ll be in touch shortly. In
+                the meantime, follow{" "}
+                <a
+                  href="https://instagram.com/shopdeven"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="gold-link text-deven-black"
+                >
+                  @shopdeven
+                </a>{" "}
+                for the latest.
+              </p>
+            </div>
+          )}
         </div>
       </section>
 

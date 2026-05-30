@@ -40,7 +40,7 @@ export default function ProductMedia({
         />
       </div>
       <span className="text-[10px] font-semibold tracking-[0.25em] text-deven-gray/70 uppercase">
-        {product.available ? "Studio Photo Soon" : "Arriving This Fall"}
+        {product.available ? "Studio Photo Soon" : "Coming Soon"}
       </span>
     </div>
   );

@@ -23,6 +23,7 @@ export type Product = {
   swatch: string; // hex for the swatch dot
   price: number | null;
   image: string; // primary catalogue / hero image
+  model?: string; // optional on-model / lifestyle shot — shop card cross-fades to it on hover (Peter-Millar style). MUST be the same garment + colourway.
   gallery?: string[]; // optional extra angles on the PDP
   cleanImage?: boolean; // true once we have a clean studio shot; else show placeholder
   badge?: string; // e.g. "Coming Soon"
@@ -39,6 +40,8 @@ export const PRODUCTS: Product[] = [
     swatch: "#2f4fa0",
     price: 128,
     image: "/images/product-blue.jpg",
+    // On-model reveal: real crew wearing the actual DEVEN line. Hover the card to see it worn.
+    model: "/images/madison-collection.jpg",
     cleanImage: true,
     available: true,
     blurb:
@@ -64,7 +67,7 @@ export const PRODUCTS: Product[] = [
     color: "Midnight Navy",
     swatch: "#1c2540",
     price: 128,
-    image: "/images/product-yellow.jpg", // file is mislabelled — this is the navy composite
+    image: "/images/product-navy.jpg",
     cleanImage: true,
     available: true,
     blurb:
@@ -102,7 +105,7 @@ export const PRODUCTS: Product[] = [
     image: "/images/rott-poster.png",
     badge: "Coming Soon",
     available: false,
-    blurb: "The mark, in its purest form. Arriving this fall.",
+    blurb: "The mark, in its purest form. Coming soon.",
   },
 ];
 
@@ -117,7 +120,7 @@ export const PRODUCT_DETAIL = {
     "A lightweight performance hoodie built for the course and everywhere after it. The signature Rottweiler mark sits at the chest, with DEVEN scripted at the back hem. Designed to move the way you do.",
   fit: "Tailored athletic fit — true to size. Premium performance fabric with natural four-way stretch and a soft, broken-in hand. Size up for a relaxed drape.",
   shipping:
-    "Ships within 5–7 business days. Complimentary returns within 30 days, unworn with tags.",
+    "Ships within 5–7 business days. Easy returns — reach out within 30 days of delivery and we'll help.",
 };
 
 export const SIZES = ["XS", "S", "M", "L", "XL", "XXL"] as const;

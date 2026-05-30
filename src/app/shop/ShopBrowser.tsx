@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { PRODUCTS, CATEGORIES, type Category } from "@/lib/products";
@@ -43,13 +44,23 @@ export default function ShopBrowser() {
             href={`/shop/${product.slug}`}
             className="group block"
           >
-            {/* Full garment, contained — never cropped */}
+            {/* Full garment, contained — never cropped. Cross-fades to the
+                on-model shot on hover when the product has one. */}
             <div className="relative aspect-[4/5] overflow-hidden bg-deven-cream">
               <ProductMedia
                 product={product}
                 sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                 imgClassName="object-contain p-5 transition-transform duration-700 ease-out group-hover:scale-[1.04]"
               />
+              {product.model && (
+                <Image
+                  src={product.model}
+                  alt={`${product.name} — worn on the course`}
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  className="object-cover opacity-0 transition-opacity duration-700 ease-out group-hover:opacity-100"
+                />
+              )}
               {product.badge && (
                 <span className="absolute top-4 left-4 bg-deven-black px-3 py-1 text-[10px] font-semibold tracking-[0.2em] text-deven-gold uppercase">
                   {product.badge}

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PRODUCTS, getProduct, PRODUCT_DETAIL } from "@/lib/products";
 import ProductActions from "./ProductActions";
+import ProductGallery from "./ProductGallery";
 import ProductMedia from "../ProductMedia";
 
 export function generateStaticParams() {
@@ -62,21 +63,9 @@ export default async function ProductPage({
           </nav>
 
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-            {/* ── Gallery — full garment, never cropped ── */}
+            {/* ── Gallery — full garment, never cropped; hover-zoom + lightbox ── */}
             <div>
-              <div className="relative aspect-[4/3] overflow-hidden bg-deven-cream">
-                <ProductMedia
-                  product={product}
-                  priority
-                  sizes="(min-width: 1024px) 50vw, 100vw"
-                  imgClassName="object-contain p-4"
-                />
-                {product.badge && (
-                  <span className="absolute top-4 left-4 bg-deven-black px-4 py-1.5 text-[10px] font-semibold tracking-[0.2em] text-deven-gold uppercase">
-                    {product.badge}
-                  </span>
-                )}
-              </div>
+              <ProductGallery product={product} />
             </div>
 
             {/* ── Detail ── */}
