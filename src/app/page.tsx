@@ -67,6 +67,10 @@ const LOOKBOOK_SHOTS = [
     src: "/images/model-gray-madison-woman.jpg",
     alt: "A golfer at golden hour in the DEVEN Silver Oak Madison Collection hoodie",
   },
+  {
+    src: "/images/hero-duo-gray-yellow.jpg",
+    alt: "Two golfers at golden hour in DEVEN — the Silver Oak Madison hoodie and the Peanut Cream hoodie",
+  },
 ];
 
 // Show in-stock pieces shot on a model (the people frames), so the homepage
@@ -111,8 +115,8 @@ export default function Home() {
       >
         <div className="absolute inset-0">
           <Image
-            src="/images/hero-duo-gray-yellow.jpg"
-            alt="Two golfers at golden hour in DEVEN — the Silver Oak Madison hoodie and the Peanut Cream hoodie"
+            src="/images/campaign-group.jpg"
+            alt="Five golfers at golden hour in DEVEN — the Diesel Sky, Peanut Cream, and Silver Oak hoodies across the Signature and Madison lines"
             fill
             priority
             className="object-cover object-top"
