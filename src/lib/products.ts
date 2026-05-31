@@ -93,9 +93,13 @@ export const PRODUCTS: Product[] = [
     styleLabel: STYLE_LABELS.shoulder,
     category: "Golf",
     price: PRICE,
-    image: "/images/madison-yellow-shoulder-dark.jpg",
+    // RULE: no flat-lay / laid-out hoodie shots — on-model or 3D render only.
+    // The yellow Madison has neither yet, so it shows the branded placeholder
+    // (cleanImage:false) until the 3D render lands. Do NOT point this back at
+    // a flat-lay. (madison-yellow-shoulder-dark.jpg was a flat-lay — retired.)
+    image: "",
     gallery: [],
-    cleanImage: true,
+    cleanImage: false,
     stock: { M: 8, L: 13 },
     blurb: STYLE_BLURB.shoulder,
   },
