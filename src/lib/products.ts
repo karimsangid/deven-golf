@@ -1,136 +1,253 @@
 // ─────────────────────────────────────────────────────────────────────────
 // DEVEN — product catalogue (single source of truth)
 //
-// Six pieces for the launch. More arrive in the fall.
+// REALITY (per Deven's inventory list, 2026-05-30):
+//   One hoodie. Four colours (Yellow, Gray, Light Blue, Navy) × two logo
+//   styles (small mark on the shoulder, big mark on the chest) = 8 SKUs.
+//   Stock is tracked per size below; sold-out sizes grey out automatically and
+//   a SKU with zero total stock shows "Sold Out" everywhere.
 //
-// NOTE FOR DEVEN: names + copy below are placeholders and the photography for
-// Meridian / Sundown is interim. Send the real six names + clean studio shots
-// and they drop straight in here — nothing else needs to change.
+// PHOTO STATUS — only four SKUs have a clean studio shot today:
+//   Yellow·Shoulder (hanger), Gray·Chest, Light Blue·Shoulder, Navy·Shoulder.
+//   The four big-chest-for-yellow/blue/navy + gray·shoulder fall back to the
+//   quiet branded placeholder until Deven shoots them. To light one up: drop the
+//   photo in /public/images, point `image:` at it, set `cleanImage: true`.
+//
+// PRICE — every piece is $119 (see PRICE constant). The number surfaces across
+//   the card + PDP automatically; set price: null on a SKU to hide it.
 // ─────────────────────────────────────────────────────────────────────────
 
 // Categories are the spine of the catalogue. DEVEN launches in Golf, but the
 // brand vision is a full athlete apparel house — adding "Training", "Tennis",
 // "Lifestyle", etc. later is purely a matter of tagging products with a new
-// category here. The shop + nav read categories dynamically, so the UI grows
-// on its own with no layout work.
+// category here. The shop + nav read categories dynamically.
 export type Category = "Golf" | "Training" | "Tennis" | "Lifestyle";
+
+export type Color = "Yellow" | "Gray" | "Light Blue" | "Navy";
+export type LogoStyle = "shoulder" | "chest";
+
+export const SIZES = ["XS", "S", "M", "L", "XL", "XXL"] as const;
+export type Size = (typeof SIZES)[number];
+
+// ── Commerce constants ──────────────────────────────────────────────────────
+// Every piece is the same price for now. Change here to reprice the catalogue.
+export const PRICE = 119;
+// Free shipping on every order, no minimum (0 threshold). Reflected in the
+// announcement bar + policy copy; enforced in the GoDaddy store settings.
+export const FREE_SHIPPING_THRESHOLD = 0;
 
 export type Product = {
   slug: string;
-  name: string;
+  name: string; // e.g. "Yellow Hoodie"
+  color: Color;
+  swatch: string; // hex for the swatch dot — matches the real garment
+  style: LogoStyle;
+  styleLabel: string; // "Madison Collection" (shoulder) | "Big Chest Logo" (chest)
   category: Category;
-  color: string; // colourway name
-  swatch: string; // hex for the swatch dot
-  price: number | null;
+  price: number | null; // null → price hidden
   image: string; // primary catalogue / hero image
-  model?: string; // optional on-model / lifestyle shot — shop card cross-fades to it on hover (Peter-Millar style). MUST be the same garment + colourway.
   gallery?: string[]; // optional extra angles on the PDP
-  cleanImage?: boolean; // true once we have a clean studio shot; else show placeholder
-  badge?: string; // e.g. "Coming Soon"
-  available: boolean;
+  cleanImage?: boolean; // true once we have a clean studio shot; else placeholder
+  stock: Partial<Record<Size, number>>; // units on hand per size
   blurb: string; // one-line, shown on the card + PDP intro
 };
 
+// ── Style copy (shared) ────────────────────────────────────────────────────
+export const STYLE_LABELS: Record<LogoStyle, string> = {
+  shoulder: "Madison Collection",
+  chest: "Big Chest Logo",
+};
+
+const STYLE_BLURB: Record<LogoStyle, string> = {
+  shoulder:
+    "The small Rottweiler mark at the shoulder with the golfer silhouette across the chest — clean and quiet.",
+  chest: "The Rottweiler mark set bold and centred across the chest.",
+};
+
+// ── Colour swatches (sampled from the real garments) ────────────────────────
+const SWATCH: Record<Color, string> = {
+  Yellow: "#efe6c4", // butter cream
+  Gray: "#b7babf", // soft cool gray
+  "Light Blue": "#8fa1c2", // steel / periwinkle
+  Navy: "#2a3450", // deep slate navy
+};
+
 export const PRODUCTS: Product[] = [
+  // ── YELLOW ────────────────────────────────────────────────────────────────
   {
-    slug: "the-madison",
-    name: "The Madison",
+    slug: "yellow-shoulder",
+    name: "Yellow Hoodie",
+    color: "Yellow",
+    swatch: SWATCH.Yellow,
+    style: "shoulder",
+    styleLabel: STYLE_LABELS.shoulder,
     category: "Golf",
-    color: "Royal Blue",
-    swatch: "#2f4fa0",
-    price: 128,
-    image: "/images/product-blue.jpg",
-    // On-model reveal: real crew wearing the actual DEVEN line. Hover the card to see it worn.
-    model: "/images/madison-collection.jpg",
+    price: PRICE,
+    image: "/images/p-yellow-shoulder.jpg",
+    gallery: ["/images/p-yellow-shoulder-back.jpg"],
     cleanImage: true,
-    available: true,
-    blurb:
-      "The signature piece. A lightweight performance hoodie cut clean and worn easy — front and back.",
+    stock: { M: 8, L: 13 },
+    blurb: STYLE_BLURB.shoulder,
   },
   {
-    slug: "the-augusta",
-    name: "The Augusta",
+    slug: "yellow-chest",
+    name: "Yellow Hoodie",
+    color: "Yellow",
+    swatch: SWATCH.Yellow,
+    style: "chest",
+    styleLabel: STYLE_LABELS.chest,
     category: "Golf",
-    color: "Stone Grey",
-    swatch: "#9a9a9a",
-    price: 128,
-    image: "/images/product-gray.jpg",
+    price: PRICE,
+    image: "/images/p-yellow-chest.jpg",
+    gallery: ["/images/p-yellow-chest-back.jpg"],
     cleanImage: true,
-    available: true,
-    blurb:
-      "Quiet, considered grey with the Rottweiler mark set proud across the chest.",
+    stock: { M: 2, L: 4, XL: 3, XXL: 3 },
+    blurb: STYLE_BLURB.chest,
   },
+
+  // ── GRAY ──────────────────────────────────────────────────────────────────
   {
-    slug: "the-legacy",
-    name: "The Legacy",
+    slug: "gray-shoulder",
+    name: "Gray Hoodie",
+    color: "Gray",
+    swatch: SWATCH.Gray,
+    style: "shoulder",
+    styleLabel: STYLE_LABELS.shoulder,
     category: "Golf",
-    color: "Midnight Navy",
-    swatch: "#1c2540",
-    price: 128,
-    image: "/images/product-navy.jpg",
+    price: PRICE,
+    image: "/images/p-gray-shoulder.jpg",
+    gallery: ["/images/p-gray-shoulder-back.jpg"],
     cleanImage: true,
-    available: true,
-    blurb:
-      "Deep navy with a tonal swing mark. The one you reach for on every round.",
+    stock: { L: 3 },
+    blurb: STYLE_BLURB.shoulder,
   },
   {
-    slug: "the-meridian",
-    name: "The Meridian",
+    slug: "gray-chest",
+    name: "Gray Hoodie",
+    color: "Gray",
+    swatch: SWATCH.Gray,
+    style: "chest",
+    styleLabel: STYLE_LABELS.chest,
     category: "Golf",
-    color: "Sky Blue",
-    swatch: "#5b7fc4",
-    price: 128,
-    image: "/images/color-blue-a.jpg",
-    available: true,
-    blurb: "An easy mid-blue for warm mornings and long afternoons on the course.",
+    price: PRICE,
+    image: "/images/p-gray-chest.jpg",
+    gallery: ["/images/p-gray-chest-back.jpg"],
+    cleanImage: true,
+    stock: { S: 5, M: 16, L: 6, XL: 4, XXL: 5 },
+    blurb: STYLE_BLURB.chest,
+  },
+
+  // ── LIGHT BLUE ──────────────────────────────────────────────────────────
+  {
+    slug: "light-blue-shoulder",
+    name: "Light Blue Hoodie",
+    color: "Light Blue",
+    swatch: SWATCH["Light Blue"],
+    style: "shoulder",
+    styleLabel: STYLE_LABELS.shoulder,
+    category: "Golf",
+    price: PRICE,
+    image: "/images/p-light-blue-shoulder.jpg",
+    gallery: ["/images/p-light-blue-shoulder-back.jpg"],
+    cleanImage: true,
+    stock: { M: 1, L: 1 },
+    blurb: STYLE_BLURB.shoulder,
   },
   {
-    slug: "the-sundown",
-    name: "The Sundown",
+    slug: "light-blue-chest",
+    name: "Light Blue Hoodie",
+    color: "Light Blue",
+    swatch: SWATCH["Light Blue"],
+    style: "chest",
+    styleLabel: STYLE_LABELS.chest,
     category: "Golf",
-    color: "Butter Yellow",
-    swatch: "#f2e9b8",
-    price: 128,
-    image: "/images/studio-hanger-yellow.jpg",
-    available: true,
-    blurb: "Soft butter yellow. Light on the shoulders, easy on the eye.",
+    price: PRICE,
+    image: "/images/p-light-blue-chest.jpg",
+    gallery: ["/images/p-light-blue-chest-back.jpg"],
+    cleanImage: true,
+    stock: { XS: 3, S: 2, M: 6, L: 10, XL: 5, XXL: 3 },
+    blurb: STYLE_BLURB.chest,
+  },
+
+  // ── NAVY ──────────────────────────────────────────────────────────────────
+  {
+    slug: "navy-shoulder",
+    name: "Navy Hoodie",
+    color: "Navy",
+    swatch: SWATCH.Navy,
+    style: "shoulder",
+    styleLabel: STYLE_LABELS.shoulder,
+    category: "Golf",
+    price: PRICE,
+    image: "/images/p-navy-shoulder.jpg",
+    gallery: ["/images/p-navy-shoulder-back.jpg"],
+    cleanImage: true,
+    stock: {}, // ZERO on hand — sold out
+    blurb: STYLE_BLURB.shoulder,
   },
   {
-    slug: "the-onyx",
-    name: "The Onyx",
+    slug: "navy-chest",
+    name: "Navy Hoodie",
+    color: "Navy",
+    swatch: SWATCH.Navy,
+    style: "chest",
+    styleLabel: STYLE_LABELS.chest,
     category: "Golf",
-    color: "Black",
-    swatch: "#111111",
-    price: 128,
-    image: "/images/rott-poster.png",
-    badge: "Coming Soon",
-    available: false,
-    blurb: "The mark, in its purest form. Coming soon.",
+    price: PRICE,
+    image: "/images/p-navy-chest.jpg",
+    gallery: ["/images/p-navy-chest-back.jpg"],
+    cleanImage: true,
+    stock: { L: 2, XL: 2 },
+    blurb: STYLE_BLURB.chest,
   },
 ];
 
+// ── Derived helpers ─────────────────────────────────────────────────────────
 export function getProduct(slug: string): Product | undefined {
   return PRODUCTS.find((p) => p.slug === slug);
+}
+
+export function totalStock(p: Product): number {
+  return SIZES.reduce((sum, s) => sum + (p.stock[s] ?? 0), 0);
+}
+
+export function isAvailable(p: Product): boolean {
+  return totalStock(p) > 0;
+}
+
+export function inStockSizes(p: Product): Size[] {
+  return SIZES.filter((s) => (p.stock[s] ?? 0) > 0);
+}
+
+// Display order of colours (matches Deven's list).
+const COLOR_ORDER: Color[] = ["Yellow", "Gray", "Light Blue", "Navy"];
+
+export const COLORS: Color[] = COLOR_ORDER.filter((c) =>
+  PRODUCTS.some((p) => p.color === c)
+);
+
+// The variant of a given colour in a given style (every combo exists today).
+export function getVariant(
+  color: Color,
+  style: LogoStyle
+): Product | undefined {
+  return PRODUCTS.find((p) => p.color === color && p.style === style);
 }
 
 // Shared copy used across every PDP. Kept deliberately generic until Deven
 // confirms final fabric / fit specs — no invented numbers.
 export const PRODUCT_DETAIL = {
   description:
-    "A lightweight performance hoodie built for the course and everywhere after it. The signature Rottweiler mark sits at the chest, with DEVEN scripted at the back hem. Designed to move the way you do.",
+    "A lightweight performance hoodie built for the course and everywhere after it, carrying the signature Rottweiler mark with DEVEN scripted down the back. Designed to move the way you do.",
   fit: "Tailored athletic fit — true to size. Premium performance fabric with natural four-way stretch and a soft, broken-in hand. Size up for a relaxed drape.",
   shipping:
-    "Ships within 5–7 business days. Easy returns — reach out within 30 days of delivery and we'll help.",
+    "Ships within 5–7 business days. Free shipping on all orders. No refunds — exchanges only. Reach out within 30 days of delivery and we'll arrange an exchange.",
 };
-
-export const SIZES = ["XS", "S", "M", "L", "XL", "XXL"] as const;
 
 // Preferred display order for categories as the brand expands beyond golf.
 const CATEGORY_ORDER: Category[] = ["Golf", "Training", "Tennis", "Lifestyle"];
 
-// Only the categories that actually have products, in display order. The shop
-// and nav use this — so new verticals appear automatically once tagged above,
-// and nothing empty is ever shown.
+// Only the categories that actually have products, in display order.
 export const CATEGORIES: Category[] = CATEGORY_ORDER.filter((c) =>
   PRODUCTS.some((p) => p.category === c)
 );

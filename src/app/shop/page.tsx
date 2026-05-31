@@ -4,13 +4,13 @@ import ShopBrowser from "./ShopBrowser";
 export const metadata: Metadata = {
   title: "Shop",
   description:
-    "Six pieces for the season. The DEVEN performance hoodie in every colourway — more arriving this fall.",
+    "The DEVEN performance hoodie — four colourways, two signature marks. Shop the collection.",
 };
 
 export default function ShopPage() {
   return (
     <>
-      <div className="h-20" />
+      <div className="h-28" />
 
       {/* Header */}
       <section className="bg-deven-linen pt-16 pb-10 lg:pt-24">
@@ -22,7 +22,7 @@ export default function ShopPage() {
             Shop
           </h1>
           <p className="mx-auto mt-4 max-w-md text-sm font-light leading-relaxed text-deven-gray">
-            Six pieces for the season. More arrive this fall.
+            The signature hoodie — four colourways, two marks.
           </p>
         </div>
       </section>

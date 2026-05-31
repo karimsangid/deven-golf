@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { SIZES } from "@/lib/products";
+import { SIZES, type Size } from "@/lib/products";
+import { PRODUCT_URL } from "@/lib/store";
 
 // ─────────────────────────────────────────────────────────────────────────
 // Size guide — standard athletic-fit hoodie measurements (inches).
@@ -19,11 +20,19 @@ const SIZE_GUIDE: { size: string; chest: string; length: string; sleeve: string 
   { size: "XXL", chest: "50–52", length: "31", sleeve: "35.5" },
 ];
 
-export default function ProductActions({ available }: { available: boolean }) {
-  const [size, setSize] = useState<string | null>(null);
-  const [reserved, setReserved] = useState(false);
-  const [error, setError] = useState(false);
+export default function ProductActions({
+  stock,
+  size,
+  onSizeChange,
+}: {
+  stock: Partial<Record<Size, number>>;
+  size: Size | null;
+  onSizeChange: (s: Size) => void;
+}) {
   const [guideOpen, setGuideOpen] = useState(false);
+
+  const stockOf = (s: Size) => stock[s] ?? 0;
+  const available = SIZES.some((s) => stockOf(s) > 0);
 
   // Close the guide on Escape; lock body scroll while it's open.
   useEffect(() => {
@@ -39,14 +48,6 @@ export default function ProductActions({ available }: { available: boolean }) {
     };
   }, [guideOpen]);
 
-  const onReserve = () => {
-    if (!size) {
-      setError(true);
-      return;
-    }
-    setReserved(true);
-  };
-
   if (!available) {
     return (
       <div className="mt-10">
@@ -54,13 +55,14 @@ export default function ProductActions({ available }: { available: boolean }) {
           disabled
           className="w-full cursor-not-allowed border border-deven-light-gray bg-transparent py-4 text-xs font-semibold tracking-[0.25em] text-deven-gray uppercase"
         >
-          Coming Soon
+          Sold Out
         </button>
         <p className="mt-4 text-center text-sm font-light text-deven-gray">
+          Out of stock in this style.{" "}
           <Link href="/#contact" className="gold-link text-deven-black">
             Join the list
           </Link>{" "}
-          to hear the moment it drops.
+          to hear when it&rsquo;s back.
         </p>
       </div>
     );
@@ -82,50 +84,54 @@ export default function ProductActions({ available }: { available: boolean }) {
       </div>
 
       <div className="mt-3 grid grid-cols-6 gap-2">
-        {SIZES.map((s) => (
-          <button
-            key={s}
-            onClick={() => {
-              setSize(s);
-              setError(false);
-            }}
-            className={`size-pill ${size === s ? "is-selected" : ""}`}
-          >
-            {s}
-          </button>
-        ))}
+        {SIZES.map((s) => {
+          const soldOut = stockOf(s) === 0;
+          return (
+            <button
+              key={s}
+              type="button"
+              disabled={soldOut}
+              aria-disabled={soldOut}
+              title={soldOut ? `${s} — sold out` : undefined}
+              onClick={() => {
+                if (soldOut) return;
+                onSizeChange(s);
+              }}
+              className={`size-pill ${size === s ? "is-selected" : ""} ${
+                soldOut ? "is-disabled" : ""
+              }`}
+            >
+              {s}
+            </button>
+          );
+        })}
       </div>
 
-      {error && (
-        <p className="mt-3 text-xs font-medium text-deven-green">
-          Please select a size.
-        </p>
-      )}
-
-      {!reserved ? (
-        <button
-          onClick={onReserve}
-          className="mt-6 w-full bg-deven-black py-4 text-xs font-semibold tracking-[0.25em] text-white uppercase transition-colors hover:bg-deven-green"
+      <a
+        href={PRODUCT_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-6 flex w-full items-center justify-center gap-2 bg-deven-black py-4 text-xs font-semibold tracking-[0.25em] text-white uppercase transition-colors hover:bg-deven-gold hover:text-deven-black"
+      >
+        Buy on the DEVEN Store
+        <svg
+          width="13"
+          height="13"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
         >
-          Pre-Order — {size ? `Size ${size}` : "Select a Size"}
-        </button>
-      ) : (
-        <div className="mt-6 border border-deven-green/30 bg-deven-cream px-5 py-4 text-center">
-          <p className="text-sm font-medium text-deven-green">
-            Reserved — {size}.
-          </p>
-          <p className="mt-1 text-sm font-light text-deven-gray">
-            We&rsquo;ll confirm your pre-order by email. {" "}
-            <Link href="/#contact" className="gold-link text-deven-black">
-              Leave your details
-            </Link>
-            .
-          </p>
-        </div>
-      )}
+          <path d="M7 17L17 7M9 7h8v8" />
+        </svg>
+      </a>
 
       <p className="mt-4 text-center text-xs font-light text-deven-gray">
-        Secure pre-order · Ships in 5–7 business days
+        Secure checkout on our store · Ships in 5–7 business days · Free
+        shipping on all orders
       </p>
 
       {/* ── SIZE GUIDE MODAL ── */}

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import type { Product } from "@/lib/products";
+import { type Product, isAvailable } from "@/lib/products";
 
 // ─────────────────────────────────────────────────────────────────────────
 // Premium PDP gallery — editorial, never gimmicky.
@@ -31,6 +31,7 @@ export default function ProductGallery({ product }: { product: Product }) {
   const hasImages = images.length > 0;
   const multi = images.length > 1;
   const current = images[active];
+  const soldOut = !isAvailable(product);
 
   // Lightbox: lock scroll + wire keyboard nav.
   useEffect(() => {
@@ -72,7 +73,7 @@ export default function ProductGallery({ product }: { product: Product }) {
   // No clean photo yet → quiet branded placeholder (keeps the grid premium).
   if (!hasImages) {
     return (
-      <div className="relative aspect-[4/3] overflow-hidden bg-deven-cream">
+      <div className="relative aspect-[4/5] overflow-hidden bg-deven-cream">
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
           <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full border border-deven-gold/40">
             <Image
@@ -84,12 +85,12 @@ export default function ProductGallery({ product }: { product: Product }) {
             />
           </div>
           <span className="text-[10px] font-semibold tracking-[0.25em] text-deven-gray/70 uppercase">
-            {product.available ? "Studio Photo Soon" : "Coming Soon"}
+            {soldOut ? "Sold Out" : "Studio Photo Soon"}
           </span>
         </div>
-        {product.badge && (
+        {soldOut && (
           <span className="absolute top-4 left-4 bg-deven-black px-4 py-1.5 text-[10px] font-semibold tracking-[0.2em] text-deven-gold uppercase">
-            {product.badge}
+            Sold Out
           </span>
         )}
       </div>
@@ -113,7 +114,7 @@ export default function ProductGallery({ product }: { product: Product }) {
                   : "opacity-70 ring-1 ring-deven-light-gray hover:opacity-100"
               }`}
             >
-              <Image src={src} alt="" fill sizes="80px" className="object-contain p-1.5" />
+              <Image src={src} alt="" fill sizes="80px" className="object-cover" />
             </button>
           ))}
         </div>
@@ -126,7 +127,7 @@ export default function ProductGallery({ product }: { product: Product }) {
           onMouseLeave={() => setZoom(false)}
           onMouseMove={onMove}
           onClick={() => setLightbox(true)}
-          className="group relative aspect-[4/3] cursor-zoom-in overflow-hidden bg-deven-cream"
+          className="group relative aspect-[4/5] cursor-zoom-in overflow-hidden bg-deven-cream"
         >
           <Image
             src={current}
@@ -138,12 +139,12 @@ export default function ProductGallery({ product }: { product: Product }) {
               transform: zoom ? "scale(2)" : "scale(1)",
               transformOrigin: origin,
             }}
-            className="object-contain p-4 transition-transform duration-200 ease-out will-change-transform"
+            className="object-cover transition-transform duration-200 ease-out will-change-transform"
           />
 
-          {product.badge && (
+          {soldOut && (
             <span className="absolute top-4 left-4 z-10 bg-deven-black px-4 py-1.5 text-[10px] font-semibold tracking-[0.2em] text-deven-gold uppercase">
-              {product.badge}
+              Sold Out
             </span>
           )}
 

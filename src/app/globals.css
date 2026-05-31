@@ -129,6 +129,30 @@ body {
   border-color: var(--color-deven-black);
   color: #fff;
 }
+.size-pill.is-disabled,
+.size-pill:disabled {
+  position: relative;
+  color: var(--color-deven-light-gray);
+  background: #fafafa;
+  border-color: #ededed;
+  cursor: not-allowed;
+  overflow: hidden;
+}
+.size-pill.is-disabled:hover {
+  border-color: #ededed;
+}
+/* faint diagonal strike to read as "out of stock" */
+.size-pill.is-disabled::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top right,
+    transparent calc(50% - 0.5px),
+    #e2e2e2 50%,
+    transparent calc(50% + 0.5px)
+  );
+}
 
 /* ── PDP accordion (native <details>) ── */
 .pdp-acc summary {
@@ -210,6 +234,140 @@ body {
 }
 .mobile-menu.open {
   transform: translateX(0);
+}
+
+/* ── Legal pages (privacy / terms) ── */
+.legal-h {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--color-deven-black);
+  margin-bottom: 0.6rem;
+}
+
+/* ── Announcement bar (fixed, above the nav) ── */
+.announce-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-deven-black);
+  color: var(--color-deven-cream);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(201, 160, 84, 0.25);
+}
+.announce-bar .dot {
+  color: var(--color-deven-gold);
+  margin: 0 0.6rem;
+}
+
+/* ── Colourway marquee (homepage) ── */
+.color-marquee-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+}
+.color-marquee {
+  display: flex;
+  width: max-content;
+  animation: color-marquee 42s linear infinite;
+}
+.color-marquee:hover {
+  animation-play-state: paused;
+}
+@keyframes color-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ── Scratch-to-win popup ── */
+.scratch-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background: rgba(10, 10, 10, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: scratch-fade 0.3s ease both;
+}
+@keyframes scratch-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.scratch-card {
+  position: relative;
+  width: 100%;
+  max-width: 24rem;
+  background: var(--color-deven-cream);
+  padding: 2.25rem 2rem 2rem;
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  animation: scratch-pop 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes scratch-pop {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.scratch-area {
+  position: relative;
+  margin: 1.25rem auto 0;
+  width: 100%;
+  height: 8.5rem;
+  border: 1px solid rgba(201, 160, 84, 0.4);
+  overflow: hidden;
+  user-select: none;
+  touch-action: none;
+}
+.scratch-area canvas {
+  position: absolute;
+  inset: 0;
+  cursor: grab;
+}
+.scratch-prize {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
 }
 
 /* ── Reduced motion ── */

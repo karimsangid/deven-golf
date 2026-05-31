@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Montserrat, Cormorant_Garamond } from "next/font/google";
 import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
+import ScratchPopup from "@/components/ScratchPopup";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -17,7 +19,7 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://deven-golf.vercel.app"),
+  metadataBase: new URL("https://devenbrand.shop"),
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",
@@ -45,8 +47,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: "DEVEN | Premium Golf Apparel — More Than a Game",
     description:
-      "Modern golf apparel with the signature Rottweiler logo. Shop the Madison Collection — six pieces for the season, more this fall.",
-    url: "https://deveneapen.com",
+      "Modern golf apparel with the signature Rottweiler logo. The performance hoodie — four colourways, two signature marks.",
+    url: "https://devenbrand.shop",
     siteName: "DEVEN",
     images: [
       {
@@ -90,8 +92,13 @@ export default function RootLayout({
       className={`${montserrat.variable} ${cormorant.variable} antialiased`}
     >
       <body>
+        <div className="announce-bar">
+          <span>Free Shipping on All Orders</span>
+        </div>
         <Nav />
         {children}
+        <Footer />
+        <ScratchPopup />
       </body>
     </html>
   );

@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { PRODUCTS } from "@/lib/products";
+import { PRODUCTS, isAvailable } from "@/lib/products";
+import ProductMedia from "./shop/ProductMedia";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -11,9 +12,9 @@ const jsonLd = {
   name: "DEVEN",
   slogan: "More Than a Game",
   description:
-    "Premium golf apparel featuring the signature Rottweiler logo. The Madison Collection — performance hoodies designed for the course and beyond.",
-  url: "https://deveneapen.com",
-  image: "https://deven-golf.vercel.app/images/logo.png",
+    "Premium golf apparel featuring the signature Rottweiler logo. Performance hoodies designed for the course and beyond.",
+  url: "https://devenbrand.shop",
+  image: "https://devenbrand.shop/images/logo.png",
   sameAs: ["https://instagram.com/shopdeven"],
   brand: {
     "@type": "Brand",
@@ -22,7 +23,26 @@ const jsonLd = {
   },
 };
 
-const featured = PRODUCTS.filter((p) => p.available).slice(0, 3);
+// Colourway marquee — the scrolling strip of every colour/mood. These are the
+// current on-disk shots; when the new ChatGPT colour images land, just swap the
+// filenames here (keep the count even for the seamless loop).
+const COLOR_MARQUEE = [
+  "/images/p-yellow-shoulder.jpg",
+  "/images/p-navy-chest.jpg",
+  "/images/p-gray-chest.jpg",
+  "/images/p-light-blue-shoulder.jpg",
+  "/images/p-yellow-chest.jpg",
+  "/images/p-gray-shoulder.jpg",
+  "/images/p-light-blue-chest.jpg",
+  "/images/p-navy-shoulder.jpg",
+];
+
+// Show the in-stock pieces that have a clean studio shot (placeholders stay off
+// the homepage so the front door always looks finished).
+const featured = PRODUCTS.filter((p) => p.cleanImage && isAvailable(p)).slice(
+  0,
+  3
+);
 
 export default function Home() {
   const [joined, setJoined] = useState(false);
@@ -59,8 +79,8 @@ export default function Home() {
       >
         <div className="absolute inset-0">
           <Image
-            src="/images/maryland-foursome.jpg"
-            alt="DEVEN golfers on a Maryland course at sunset"
+            src="/images/mens-lookbook.jpg"
+            alt="DEVEN golfers on the course in the signature hoodie"
             fill
             priority
             className="object-cover"
@@ -77,7 +97,7 @@ export default function Home() {
               width={112}
               height={112}
               priority
-              className="h-full w-full scale-110 object-cover"
+              className="h-full w-full object-cover"
             />
           </div>
 
@@ -130,7 +150,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── THE MADISON COLLECTION ── */}
+      {/* ── THE MADISON COLLECTION — its own signature line, separate from the
+            main hoodie lineup; logo / packaging imagery only ── */}
       <section
         id="collection"
         className="bg-deven-cream py-24 lg:py-32"
@@ -138,10 +159,10 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-2 lg:gap-20">
           <div className="reveal overflow-hidden">
             <Image
-              src="/images/madison-collection.jpg"
-              alt="The Madison Collection — models in DEVEN hoodies"
+              src="/images/premium-packaging.jpg"
+              alt="The Madison Collection — premium packaging with the signature mark"
               width={1200}
-              height={760}
+              height={1400}
               className="h-full w-full object-cover"
             />
           </div>
@@ -150,15 +171,15 @@ export default function Home() {
               The Madison Collection
             </span>
             <h2 className="mt-3 font-[family-name:var(--font-heading)] text-4xl font-light leading-snug text-deven-black sm:text-5xl">
-              Timeless style.
+              The signature line.
               <br />
-              Made for every swing.
+              Marked, boxed, delivered.
             </h2>
             <div className="my-6 h-px w-16 bg-deven-gold" />
             <p className="max-w-md text-base font-light leading-relaxed text-deven-gray">
-              A modern take on golf apparel — clean lines, premium performance
-              fabric, and the signature mark. Six pieces for the season, with
-              more arriving this fall.
+              A line apart — the pieces that carry the DEVEN mark, finished and
+              packaged to match. Held separate from the everyday lineup for the
+              moments that deserve it.
             </p>
             <Link
               href="/shop"
@@ -189,12 +210,10 @@ export default function Home() {
                 className="reveal group block"
               >
                 <div className="relative aspect-[4/5] overflow-hidden bg-deven-cream">
-                  <Image
-                    src={product.image}
-                    alt={`${product.name} — ${product.color}`}
-                    fill
+                  <ProductMedia
+                    product={product}
                     sizes="(min-width: 640px) 33vw, 100vw"
-                    className="object-contain p-5 transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                    imgClassName="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                   />
                 </div>
                 <div className="mt-4 text-center">
@@ -202,13 +221,46 @@ export default function Home() {
                     {product.name}
                   </h3>
                   <p className="mt-0.5 text-xs font-light tracking-wide text-deven-gray">
-                    {product.color}
+                    {product.styleLabel}
                   </p>
-                  <p className="mt-2 text-sm font-light text-deven-black">
-                    ${product.price}
-                  </p>
+                  {product.price != null && (
+                    <p className="mt-1.5 text-sm font-light text-deven-black">
+                      ${product.price}
+                    </p>
+                  )}
                 </div>
               </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── EVERY COLORWAY — marquee ── */}
+      <section className="overflow-hidden bg-deven-black py-20 lg:py-24">
+        <div className="reveal mx-auto mb-10 max-w-7xl px-6 text-center">
+          <span className="text-xs font-semibold tracking-[0.3em] text-deven-gold uppercase">
+            Every Colorway
+          </span>
+          <h2 className="mt-3 font-[family-name:var(--font-heading)] text-4xl font-light text-white sm:text-5xl">
+            Pick Your{" "}
+            <span className="font-medium italic text-deven-gold">Mood</span>
+          </h2>
+        </div>
+        <div className="color-marquee-mask relative overflow-hidden">
+          <div className="color-marquee gap-4 px-2">
+            {[...COLOR_MARQUEE, ...COLOR_MARQUEE].map((src, i) => (
+              <div
+                key={i}
+                className="relative h-72 w-52 flex-none overflow-hidden rounded-sm bg-deven-charcoal"
+              >
+                <Image
+                  src={src}
+                  alt=""
+                  fill
+                  sizes="208px"
+                  className="object-cover"
+                />
+              </div>
             ))}
           </div>
         </div>
@@ -290,6 +342,49 @@ export default function Home() {
               Contact
             </h2>
           </div>
+
+          {/* ── Address / phone / email ── */}
+          <div className="reveal mb-12 grid gap-8 border-y border-deven-light-gray py-8 text-center sm:grid-cols-3">
+            <div>
+              <span className="text-[10px] font-semibold tracking-[0.3em] text-deven-gold uppercase">
+                Visit
+              </span>
+              <a
+                href="https://maps.apple.com/place?address=1101%20Wootton%20Pkwy,%20Ste%20400,%20Rockville,%20MD%20%2020852,%20United%20States&coordinate=39.067724,-77.156966&name=1101%20Wootton%20Pkwy,%20Ste%20400&map=explore"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 block text-sm font-light leading-relaxed text-deven-gray transition-colors hover:text-deven-black"
+              >
+                1101 Wootton Parkway
+                <br />
+                Suite 400
+                <br />
+                Rockville, MD 20852
+              </a>
+            </div>
+            <div>
+              <span className="text-[10px] font-semibold tracking-[0.3em] text-deven-gold uppercase">
+                Call
+              </span>
+              <a
+                href="tel:+13017016226"
+                className="mt-2 block text-sm font-light text-deven-gray transition-colors hover:text-deven-black"
+              >
+                (301) 701-6226
+              </a>
+            </div>
+            <div>
+              <span className="text-[10px] font-semibold tracking-[0.3em] text-deven-gold uppercase">
+                Email
+              </span>
+              <a
+                href="mailto:info@devenbrand.shop"
+                className="mt-2 block text-sm font-light text-deven-gray transition-colors hover:text-deven-black"
+              >
+                info@devenbrand.shop
+              </a>
+            </div>
+          </div>
           {!sent ? (
             <form
               className="reveal space-y-5"
@@ -342,85 +437,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── FOOTER ── */}
-      <footer className="bg-deven-black py-16">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="grid gap-12 md:grid-cols-3">
-            <div>
-              <div className="flex items-center gap-3">
-                <Image
-                  src="/images/logo-icon.png"
-                  alt="DEVEN"
-                  width={36}
-                  height={36}
-                  className="object-contain"
-                />
-                <span className="font-[family-name:var(--font-heading)] text-xl tracking-[0.3em] text-white">
-                  DEVEN
-                </span>
-              </div>
-              <p className="mt-4 max-w-xs text-sm font-light leading-relaxed text-white/40">
-                Premium performance apparel with the signature Rottweiler mark.
-                More than a game.
-              </p>
-            </div>
-
-            <div>
-              <h4 className="mb-4 text-xs font-semibold tracking-[0.2em] text-deven-gold uppercase">
-                Explore
-              </h4>
-              <div className="flex flex-col gap-2">
-                {[
-                  { label: "Home", href: "/" },
-                  { label: "Shop", href: "/shop" },
-                  { label: "Collection", href: "/#collection" },
-                  { label: "Contact", href: "/#contact" },
-                ].map((link) => (
-                  <Link
-                    key={link.label}
-                    href={link.href}
-                    className="gold-link w-fit text-sm font-light text-white/50 transition-colors hover:text-white"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h4 className="mb-4 text-xs font-semibold tracking-[0.2em] text-deven-gold uppercase">
-                Follow
-              </h4>
-              <a
-                href="https://instagram.com/shopdeven"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-3 text-sm font-light text-white/50 transition-colors hover:text-white"
-              >
-                <svg
-                  className="h-5 w-5 transition-colors group-hover:text-deven-gold"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                </svg>
-                @shopdeven
-              </a>
-            </div>
-          </div>
-
-          <div className="mt-16 border-t border-white/10 pt-8">
-            <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-              <p className="text-xs font-light text-white/30">
-                &copy; {new Date().getFullYear()} DEVEN. All Rights Reserved.
-              </p>
-              <p className="text-xs font-light text-white/20">
-                Created by Hummus Development &middot; 2026
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
     </>
   );
 }

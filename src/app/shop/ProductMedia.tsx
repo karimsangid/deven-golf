@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { Product } from "@/lib/products";
+import { type Product, isAvailable } from "@/lib/products";
 
 // Drops inside a `relative bg-deven-cream` container. Shows the studio photo
 // when we have a clean one; otherwise a quiet branded placeholder so the grid
@@ -15,11 +15,11 @@ export default function ProductMedia({
   imgClassName?: string;
   priority?: boolean;
 }) {
-  if (product.cleanImage) {
+  if (product.cleanImage && product.image) {
     return (
       <Image
         src={product.image}
-        alt={`${product.name} — ${product.color}`}
+        alt={`${product.name} — ${product.styleLabel}`}
         fill
         priority={priority}
         sizes={sizes}
@@ -40,7 +40,7 @@ export default function ProductMedia({
         />
       </div>
       <span className="text-[10px] font-semibold tracking-[0.25em] text-deven-gray/70 uppercase">
-        {product.available ? "Studio Photo Soon" : "Coming Soon"}
+        {isAvailable(product) ? "Studio Photo Soon" : "Sold Out"}
       </span>
     </div>
   );

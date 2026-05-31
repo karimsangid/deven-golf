@@ -1,0 +1,76 @@
+{
+  "_note": "DEVEN live stock. Mirrors the 107-unit launch inventory. recordOrder() decrements these counts. Edit lowStockThreshold to change when alerts fire.",
+  "lowStockThreshold": 3,
+  "updatedAt": "2026-05-30",
+  "skus": {
+    "yellow-shoulder": {
+      "name": "Yellow Hoodie",
+      "style": "Small Shoulder Logo",
+      "sizes": {
+        "M": 8,
+        "L": 13
+      }
+    },
+    "yellow-chest": {
+      "name": "Yellow Hoodie",
+      "style": "Big Chest Logo",
+      "sizes": {
+        "M": 2,
+        "L": 4,
+        "XL": 3,
+        "XXL": 3
+      }
+    },
+    "gray-shoulder": {
+      "name": "Gray Hoodie",
+      "style": "Small Shoulder Logo",
+      "sizes": {
+        "L": 3
+      }
+    },
+    "gray-chest": {
+      "name": "Gray Hoodie",
+      "style": "Big Chest Logo",
+      "sizes": {
+        "S": 5,
+        "M": 16,
+        "L": 6,
+        "XL": 4,
+        "XXL": 5
+      }
+    },
+    "light-blue-shoulder": {
+      "name": "Light Blue Hoodie",
+      "style": "Small Shoulder Logo",
+      "sizes": {
+        "M": 1,
+        "L": 1
+      }
+    },
+    "light-blue-chest": {
+      "name": "Light Blue Hoodie",
+      "style": "Big Chest Logo",
+      "sizes": {
+        "XS": 3,
+        "S": 2,
+        "M": 6,
+        "L": 10,
+        "XL": 5,
+        "XXL": 3
+      }
+    },
+    "navy-shoulder": {
+      "name": "Navy Hoodie",
+      "style": "Small Shoulder Logo",
+      "sizes": {}
+    },
+    "navy-chest": {
+      "name": "Navy Hoodie",
+      "style": "Big Chest Logo",
+      "sizes": {
+        "L": 2,
+        "XL": 2
+      }
+    }
+  }
+}

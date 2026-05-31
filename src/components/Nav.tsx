@@ -29,7 +29,7 @@ export default function Nav() {
 
   return (
     <nav
-      className={`nav-glass fixed top-0 left-0 right-0 z-50 ${scrolled ? "scrolled" : ""}`}
+      className={`nav-glass fixed top-9 left-0 right-0 z-50 ${scrolled ? "scrolled" : ""}`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-3">
@@ -60,6 +60,12 @@ export default function Nav() {
               {item.label}
             </Link>
           ))}
+          <Link
+            href="/account"
+            className="gold-link text-sm font-medium tracking-wider text-white/80 uppercase transition-colors hover:text-white"
+          >
+            Sign In
+          </Link>
           <Link
             href="/shop"
             className="bg-deven-gold px-6 py-2.5 text-xs font-semibold tracking-[0.2em] text-deven-black uppercase transition-colors hover:bg-deven-gold-light"
@@ -104,6 +110,13 @@ export default function Nav() {
             {item.label}
           </Link>
         ))}
+        <Link
+          href="/account"
+          onClick={() => setMenuOpen(false)}
+          className="font-[family-name:var(--font-heading)] text-3xl font-light tracking-[0.2em] text-white uppercase"
+        >
+          Sign In
+        </Link>
         <Link
           href="/shop"
           onClick={() => setMenuOpen(false)}
