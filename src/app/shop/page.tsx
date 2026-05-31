@@ -22,17 +22,14 @@ export default function ShopPage() {
             Shop
           </h1>
           <p className="mx-auto mt-4 max-w-md text-sm font-light leading-relaxed text-deven-gray">
-            The signature hoodie — four colourways, two marks.
+            Two distinct lines — the bold Signature crest and the understated
+            Madison Collection.
           </p>
         </div>
       </section>
 
-      {/* Grid + category filter */}
-      <section className="bg-deven-linen pb-28">
-        <div className="mx-auto max-w-7xl px-6">
-          <ShopBrowser />
-        </div>
-      </section>
+      {/* Two full-bleed collection sections (Signature = light, Madison = dark) */}
+      <ShopBrowser />
     </>
   );
 }

@@ -358,7 +358,7 @@ body {
 .scratch-area canvas {
   position: absolute;
   inset: 0;
-  cursor: grab;
+  cursor: crosshair;
 }
 .scratch-prize {
   position: absolute;

@@ -49,10 +49,20 @@ export default function ScratchPopup() {
     if (!parent) return;
 
     const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    // Use clientWidth/Height (layout content-box) — unlike getBoundingClientRect
+    // it ignores the card's pop-in scale() transform, so the foil isn't locked
+    // a few % small (which left it off-centre).
     const w = parent.clientWidth;
     const h = parent.clientHeight;
-    canvas.width = w * ratio;
-    canvas.height = h * ratio;
+    canvas.width = Math.round(w * ratio);
+    canvas.height = Math.round(h * ratio);
+    // Lock the *display* size too. A canvas with only width/height attributes is
+    // a replaced element, so `inset:0` won't stretch it on a hi-dpi / scaled
+    // (125–150%) PC display — it renders oversized + clipped, which is why the
+    // scratch landed off-centre. Pinning the CSS size makes the foil cover the
+    // panel exactly and the scratch land under the cursor.
+    canvas.style.width = `${w}px`;
+    canvas.style.height = `${h}px`;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     ctx.scale(ratio, ratio);
@@ -80,7 +90,12 @@ export default function ScratchPopup() {
 
     const pos = (e: PointerEvent) => {
       const r = canvas.getBoundingClientRect();
-      return { x: e.clientX - r.left, y: e.clientY - r.top };
+      // Normalise to the canvas's logical (CSS-pixel) space so the scratch lands
+      // exactly under the cursor regardless of display scaling.
+      return {
+        x: (e.clientX - r.left) * (w / r.width),
+        y: (e.clientY - r.top) * (h / r.height),
+      };
     };
 
     const clearedPct = () => {
@@ -106,31 +121,50 @@ export default function ScratchPopup() {
       last = p;
     };
 
+    let moves = 0;
+    const maybeReveal = () => {
+      if (clearedPct() > 0.45) setRevealed(true);
+    };
+
     const down = (e: PointerEvent) => {
       drawing = true;
       last = null;
       scratch(pos(e));
-      canvas.setPointerCapture(e.pointerId);
+      try {
+        canvas.setPointerCapture(e.pointerId);
+      } catch {
+        /* ignore */
+      }
     };
     const move = (e: PointerEvent) => {
-      if (!drawing) return;
+      // On a PC the foil scratches itself as the mouse trails over it — no need
+      // to hold the button down. Touch still needs a press-and-drag (no hover).
+      const hovering = e.pointerType === "mouse";
+      if (!drawing && !hovering) return;
       scratch(pos(e));
+      if (++moves % 6 === 0) maybeReveal();
     };
     const up = () => {
       drawing = false;
       last = null;
-      if (clearedPct() > 0.45) setRevealed(true);
+      maybeReveal();
+    };
+    // Reset the trail when the cursor leaves so re-entry doesn't draw one long
+    // line across the panel.
+    const leave = () => {
+      drawing = false;
+      last = null;
     };
 
     canvas.addEventListener("pointerdown", down);
     canvas.addEventListener("pointermove", move);
     canvas.addEventListener("pointerup", up);
-    canvas.addEventListener("pointerleave", up);
+    canvas.addEventListener("pointerleave", leave);
     return () => {
       canvas.removeEventListener("pointerdown", down);
       canvas.removeEventListener("pointermove", move);
       canvas.removeEventListener("pointerup", up);
-      canvas.removeEventListener("pointerleave", up);
+      canvas.removeEventListener("pointerleave", leave);
     };
   }, [open, revealed]);
 

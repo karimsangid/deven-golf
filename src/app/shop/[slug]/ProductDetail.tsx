@@ -5,6 +5,7 @@ import {
   PRODUCTS,
   getVariant,
   COLORS,
+  COLOR_LABELS,
   STYLE_LABELS,
   PRODUCT_DETAIL,
   isAvailable,
@@ -127,7 +128,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
         {/* Colourways — switch ONLY the colour, keep the chosen logo style */}
         <div className="mt-8">
           <span className="text-xs font-semibold tracking-[0.2em] text-deven-black uppercase">
-            Colour — {color}
+            Colour — {COLOR_LABELS[color]}
           </span>
           <div className="mt-3 flex flex-wrap items-center gap-3">
             {COLORS.map((c) => {
@@ -139,8 +140,8 @@ export default function ProductDetail({ slug }: { slug: string }) {
                   key={c}
                   type="button"
                   onClick={() => pickColor(c)}
-                  title={`${c} — ${STYLE_LABELS[style]}`}
-                  aria-label={`${c} — ${STYLE_LABELS[style]}`}
+                  title={`${COLOR_LABELS[c]} — ${STYLE_LABELS[style]}`}
+                  aria-label={`${COLOR_LABELS[c]} — ${STYLE_LABELS[style]}`}
                   aria-pressed={isCurrent}
                   className={`h-9 w-9 rounded-full ring-offset-2 ring-offset-deven-linen transition-all ${
                     isCurrent

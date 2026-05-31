@@ -23,26 +23,58 @@ const jsonLd = {
   },
 };
 
-// Colourway marquee — the scrolling strip of every colour/mood. These are the
-// current on-disk shots; when the new ChatGPT colour images land, just swap the
-// filenames here (keep the count even for the seamless loop).
+// Colourway marquee — the scrolling strip of every colour/mood, all on-model
+// campaign frames (no laid-out flats). Order is deliberately shuffled so no two
+// neighbours share a colour and there's no A-B-A-B / palindrome rhythm; the
+// first and last differ too, so the seamless loop seam doesn't repeat a colour.
 const COLOR_MARQUEE = [
-  "/images/p-yellow-shoulder.jpg",
-  "/images/p-navy-chest.jpg",
-  "/images/p-gray-chest.jpg",
-  "/images/p-light-blue-shoulder.jpg",
-  "/images/p-yellow-chest.jpg",
-  "/images/p-gray-shoulder.jpg",
-  "/images/p-light-blue-chest.jpg",
-  "/images/p-navy-shoulder.jpg",
+  "/images/model-yellow-chest-woman.jpg", // yellow · woman
+  "/images/model-gray-madison-man.jpg", //   gray · man
+  "/images/marquee-navy-man.jpg", //         navy · man
+  "/images/model-lblue-chest-man.jpg", //    blue · man
+  "/images/hero-onmodel-gray.jpg", //        gray · man
+  "/images/marquee-yellow-man.jpg", //       yellow · man
+  "/images/lookbook-navy-woman.jpg", //      navy · woman
+  "/images/model-lblue-madison-woman.jpg", //blue · woman
+  "/images/model-gray-madison-woman.jpg", // gray · woman
+  "/images/hero-duo-gray-yellow.jpg", //     duo
+  "/images/marquee-navy-woman.jpg", //       navy · woman
+  "/images/model-gray-madison-man2.jpg", //  gray · man
+  "/images/marquee-lblue-man.jpg", //        blue · man
+  "/images/model-gray-madison-woman2.jpg", //gray · woman
 ];
 
-// Show the in-stock pieces that have a clean studio shot (placeholders stay off
-// the homepage so the front door always looks finished).
-const featured = PRODUCTS.filter((p) => p.cleanImage && isAvailable(p)).slice(
-  0,
-  3
-);
+// On-model lookbook — real campaign frames of the signature hoodie. Add entries
+// here as new full-res on-model shots land (one object per shot).
+const LOOKBOOK_SHOTS = [
+  {
+    src: "/images/model-gray-madison-man.jpg",
+    alt: "A golfer on the course in the DEVEN Silver Oak Madison Collection hoodie",
+  },
+  {
+    src: "/images/model-yellow-chest-woman.jpg",
+    alt: "A golfer beside the cart in the DEVEN Peanut Cream hoodie",
+  },
+  {
+    src: "/images/lookbook-navy-woman.jpg",
+    alt: "A golfer on the fairway in the DEVEN Georgia Blue hoodie",
+  },
+  {
+    src: "/images/model-lblue-chest-man.jpg",
+    alt: "A golfer reading the green in the DEVEN Diesel Sky hoodie",
+  },
+  {
+    src: "/images/model-gray-madison-woman.jpg",
+    alt: "A golfer at golden hour in the DEVEN Silver Oak Madison Collection hoodie",
+  },
+];
+
+// Show in-stock pieces shot on a model (the people frames), so the homepage
+// always leads with a real campaign image — never a laid-out studio flat.
+const featured = PRODUCTS.filter(
+  (p) =>
+    isAvailable(p) && /\/(model-|hero-onmodel|lookbook-)/.test(p.image)
+).slice(0, 3);
 
 export default function Home() {
   const [joined, setJoined] = useState(false);
@@ -75,20 +107,20 @@ export default function Home() {
       {/* ── HERO — More Than a Game ── */}
       <section
         id="home"
-        className="relative flex min-h-screen items-center justify-center overflow-hidden"
+        className="relative flex min-h-screen items-end justify-center overflow-hidden"
       >
         <div className="absolute inset-0">
           <Image
-            src="/images/mens-lookbook.jpg"
-            alt="DEVEN golfers on the course in the signature hoodie"
+            src="/images/hero-duo-gray-yellow.jpg"
+            alt="Two golfers at golden hour in DEVEN — the Silver Oak Madison hoodie and the Peanut Cream hoodie"
             fill
             priority
-            className="object-cover"
+            className="object-cover object-top"
           />
-          <div className="absolute inset-0 bg-black/55" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/25" />
         </div>
 
-        <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-6 text-center">
+        <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-6 pb-20 text-center lg:pb-28">
           {/* The mark — Rottweiler, green eyes — framed so it reads on the dark hero */}
           <div className="flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border border-deven-gold/50 sm:h-28 sm:w-28">
             <Image
@@ -123,6 +155,37 @@ export default function Home() {
           >
             Shop the Collection
           </Link>
+        </div>
+      </section>
+
+      {/* ── EVERY COLORWAY — marquee (Pick Your Mood, near the top) ── */}
+      <section className="overflow-hidden bg-deven-black py-20 lg:py-24">
+        <div className="reveal mx-auto mb-10 max-w-7xl px-6 text-center">
+          <span className="text-xs font-semibold tracking-[0.3em] text-deven-gold uppercase">
+            Every Colorway
+          </span>
+          <h2 className="mt-3 font-[family-name:var(--font-heading)] text-4xl font-light text-white sm:text-5xl">
+            Pick Your{" "}
+            <span className="font-medium italic text-deven-gold">Mood</span>
+          </h2>
+        </div>
+        <div className="color-marquee-mask relative overflow-hidden">
+          <div className="color-marquee gap-4 px-2">
+            {[...COLOR_MARQUEE, ...COLOR_MARQUEE].map((src, i) => (
+              <div
+                key={i}
+                className="relative h-72 w-52 flex-none overflow-hidden rounded-sm bg-deven-charcoal"
+              >
+                <Image
+                  src={src}
+                  alt=""
+                  fill
+                  sizes="208px"
+                  className="object-cover"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -235,60 +298,31 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── EVERY COLORWAY — marquee ── */}
-      <section className="overflow-hidden bg-deven-black py-20 lg:py-24">
-        <div className="reveal mx-auto mb-10 max-w-7xl px-6 text-center">
-          <span className="text-xs font-semibold tracking-[0.3em] text-deven-gold uppercase">
-            Every Colorway
+      {/* ── LOOKBOOK — real on-model campaign frames ── */}
+      <section className="bg-deven-linen py-24 lg:py-32">
+        <div className="reveal mx-auto mb-12 max-w-7xl px-6 text-center">
+          <span className="text-[10px] font-semibold tracking-[0.5em] text-deven-gold uppercase">
+            On the Course
           </span>
-          <h2 className="mt-3 font-[family-name:var(--font-heading)] text-4xl font-light text-white sm:text-5xl">
-            Pick Your{" "}
-            <span className="font-medium italic text-deven-gold">Mood</span>
+          <h2 className="mt-4 font-[family-name:var(--font-heading)] text-3xl font-light text-deven-black sm:text-4xl lg:text-5xl">
+            The Lookbook
           </h2>
         </div>
-        <div className="color-marquee-mask relative overflow-hidden">
-          <div className="color-marquee gap-4 px-2">
-            {[...COLOR_MARQUEE, ...COLOR_MARQUEE].map((src, i) => (
-              <div
-                key={i}
-                className="relative h-72 w-52 flex-none overflow-hidden rounded-sm bg-deven-charcoal"
-              >
-                <Image
-                  src={src}
-                  alt=""
-                  fill
-                  sizes="208px"
-                  className="object-cover"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── LOOKBOOK ── */}
-      <section className="bg-deven-linen pb-24 lg:pb-32">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="grid gap-4 sm:grid-cols-3">
-            {[
-              { src: "/images/mens-lookbook.jpg", alt: "Men's hoodie on the course" },
-              { src: "/images/women-putting.jpg", alt: "Putting with the Rottweiler flag" },
-              { src: "/images/women-lifestyle.jpg", alt: "On the course in DEVEN hoodies" },
-            ].map((img, i) => (
-              <div
-                key={i}
-                className="reveal relative aspect-[3/4] overflow-hidden"
-              >
-                <Image
-                  src={img.src}
-                  alt={img.alt}
-                  fill
-                  sizes="(min-width: 640px) 33vw, 100vw"
-                  className="object-cover"
-                />
-              </div>
-            ))}
-          </div>
+        <div className="mx-auto flex max-w-7xl flex-wrap justify-center gap-4 px-6">
+          {LOOKBOOK_SHOTS.map((shot, i) => (
+            <div
+              key={i}
+              className="reveal relative aspect-[4/5] w-full max-w-sm overflow-hidden rounded-sm sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.75rem)]"
+            >
+              <Image
+                src={shot.src}
+                alt={shot.alt}
+                fill
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+          ))}
         </div>
       </section>
 

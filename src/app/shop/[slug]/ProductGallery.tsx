@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { type Product, isAvailable } from "@/lib/products";
+import { type Product, isAvailable, COLOR_LABELS } from "@/lib/products";
 
 // ─────────────────────────────────────────────────────────────────────────
 // Premium PDP gallery — editorial, never gimmicky.
@@ -131,7 +131,7 @@ export default function ProductGallery({ product }: { product: Product }) {
         >
           <Image
             src={current}
-            alt={`${product.name} — ${product.color}`}
+            alt={`${product.name} — ${COLOR_LABELS[product.color]}`}
             fill
             priority
             sizes="(min-width: 1024px) 45vw, 100vw"
@@ -211,7 +211,7 @@ export default function ProductGallery({ product }: { product: Product }) {
           >
             <Image
               src={current}
-              alt={`${product.name} — ${product.color}`}
+              alt={`${product.name} — ${COLOR_LABELS[product.color]}`}
               fill
               sizes="92vw"
               className="object-contain"
