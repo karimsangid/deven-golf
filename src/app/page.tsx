@@ -27,21 +27,22 @@ const jsonLd = {
 // campaign frames (no laid-out flats). Order is deliberately shuffled so no two
 // neighbours share a colour and there's no A-B-A-B / palindrome rhythm; the
 // first and last differ too, so the seamless loop seam doesn't repeat a colour.
+// Each tile links to the shop variant it depicts (Pick Your Mood → buy).
 const COLOR_MARQUEE = [
-  "/images/model-yellow-chest-woman.jpg", // yellow · woman
-  "/images/model-gray-madison-man.jpg", //   gray · man
-  "/images/marquee-navy-man.jpg", //         navy · man
-  "/images/model-lblue-chest-man.jpg", //    blue · man
-  "/images/hero-onmodel-gray.jpg", //        gray · man
-  "/images/marquee-yellow-man.jpg", //       yellow · man
-  "/images/lookbook-navy-woman.jpg", //      navy · woman
-  "/images/model-lblue-madison-woman.jpg", //blue · woman
-  "/images/model-gray-madison-woman.jpg", // gray · woman
-  "/images/hero-duo-gray-yellow.jpg", //     duo
-  "/images/marquee-navy-woman.jpg", //       navy · woman
-  "/images/model-gray-madison-man2.jpg", //  gray · man
-  "/images/marquee-lblue-man.jpg", //        blue · man
-  "/images/model-gray-madison-woman2.jpg", //gray · woman
+  { src: "/images/model-yellow-chest-woman.jpg", slug: "yellow-chest" }, //   yellow · woman
+  { src: "/images/model-gray-madison-man.jpg", slug: "gray-shoulder" }, //    gray · man
+  { src: "/images/marquee-navy-man.jpg", slug: "navy-chest" }, //            navy · man
+  { src: "/images/model-lblue-chest-man.jpg", slug: "light-blue-chest" }, //  blue · man
+  { src: "/images/hero-onmodel-gray.jpg", slug: "gray-chest" }, //            gray · man
+  { src: "/images/marquee-yellow-man.jpg", slug: "yellow-chest" }, //         yellow · man
+  { src: "/images/lookbook-navy-woman.jpg", slug: "navy-chest" }, //          navy · woman
+  { src: "/images/model-lblue-madison-woman.jpg", slug: "light-blue-shoulder" }, // blue · woman
+  { src: "/images/model-gray-madison-woman.jpg", slug: "gray-shoulder" }, //  gray · woman
+  { src: "/images/hero-duo-gray-yellow.jpg", slug: "gray-shoulder" }, //      duo
+  { src: "/images/marquee-navy-woman.jpg", slug: "navy-chest" }, //           navy · woman
+  { src: "/images/model-gray-madison-man2.jpg", slug: "gray-shoulder" }, //   gray · man
+  { src: "/images/marquee-lblue-man.jpg", slug: "light-blue-chest" }, //      blue · man
+  { src: "/images/model-gray-madison-woman2.jpg", slug: "gray-shoulder" }, // gray · woman
 ];
 
 // On-model lookbook — real campaign frames of the signature hoodie. Add entries
@@ -175,19 +176,24 @@ export default function Home() {
         </div>
         <div className="color-marquee-mask relative overflow-hidden">
           <div className="color-marquee gap-4 px-2">
-            {[...COLOR_MARQUEE, ...COLOR_MARQUEE].map((src, i) => (
-              <div
+            {[...COLOR_MARQUEE, ...COLOR_MARQUEE].map((tile, i) => (
+              <Link
                 key={i}
-                className="relative h-72 w-52 flex-none overflow-hidden rounded-sm bg-deven-charcoal"
+                href={`/shop/${tile.slug}`}
+                aria-label="Shop this piece"
+                className="group relative h-72 w-52 flex-none overflow-hidden rounded-sm bg-deven-charcoal"
               >
                 <Image
-                  src={src}
+                  src={tile.src}
                   alt=""
                   fill
                   sizes="208px"
-                  className="object-cover"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-              </div>
+                <span className="absolute inset-x-0 bottom-0 flex items-center justify-center bg-gradient-to-t from-black/70 to-transparent pb-3 pt-8 text-[10px] font-semibold tracking-[0.3em] text-white uppercase opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  Shop
+                </span>
+              </Link>
             ))}
           </div>
         </div>

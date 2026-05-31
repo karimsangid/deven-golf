@@ -184,21 +184,24 @@ export const PRODUCTS: Product[] = [
   },
 
   // ── NAVY ──────────────────────────────────────────────────────────────────
-  {
-    slug: "navy-shoulder",
-    name: "Georgia Blue",
-    color: "Navy",
-    swatch: SWATCH.Navy,
-    style: "shoulder",
-    styleLabel: STYLE_LABELS.shoulder,
-    category: "Golf",
-    price: PRICE,
-    image: "/images/madison-navy-shoulder-dark.jpg",
-    gallery: [],
-    cleanImage: true,
-    stock: {}, // ZERO on hand — sold out
-    blurb: STYLE_BLURB.shoulder,
-  },
+  // Georgia Blue MADISON (navy·shoulder) pulled from the collection per Deven
+  // (2026-05-31): it was sold out and only had a flat-lay. Re-add this block
+  // once the new Georgia Blue small-dog render lands.
+  // {
+  //   slug: "navy-shoulder",
+  //   name: "Georgia Blue",
+  //   color: "Navy",
+  //   swatch: SWATCH.Navy,
+  //   style: "shoulder",
+  //   styleLabel: STYLE_LABELS.shoulder,
+  //   category: "Golf",
+  //   price: PRICE,
+  //   image: "/images/madison-navy-shoulder-dark.jpg",
+  //   gallery: [],
+  //   cleanImage: true,
+  //   stock: {}, // ZERO on hand — sold out
+  //   blurb: STYLE_BLURB.shoulder,
+  // },
   {
     slug: "navy-chest",
     name: "Georgia Blue",
