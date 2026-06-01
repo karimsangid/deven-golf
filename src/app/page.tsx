@@ -30,17 +30,13 @@ const jsonLd = {
 // Each tile links to the shop variant it depicts (Pick Your Mood → buy).
 const COLOR_MARQUEE = [
   { src: "/images/model-yellow-chest-woman.jpg", slug: "yellow-chest" }, //   yellow · woman
-  { src: "/images/model-gray-madison-man.jpg", slug: "gray-shoulder" }, //    gray · man
   { src: "/images/marquee-navy-man.jpg", slug: "navy-chest" }, //            navy · man
   { src: "/images/model-lblue-chest-man.jpg", slug: "light-blue-chest" }, //  blue · man
-  { src: "/images/hero-onmodel-gray.jpg", slug: "gray-chest" }, //            gray · man
   { src: "/images/marquee-yellow-man.jpg", slug: "yellow-chest" }, //         yellow · man
   { src: "/images/lookbook-navy-woman.jpg", slug: "navy-chest" }, //          navy · woman
   { src: "/images/model-lblue-madison-woman.jpg", slug: "light-blue-shoulder" }, // blue · woman
   { src: "/images/model-gray-madison-woman.jpg", slug: "gray-shoulder" }, //  gray · woman
-  { src: "/images/hero-duo-gray-yellow.jpg", slug: "gray-shoulder" }, //      duo
   { src: "/images/marquee-navy-woman.jpg", slug: "navy-chest" }, //           navy · woman
-  { src: "/images/model-gray-madison-man2.jpg", slug: "gray-shoulder" }, //   gray · man
   { src: "/images/marquee-lblue-man.jpg", slug: "light-blue-chest" }, //      blue · man
   { src: "/images/model-gray-madison-woman2.jpg", slug: "gray-shoulder" }, // gray · woman
 ];
@@ -49,8 +45,8 @@ const COLOR_MARQUEE = [
 // here as new full-res on-model shots land (one object per shot).
 const LOOKBOOK_SHOTS = [
   {
-    src: "/images/model-gray-madison-man.jpg",
-    alt: "A golfer on the course in the DEVEN Silver Oak Madison Collection hoodie",
+    src: "/images/model-gray-madison-woman2.jpg",
+    alt: "A golfer at golden hour in the DEVEN Silver Oak Madison Collection hoodie",
   },
   {
     src: "/images/model-yellow-chest-woman.jpg",
@@ -67,10 +63,6 @@ const LOOKBOOK_SHOTS = [
   {
     src: "/images/model-gray-madison-woman.jpg",
     alt: "A golfer at golden hour in the DEVEN Silver Oak Madison Collection hoodie",
-  },
-  {
-    src: "/images/hero-duo-gray-yellow.jpg",
-    alt: "Two golfers at golden hour in DEVEN — the Silver Oak Madison hoodie and the Peanut Cream hoodie",
   },
 ];
 

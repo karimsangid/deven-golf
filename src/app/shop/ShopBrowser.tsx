@@ -8,6 +8,7 @@ import {
   type Product,
 } from "@/lib/products";
 import ProductMedia from "./ProductMedia";
+import Image from "next/image";
 
 // Card — shared between the two collections. `dark` flips it for the Madison
 // section so the two lines read as visually distinct.
@@ -103,6 +104,17 @@ export default function ShopBrowser() {
       {/* ── Madison Collection — understated shoulder mark, dark & elevated ── */}
       <section className="madison-section bg-deven-black py-24">
         <div className="mx-auto max-w-7xl px-6">
+          {/* Face of the collection — the real campaign group shot */}
+          <div className="relative mb-10 aspect-[16/7] w-full overflow-hidden rounded-2xl">
+            <Image
+              src="/images/campaign-group.jpg"
+              alt="The DEVEN Madison Collection — friends together on the course at golden hour"
+              fill
+              priority={false}
+              sizes="(min-width: 1280px) 1280px, 100vw"
+              className="object-cover object-top"
+            />
+          </div>
           <div className="mb-12 text-center">
             <span className="text-xs font-semibold tracking-[0.35em] text-deven-gold uppercase">
               Madison Collection

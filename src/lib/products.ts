@@ -129,11 +129,9 @@ export const PRODUCTS: Product[] = [
     styleLabel: STYLE_LABELS.shoulder,
     category: "Golf",
     price: PRICE,
-    image: "/images/model-gray-madison-man.jpg",
+    image: "/images/model-gray-madison-woman.jpg",
     gallery: [
       "/images/ghost-gray-madison.jpg",
-      "/images/model-gray-madison-woman.jpg",
-      "/images/model-gray-madison-man2.jpg",
       "/images/model-gray-madison-woman2.jpg",
     ],
     cleanImage: true,
