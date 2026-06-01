@@ -69,7 +69,7 @@ const SWATCH: Record<Color, string> = {
   Yellow: "#efe6c4", // butter cream
   Gray: "#b7babf", // soft cool gray
   "Light Blue": "#8fa1c2", // steel / periwinkle
-  Navy: "#2a3450", // deep slate navy
+  Navy: "#6c7a98", // Georgia Blue — dusty cornflower (real garment)
 };
 
 // ── Colourway display names (branding) ──────────────────────────────────────
