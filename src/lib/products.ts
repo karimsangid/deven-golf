@@ -97,8 +97,11 @@ export const PRODUCTS: Product[] = [
     // The yellow Madison has neither yet, so it shows the branded placeholder
     // (cleanImage:false) until the 3D render lands. Do NOT point this back at
     // a flat-lay. (madison-yellow-shoulder-dark.jpg was a flat-lay — retired.)
-    image: "/images/ghost-yellow-madison-front.jpg",
-    gallery: ["/images/ghost-yellow-madison-back.jpg"],
+    image: "/images/model-yellow-madison-woman.jpg",
+    gallery: [
+      "/images/ghost-yellow-madison-front.jpg",
+      "/images/ghost-yellow-madison-back.jpg",
+    ],
     cleanImage: true,
     stock: { M: 8, L: 13 },
     blurb: STYLE_BLURB.shoulder,
@@ -148,8 +151,12 @@ export const PRODUCTS: Product[] = [
     styleLabel: STYLE_LABELS.chest,
     category: "Golf",
     price: PRICE,
-    image: "/images/hero-onmodel-gray.jpg",
-    gallery: ["/images/ghost-gray-chest-front.jpg", "/images/ghost-gray-chest-back.jpg"],
+    image: "/images/model-gray-chest-woman.jpg",
+    gallery: [
+      "/images/model-gray-chest-woman2.jpg",
+      "/images/ghost-gray-chest-front.jpg",
+      "/images/ghost-gray-chest-back.jpg",
+    ],
     cleanImage: true,
     stock: { S: 5, M: 16, L: 6, XL: 4, XXL: 5 },
     blurb: STYLE_BLURB.chest,
