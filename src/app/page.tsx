@@ -116,8 +116,8 @@ export default function Home() {
       >
         <div className="absolute inset-0">
           <Image
-            src="/images/campaign-group.jpg"
-            alt="Five golfers at golden hour in DEVEN — the Diesel Sky, Peanut Cream, and Silver Oak hoodies across the Signature and Madison lines"
+            src="/images/hero-duo-looking.jpg"
+            alt="A man in the Silver Oak hoodie and a woman in the Peanut Cream hoodie on the course at golden hour — DEVEN"
             fill
             priority
             className="object-cover object-top"
