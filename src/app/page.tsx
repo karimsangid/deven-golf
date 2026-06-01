@@ -224,10 +224,10 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-2 lg:gap-20">
           <div className="reveal overflow-hidden">
             <Image
-              src="/images/premium-packaging.jpg"
-              alt="The Madison Collection — premium packaging with the signature mark"
-              width={1200}
-              height={1400}
+              src="/images/campaign-group.jpg"
+              alt="The Madison Collection — friends together on the course at golden hour in DEVEN"
+              width={1206}
+              height={918}
               className="h-full w-full object-cover"
             />
           </div>
