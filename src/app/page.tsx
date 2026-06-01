@@ -237,14 +237,11 @@ export default function Home() {
             </span>
             <h2 className="mt-3 font-[family-name:var(--font-heading)] text-4xl font-light leading-snug text-deven-black sm:text-5xl">
               The signature line.
-              <br />
-              Marked, boxed, delivered.
             </h2>
             <div className="my-6 h-px w-16 bg-deven-gold" />
             <p className="max-w-md text-base font-light leading-relaxed text-deven-gray">
-              A line apart — the pieces that carry the DEVEN mark, finished and
-              packaged to match. Held separate from the everyday lineup for the
-              moments that deserve it.
+              Held apart from the everyday lineup — a quiet badge at the shoulder,
+              the swing across the chest. For the players who let the game speak.
             </p>
             <Link
               href="/shop"
