@@ -30,16 +30,21 @@ const jsonLd = {
 // first and last differ too, so the seamless loop seam doesn't repeat a colour.
 // Each tile links to the shop variant it depicts (Pick Your Mood → buy).
 const COLOR_MARQUEE = [
-  { src: "/images/model-yellow-chest-woman.jpg", slug: "yellow-chest" }, //   yellow · woman
-  { src: "/images/marquee-navy-man.jpg", slug: "navy-chest" }, //            navy · man
-  { src: "/images/model-lblue-chest-man.jpg", slug: "light-blue-chest" }, //  blue · man
-  { src: "/images/marquee-yellow-man.jpg", slug: "yellow-chest" }, //         yellow · man
-  { src: "/images/lookbook-navy-woman.jpg", slug: "navy-chest" }, //          navy · woman
+  { src: "/images/model-yellow-chest-woman.jpg", slug: "yellow-chest" }, //       yellow · woman
+  { src: "/images/ghost-gray-chest-front.jpg", slug: "gray-chest" }, //           gray · ghost
+  { src: "/images/marquee-navy-man.jpg", slug: "navy-chest" }, //                 navy · man
+  { src: "/images/model-lblue-chest-man.jpg", slug: "light-blue-chest" }, //      blue · man
+  { src: "/images/ghost-yellow-chest-front.jpg", slug: "yellow-chest" }, //       yellow · ghost
+  { src: "/images/lookbook-navy-woman.jpg", slug: "navy-chest" }, //              navy · woman
+  { src: "/images/model-gray-madison-woman.jpg", slug: "gray-shoulder" }, //      gray · woman
+  { src: "/images/ghost-lightblue-madison-front.jpg", slug: "light-blue-shoulder" }, // blue · ghost
+  { src: "/images/marquee-navy-woman.jpg", slug: "navy-chest" }, //               navy · woman
+  { src: "/images/marquee-yellow-man.jpg", slug: "yellow-chest" }, //             yellow · man
+  { src: "/images/ghost-gray-madison-front.jpg", slug: "gray-shoulder" }, //      gray · ghost
+  { src: "/images/marquee-lblue-man.jpg", slug: "light-blue-chest" }, //          blue · man
+  { src: "/images/ghost-navy-chest-front.jpg", slug: "navy-chest" }, //           navy · ghost
   { src: "/images/model-lblue-madison-woman.jpg", slug: "light-blue-shoulder" }, // blue · woman
-  { src: "/images/model-gray-madison-woman.jpg", slug: "gray-shoulder" }, //  gray · woman
-  { src: "/images/marquee-navy-woman.jpg", slug: "navy-chest" }, //           navy · woman
-  { src: "/images/marquee-lblue-man.jpg", slug: "light-blue-chest" }, //      blue · man
-  { src: "/images/model-gray-madison-woman2.jpg", slug: "gray-shoulder" }, // gray · woman
+  { src: "/images/model-gray-madison-woman2.jpg", slug: "gray-shoulder" }, //     gray · woman
 ];
 
 // On-model lookbook — real campaign frames of the signature hoodie. Add entries
