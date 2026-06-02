@@ -52,10 +52,10 @@ export const metadata: Metadata = {
     siteName: "DEVEN",
     images: [
       {
-        url: "/images/logo.png",
-        width: 1200,
-        height: 630,
-        alt: "DEVEN Golf Apparel — Rottweiler Logo",
+        url: "/images/campaign-group.jpg",
+        width: 1206,
+        height: 918,
+        alt: "DEVEN — friends together on the course at golden hour in the collection",
       },
     ],
     locale: "en_US",
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     title: "DEVEN | Premium Golf Apparel",
     description:
       "More than a game. Performance golf hoodies with the signature Rottweiler mark — the Madison Collection.",
-    images: ["/images/logo.png"],
+    images: ["/images/campaign-group.jpg"],
   },
   robots: {
     index: true,

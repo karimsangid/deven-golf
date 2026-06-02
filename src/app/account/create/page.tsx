@@ -29,54 +29,17 @@ export default function CreateAccountPage() {
             </p>
           </header>
 
-          <form
-            action={CREATE_ACCOUNT_URL}
-            method="get"
-            className="mt-10 space-y-5 border border-deven-light-gray bg-white/60 p-8"
-          >
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-xs font-semibold tracking-[0.2em] text-deven-black uppercase"
-              >
-                Name
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                autoComplete="name"
-                placeholder="First and last name"
-                className="mt-3 w-full border border-deven-light-gray bg-white px-4 py-3 text-sm text-deven-black outline-none transition-colors placeholder:text-deven-gray/60 focus:border-deven-gold"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-xs font-semibold tracking-[0.2em] text-deven-black uppercase"
-              >
-                Email
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                autoComplete="email"
-                placeholder="you@email.com"
-                className="mt-3 w-full border border-deven-light-gray bg-white px-4 py-3 text-sm text-deven-black outline-none transition-colors placeholder:text-deven-gray/60 focus:border-deven-gold"
-              />
-            </div>
-            <button
-              type="submit"
+          <div className="mt-10 border border-deven-light-gray bg-white/60 p-8 text-center">
+            <a
+              href={CREATE_ACCOUNT_URL}
               className="flex w-full items-center justify-center bg-deven-black py-4 text-xs font-semibold tracking-[0.25em] text-white uppercase transition-colors hover:bg-deven-gold hover:text-deven-black"
             >
-              Continue to Create Account
-            </button>
-            <p className="text-center text-xs font-light text-deven-gray">
+              Create Your Account
+            </a>
+            <p className="mt-4 text-xs font-light text-deven-gray">
               Your account is created securely through the DEVEN store.
             </p>
-          </form>
+          </div>
 
           <p className="mt-8 text-center text-sm font-light text-deven-gray">
             Already have an account?{" "}

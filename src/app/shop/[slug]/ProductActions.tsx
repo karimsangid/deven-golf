@@ -109,29 +109,14 @@ export default function ProductActions({
 
       <a
         href={PRODUCT_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-6 flex w-full items-center justify-center gap-2 bg-deven-black py-4 text-xs font-semibold tracking-[0.25em] text-white uppercase transition-colors hover:bg-deven-gold hover:text-deven-black"
+        className="mt-6 flex w-full items-center justify-center bg-deven-black py-4 text-xs font-semibold tracking-[0.25em] text-white uppercase transition-colors hover:bg-deven-gold hover:text-deven-black"
       >
-        Buy on the DEVEN Store
-        <svg
-          width="13"
-          height="13"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M7 17L17 7M9 7h8v8" />
-        </svg>
+        Continue to Checkout
       </a>
 
       <p className="mt-4 text-center text-xs font-light text-deven-gray">
-        Secure checkout on our store · Ships in 5–7 business days · Free
-        shipping on all orders
+        Secure DEVEN checkout · Ships in 5–7 business days · Free shipping on
+        all orders
       </p>
 
       {/* ── SIZE GUIDE MODAL ── */}

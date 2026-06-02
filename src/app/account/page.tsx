@@ -30,36 +30,17 @@ export default function SignInPage() {
             </p>
           </header>
 
-          <form
-            action={ACCOUNT_URL}
-            method="get"
-            className="mt-10 border border-deven-light-gray bg-white/60 p-8"
-          >
-            <label
-              htmlFor="email"
-              className="block text-xs font-semibold tracking-[0.2em] text-deven-black uppercase"
+          <div className="mt-10 border border-deven-light-gray bg-white/60 p-8 text-center">
+            <a
+              href={ACCOUNT_URL}
+              className="flex w-full items-center justify-center bg-deven-black py-4 text-xs font-semibold tracking-[0.25em] text-white uppercase transition-colors hover:bg-deven-gold hover:text-deven-black"
             >
-              Email
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              autoComplete="email"
-              placeholder="you@email.com"
-              className="mt-3 w-full border border-deven-light-gray bg-white px-4 py-3 text-sm text-deven-black outline-none transition-colors placeholder:text-deven-gray/60 focus:border-deven-gold"
-            />
-            <button
-              type="submit"
-              className="mt-6 flex w-full items-center justify-center bg-deven-black py-4 text-xs font-semibold tracking-[0.25em] text-white uppercase transition-colors hover:bg-deven-gold hover:text-deven-black"
-            >
-              Continue to Sign In
-            </button>
-            <p className="mt-4 text-center text-xs font-light text-deven-gray">
-              Sign-in is completed securely through the DEVEN store.
+              Sign In to Your Account
+            </a>
+            <p className="mt-4 text-xs font-light text-deven-gray">
+              Sign-in is handled securely through the DEVEN store.
             </p>
-          </form>
+          </div>
 
           <div className="mt-8 space-y-3 text-center text-sm font-light text-deven-gray">
             <p>
@@ -69,12 +50,7 @@ export default function SignInPage() {
               </Link>
             </p>
             <p>
-              <a
-                href={ORDERS_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="gold-link text-deven-black"
-              >
+              <a href={ORDERS_URL} className="gold-link text-deven-black">
                 Track an order
               </a>
             </p>

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { PRODUCTS, isAvailable } from "@/lib/products";
+import { CONTACT_EMAIL } from "@/lib/store";
 import ProductMedia from "./shop/ProductMedia";
 
 const jsonLd = {
@@ -19,7 +20,7 @@ const jsonLd = {
   brand: {
     "@type": "Brand",
     name: "DEVEN",
-    logo: "https://deven-golf.vercel.app/images/logo.png",
+    logo: "https://devenbrand.shop/images/logo.png",
   },
 };
 
@@ -112,7 +113,7 @@ export default function Home() {
             alt="A man in the Silver Oak hoodie and a woman in the Peanut Cream hoodie on the course at golden hour — DEVEN"
             fill
             priority
-            className="object-cover object-top"
+            className="object-cover object-top lg:object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/25" />
         </div>
@@ -340,11 +341,19 @@ export default function Home() {
               className="mt-8 flex w-full max-w-md flex-col gap-3 sm:flex-row"
               onSubmit={(e) => {
                 e.preventDefault();
+                const data = new FormData(e.currentTarget);
+                const email = String(data.get("email") || "");
+                const subject = encodeURIComponent("New DEVEN subscriber");
+                const body = encodeURIComponent(
+                  `Please add me to the DEVEN list: ${email}`
+                );
+                window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
                 setJoined(true);
               }}
             >
               <input
                 type="email"
+                name="email"
                 required
                 placeholder="Email address"
                 className="flex-1 border border-white/15 bg-transparent px-5 py-3.5 text-sm text-white outline-none transition-colors placeholder:text-white/30 focus:border-deven-gold"
@@ -423,21 +432,32 @@ export default function Home() {
               className="reveal space-y-5"
               onSubmit={(e) => {
                 e.preventDefault();
+                const data = new FormData(e.currentTarget);
+                const name = String(data.get("name") || "");
+                const email = String(data.get("email") || "");
+                const message = String(data.get("message") || "");
+                const subject = encodeURIComponent(
+                  `New inquiry from ${name || "the DEVEN site"}`
+                );
+                const body = encodeURIComponent(
+                  `Name: ${name}\nEmail: ${email}\n\n${message}`
+                );
+                window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
                 setSent(true);
               }}
             >
               <div className="grid gap-5 sm:grid-cols-2">
                 <div className="float-field">
-                  <input type="text" id="name" placeholder=" " required />
+                  <input type="text" id="name" name="name" placeholder=" " required />
                   <label htmlFor="name">Name</label>
                 </div>
                 <div className="float-field">
-                  <input type="email" id="email" placeholder=" " required />
+                  <input type="email" id="email" name="email" placeholder=" " required />
                   <label htmlFor="email">Email</label>
                 </div>
               </div>
               <div className="float-field">
-                <textarea id="message" rows={4} placeholder=" " required />
+                <textarea id="message" name="message" rows={4} placeholder=" " required />
                 <label htmlFor="message">Message</label>
               </div>
               <button
