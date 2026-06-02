@@ -113,12 +113,31 @@ export default function Home() {
         className="relative flex min-h-screen items-end justify-center overflow-hidden"
       >
         <div className="absolute inset-0">
+          {/* Mobile / tablet: the portrait fills the tall viewport cleanly, anchored
+              to show faces + garments. */}
           <Image
             src="/images/hero-duo-looking.jpg"
             alt="A man in the Silver Oak hoodie and a woman in the Peanut Cream hoodie on the course at golden hour — DEVEN"
             fill
             priority
-            className="object-cover object-top lg:object-center"
+            className="object-cover object-top lg:hidden"
+          />
+          {/* Desktop: a tall portrait can't fill a wide hero without cropping the
+              couple to a band — so a blurred, scaled copy fills the width while the
+              full image sits contained on top, showing the whole shot head-to-toe. */}
+          <Image
+            src="/images/hero-duo-looking.jpg"
+            alt=""
+            aria-hidden
+            fill
+            className="hidden scale-110 object-cover blur-2xl lg:block"
+          />
+          <Image
+            src="/images/hero-duo-looking.jpg"
+            alt="A man in the Silver Oak hoodie and a woman in the Peanut Cream hoodie on the course at golden hour — DEVEN"
+            fill
+            priority
+            className="hidden object-contain lg:block"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/25" />
         </div>
