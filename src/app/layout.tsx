@@ -3,6 +3,7 @@ import { Montserrat, Cormorant_Garamond } from "next/font/google";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ScratchPopup from "@/components/ScratchPopup";
+import CookieConsent from "@/components/CookieConsent";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -99,6 +100,7 @@ export default function RootLayout({
         {children}
         <Footer />
         <ScratchPopup />
+        <CookieConsent />
       </body>
     </html>
   );
