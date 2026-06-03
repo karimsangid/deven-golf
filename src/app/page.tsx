@@ -30,21 +30,26 @@ const jsonLd = {
 // first and last differ too, so the seamless loop seam doesn't repeat a colour.
 // Each tile links to the shop variant it depicts (Pick Your Mood → buy).
 const COLOR_MARQUEE = [
-  { src: "/images/model-yellow-chest-woman.jpg", slug: "yellow-chest" }, //       yellow · woman
-  { src: "/images/ghost-gray-chest-front.jpg", slug: "gray-chest" }, //           gray · ghost
-  { src: "/images/marquee-navy-man.jpg", slug: "navy-chest" }, //                 navy · man
-  { src: "/images/model-lblue-chest-man.jpg", slug: "light-blue-chest" }, //      blue · man
-  { src: "/images/ghost-yellow-chest-front.jpg", slug: "yellow-chest" }, //       yellow · ghost
-  { src: "/images/lookbook-navy-woman.jpg", slug: "navy-chest" }, //              navy · woman
-  { src: "/images/model-gray-madison-woman.jpg", slug: "gray-shoulder" }, //      gray · woman
-  { src: "/images/ghost-lightblue-madison-front.jpg", slug: "light-blue-shoulder" }, // blue · ghost
-  { src: "/images/marquee-navy-woman.jpg", slug: "navy-chest" }, //               navy · woman
-  { src: "/images/marquee-yellow-man.jpg", slug: "yellow-chest" }, //             yellow · man
-  { src: "/images/ghost-gray-madison-front.jpg", slug: "gray-shoulder" }, //      gray · ghost
-  { src: "/images/marquee-lblue-man.jpg", slug: "light-blue-chest" }, //          blue · man
-  { src: "/images/ghost-navy-chest-front.jpg", slug: "navy-chest" }, //           navy · ghost
-  { src: "/images/model-lblue-madison-woman.jpg", slug: "light-blue-shoulder" }, // blue · woman
-  { src: "/images/model-gray-madison-woman2.jpg", slug: "gray-shoulder" }, //     gray · woman
+  { src: "/images/model-yellow-chest-woman.jpg", slug: "yellow-chest" }, //         yellow · woman
+  { src: "/images/ghost-gray-smalldog-front.jpg", slug: "gray-chest" }, //          gray · ghost · shoulder mark
+  { src: "/images/marquee-navy-man.jpg", slug: "navy-chest" }, //                   navy · man
+  { src: "/images/ghost-lightblue-madison-front.jpg", slug: "light-blue-shoulder" }, // blue · ghost · madison
+  { src: "/images/ghost-yellow-smalldog-front.jpg", slug: "yellow-chest" }, //      yellow · ghost · shoulder mark
+  { src: "/images/model-gray-madison-woman.jpg", slug: "gray-shoulder" }, //        gray · woman · madison
+  { src: "/images/ghost-navy-madison-front.jpg", slug: "navy-madison" }, //          navy · ghost · madison
+  { src: "/images/model-lblue-chest-man.jpg", slug: "light-blue-chest" }, //        blue · man
+  { src: "/images/ghost-yellow-madison-front.jpg", slug: "yellow-shoulder" }, //    yellow · ghost · madison
+  { src: "/images/ghost-gray-chest-front.jpg", slug: "gray-chest" }, //             gray · ghost · chest
+  { src: "/images/ghost-navy-chest-front.jpg", slug: "navy-chest" }, //            navy · ghost · chest (was lookbook-navy-woman — dup of the lookbook section)
+  { src: "/images/ghost-lightblue-smalldog-front.jpg", slug: "light-blue-chest" }, // blue · ghost · shoulder mark
+  { src: "/images/marquee-yellow-man.jpg", slug: "yellow-chest" }, //               yellow · man
+  { src: "/images/model-gray-chest-woman.jpg", slug: "gray-chest" }, //            gray · woman · chest (was model-gray-madison-woman2 — dup of the lookbook section)
+  { src: "/images/ghost-navy-smalldog-front.jpg", slug: "navy-chest" }, //          navy · ghost · shoulder mark
+  { src: "/images/model-lblue-madison-woman.jpg", slug: "light-blue-shoulder" }, // blue · woman · madison
+  { src: "/images/ghost-yellow-chest-front.jpg", slug: "yellow-chest" }, //         yellow · ghost · chest
+  { src: "/images/ghost-gray-madison-front.jpg", slug: "gray-shoulder" }, //        gray · ghost · madison
+  { src: "/images/marquee-navy-woman.jpg", slug: "navy-chest" }, //                 navy · woman
+  { src: "/images/marquee-lblue-man.jpg", slug: "light-blue-chest" }, //            blue · man
 ];
 
 // On-model lookbook — real campaign frames of the signature hoodie. Add entries
@@ -269,7 +274,7 @@ export default function Home() {
               the swing across the chest. For the players who let the game speak.
             </p>
             <Link
-              href="/shop"
+              href="/shop#madison"
               className="mt-8 inline-block w-fit border border-deven-black px-10 py-3.5 text-xs font-semibold tracking-[0.25em] text-deven-black uppercase transition-all hover:bg-deven-black hover:text-white"
             >
               Shop the Collection

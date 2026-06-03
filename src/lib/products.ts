@@ -24,9 +24,12 @@
 export type Category = "Golf" | "Training" | "Tennis" | "Lifestyle";
 
 export type Color = "Yellow" | "Gray" | "Light Blue" | "Navy";
-export type LogoStyle = "shoulder" | "chest";
+// Three logo styles: the Madison shoulder crest, the big chest logo, and the
+// small shoulder mark (just the dog at the top, blank otherwise).
+export type LogoStyle = "shoulder" | "chest" | "smalldog";
 
-export const SIZES = ["XS", "S", "M", "L", "XL", "XXL"] as const;
+// Final inventory carries S–XL only (no XS / XXL).
+export const SIZES = ["S", "M", "L", "XL"] as const;
 export type Size = (typeof SIZES)[number];
 
 // ── Commerce constants ──────────────────────────────────────────────────────
@@ -56,12 +59,15 @@ export type Product = {
 export const STYLE_LABELS: Record<LogoStyle, string> = {
   shoulder: "Madison Collection",
   chest: "Big Chest Logo",
+  smalldog: "Small Shoulder Logo",
 };
 
 const STYLE_BLURB: Record<LogoStyle, string> = {
   shoulder:
     "The small Rottweiler mark at the shoulder with the golfer silhouette across the chest — clean and quiet.",
   chest: "The Rottweiler mark set bold and centred across the chest.",
+  smalldog:
+    "Just the Rottweiler mark, small at the top of the shoulder — blank everywhere else. The quietest way to wear it.",
 };
 
 // ── Colour swatches (sampled from the real garments) ────────────────────────
@@ -103,7 +109,7 @@ export const PRODUCTS: Product[] = [
       "/images/ghost-yellow-madison-back.jpg",
     ],
     cleanImage: true,
-    stock: { M: 8, L: 13 },
+    stock: { M: 1, L: 7, XL: 1 }, // final inventory 2026-06-03
     blurb: STYLE_BLURB.shoulder,
   },
   {
@@ -118,7 +124,7 @@ export const PRODUCTS: Product[] = [
     image: "/images/model-yellow-chest-woman.jpg",
     gallery: ["/images/ghost-yellow-chest-front.jpg", "/images/ghost-yellow-chest-back.jpg"],
     cleanImage: true,
-    stock: { M: 2, L: 4, XL: 3, XXL: 3 },
+    stock: { M: 2, L: 4 }, // final inventory 2026-06-03
     blurb: STYLE_BLURB.chest,
   },
 
@@ -139,7 +145,7 @@ export const PRODUCTS: Product[] = [
       "/images/model-gray-madison-woman2.jpg",
     ],
     cleanImage: true,
-    stock: { L: 3 },
+    stock: { M: 3, L: 4, XL: 2 }, // final inventory 2026-06-03
     blurb: STYLE_BLURB.shoulder,
   },
   {
@@ -158,7 +164,7 @@ export const PRODUCTS: Product[] = [
       "/images/ghost-gray-chest-back.jpg",
     ],
     cleanImage: true,
-    stock: { S: 5, M: 16, L: 6, XL: 4, XXL: 5 },
+    stock: { S: 3, M: 8, L: 6 }, // final inventory 2026-06-03
     blurb: STYLE_BLURB.chest,
   },
 
@@ -175,7 +181,7 @@ export const PRODUCTS: Product[] = [
     image: "/images/model-lblue-madison-woman.jpg",
     gallery: ["/images/ghost-lightblue-madison-front.jpg", "/images/ghost-lightblue-madison-back.jpg"],
     cleanImage: true,
-    stock: { M: 1, L: 1 },
+    stock: { M: 10, L: 10 }, // final inventory 2026-06-03
     blurb: STYLE_BLURB.shoulder,
   },
   {
@@ -190,29 +196,30 @@ export const PRODUCTS: Product[] = [
     image: "/images/model-lblue-chest-man.jpg",
     gallery: ["/images/ghost-lightblue-chest-front.jpg", "/images/ghost-lightblue-chest-back.jpg"],
     cleanImage: true,
-    stock: { XS: 3, S: 2, M: 6, L: 10, XL: 5, XXL: 3 },
+    stock: { S: 2, M: 5, L: 5 }, // final inventory 2026-06-03
     blurb: STYLE_BLURB.chest,
   },
 
   // ── NAVY ──────────────────────────────────────────────────────────────────
-  // Georgia Blue MADISON (navy·shoulder) pulled from the collection per Deven
-  // (2026-05-31): it was sold out and only had a flat-lay. Re-add this block
-  // once the new Georgia Blue small-dog render lands.
-  // {
-  //   slug: "navy-shoulder",
-  //   name: "Georgia Blue",
-  //   color: "Navy",
-  //   swatch: SWATCH.Navy,
-  //   style: "shoulder",
-  //   styleLabel: STYLE_LABELS.shoulder,
-  //   category: "Golf",
-  //   price: PRICE,
-  //   image: "/images/madison-navy-shoulder-dark.jpg",
-  //   gallery: [],
-  //   cleanImage: true,
-  //   stock: {}, // ZERO on hand — sold out
-  //   blurb: STYLE_BLURB.shoulder,
-  // },
+  // Georgia Blue MADISON re-added 2026-06-02: GoDaddy export shows it back in
+  // stock (XS:5, M:1) and we now have a clean on-model shot + ghost renders.
+  {
+    slug: "navy-madison",
+    name: "Georgia Blue",
+    color: "Navy",
+    swatch: SWATCH.Navy,
+    style: "shoulder",
+    styleLabel: STYLE_LABELS.shoulder,
+    category: "Golf",
+    price: PRICE,
+    // Ghost render shows the real Madison design (shoulder dog + golfer); it's the hero
+    // since no on-model navy Madison photo exists yet.
+    image: "/images/ghost-navy-madison-front.jpg",
+    gallery: ["/images/ghost-navy-madison-back.jpg"],
+    cleanImage: true,
+    stock: { M: 2, L: 3 }, // final inventory 2026-06-03
+    blurb: STYLE_BLURB.shoulder,
+  },
   {
     slug: "navy-chest",
     name: "Georgia Blue",
@@ -223,10 +230,46 @@ export const PRODUCTS: Product[] = [
     category: "Golf",
     price: PRICE,
     image: "/images/lookbook-navy-woman.jpg",
-    gallery: ["/images/model-navy-madison-woman.jpg", "/images/ghost-navy-chest-front.jpg", "/images/ghost-navy-chest-back.jpg"],
+    gallery: ["/images/ghost-navy-chest-front.jpg", "/images/ghost-navy-chest-back.jpg"],
     cleanImage: true,
-    stock: { L: 2, XL: 2 },
+    stock: { M: 3, L: 3 }, // final inventory 2026-06-03
     blurb: STYLE_BLURB.chest,
+  },
+
+  // ── SMALL SHOULDER LOGO ─────────────────────────────────────────────────
+  // NEW third style (2026-06-03): just the small Rottweiler mark at the top of
+  // the shoulder, the hoodie blank otherwise. Per the final inventory only
+  // Yellow + Gray are stocked — Light Blue + Navy are zero, so they're omitted
+  // (we don't list a SKU the store can't fulfil).
+  {
+    slug: "yellow-smalldog",
+    name: "Peanut Cream",
+    color: "Yellow",
+    swatch: SWATCH.Yellow,
+    style: "smalldog",
+    styleLabel: STYLE_LABELS.smalldog,
+    category: "Golf",
+    price: PRICE,
+    image: "/images/ghost-yellow-smalldog-front.jpg",
+    gallery: ["/images/ghost-yellow-smalldog-back.jpg"],
+    cleanImage: true,
+    stock: { M: 7, L: 13 }, // final inventory 2026-06-03
+    blurb: STYLE_BLURB.smalldog,
+  },
+  {
+    slug: "gray-smalldog",
+    name: "Silver Oak",
+    color: "Gray",
+    swatch: SWATCH.Gray,
+    style: "smalldog",
+    styleLabel: STYLE_LABELS.smalldog,
+    category: "Golf",
+    price: PRICE,
+    image: "/images/ghost-gray-smalldog-front.jpg",
+    gallery: ["/images/ghost-gray-smalldog-back.jpg"],
+    cleanImage: true,
+    stock: { S: 3 }, // final inventory 2026-06-03
+    blurb: STYLE_BLURB.smalldog,
   },
 ];
 

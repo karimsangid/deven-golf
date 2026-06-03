@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { SIZES, type Size } from "@/lib/products";
-import { PRODUCT_URL } from "@/lib/store";
 
 // ─────────────────────────────────────────────────────────────────────────
 // Size guide — standard athletic-fit hoodie measurements (inches).
@@ -12,22 +11,22 @@ import { PRODUCT_URL } from "@/lib/store";
 // here — chest is measured flat, doubled for full circumference.
 // ─────────────────────────────────────────────────────────────────────────
 const SIZE_GUIDE: { size: string; chest: string; length: string; sleeve: string }[] = [
-  { size: "XS", chest: "34–36", length: "26", sleeve: "33" },
   { size: "S", chest: "36–38", length: "27", sleeve: "33.5" },
   { size: "M", chest: "38–40", length: "28", sleeve: "34" },
   { size: "L", chest: "42–44", length: "29", sleeve: "34.5" },
   { size: "XL", chest: "46–48", length: "30", sleeve: "35" },
-  { size: "XXL", chest: "50–52", length: "31", sleeve: "35.5" },
 ];
 
 export default function ProductActions({
   stock,
   size,
   onSizeChange,
+  checkoutUrl,
 }: {
   stock: Partial<Record<Size, number>>;
   size: Size | null;
   onSizeChange: (s: Size) => void;
+  checkoutUrl: string;
 }) {
   const [guideOpen, setGuideOpen] = useState(false);
 
@@ -83,7 +82,7 @@ export default function ProductActions({
         </button>
       </div>
 
-      <div className="mt-3 grid grid-cols-6 gap-2">
+      <div className="mt-3 grid grid-cols-4 gap-2">
         {SIZES.map((s) => {
           const soldOut = stockOf(s) === 0;
           return (
@@ -108,7 +107,7 @@ export default function ProductActions({
       </div>
 
       <a
-        href={PRODUCT_URL}
+        href={checkoutUrl}
         className="mt-6 flex w-full items-center justify-center bg-deven-black py-4 text-xs font-semibold tracking-[0.25em] text-white uppercase transition-colors hover:bg-deven-gold hover:text-deven-black"
       >
         Continue to Checkout

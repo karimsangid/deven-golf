@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import {
   PRODUCTS,
@@ -73,9 +74,32 @@ function ProductCard({ product, dark }: { product: Product; dark?: boolean }) {
 }
 
 export default function ShopBrowser() {
-  // Two distinct lines: the bold front crest vs the understated shoulder mark.
+  // Three distinct lines: the bold front crest, the Madison shoulder crest,
+  // and the minimal small-shoulder mark.
   const signature = PRODUCTS.filter((p) => p.style === "chest");
   const madison = PRODUCTS.filter((p) => p.style === "shoulder");
+  const smallShoulder = PRODUCTS.filter((p) => p.style === "smalldog");
+
+  // Deep-link from the homepage "Shop the Collection" button (/shop#madison):
+  // Next's automatic hash scroll fires before the lazy images above paint, so it
+  // lands in the wrong place. Drive the scroll ourselves once mounted, and retry
+  // a few times as the imagery settles the layout.
+  const madisonRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.location.hash !== "#madison") return;
+
+    let tries = 0;
+    const scroll = () => {
+      const el = madisonRef.current;
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      // Re-aim a few times: lazy hero/product images finish loading after first
+      // paint and shift the offset, otherwise we'd stop short of the section.
+      if (tries++ < 6) setTimeout(scroll, 250);
+    };
+    const raf = requestAnimationFrame(scroll);
+    return () => cancelAnimationFrame(raf);
+  }, []);
 
   return (
     <>
@@ -101,8 +125,39 @@ export default function ShopBrowser() {
         </div>
       </section>
 
+      {/* ── Small Shoulder Logo — minimal mark, blank hoodie, light ── */}
+      {smallShoulder.length > 0 && (
+        <section className="bg-deven-cream pb-24">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="mb-12 text-center">
+              <span className="text-xs font-semibold tracking-[0.3em] text-deven-gold uppercase">
+                Small Shoulder Logo
+              </span>
+              <h2 className="mt-2 font-[family-name:var(--font-heading)] text-4xl font-light text-deven-black">
+                Just the Mark
+              </h2>
+              <p className="mx-auto mt-3 max-w-md text-sm font-light leading-relaxed text-deven-gray">
+                The small Rottweiler at the shoulder, blank everywhere else
+                &mdash; the cleanest way to wear it.
+              </p>
+            </div>
+            <div className="grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+              {smallShoulder.map((p) => (
+                <ProductCard key={p.slug} product={p} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ── Madison Collection — understated shoulder mark, dark & elevated ── */}
-      <section className="madison-section bg-deven-black py-24">
+      {/* id + scroll-mt: homepage "Shop the Collection" deep-links here (/shop#madison);
+          scroll-mt-32 clears the fixed announce bar + nav so the heading isn't hidden. */}
+      <section
+        id="madison"
+        ref={madisonRef}
+        className="madison-section scroll-mt-32 bg-deven-black py-24"
+      >
         <div className="mx-auto max-w-7xl px-6">
           {/* Face of the collection — the real campaign group shot */}
           <div className="relative mb-10 aspect-[16/7] w-full overflow-hidden rounded-2xl">
@@ -134,6 +189,7 @@ export default function ShopBrowser() {
           </div>
         </div>
       </section>
+
     </>
   );
 }

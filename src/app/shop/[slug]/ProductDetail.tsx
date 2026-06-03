@@ -16,6 +16,7 @@ import {
 } from "@/lib/products";
 import ProductGallery from "./ProductGallery";
 import ProductActions from "./ProductActions";
+import { payLinkFor } from "@/lib/store";
 
 // ─────────────────────────────────────────────────────────────────────────
 // Interactive PDP. Selecting a colourway swaps ONLY the colour in place — the
@@ -96,7 +97,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
             Style
           </span>
           <div className="mt-3 grid max-w-xs grid-cols-2 gap-2">
-            {(["shoulder", "chest"] as LogoStyle[]).map((st) => {
+            {(["shoulder", "chest", "smalldog"] as LogoStyle[]).map((st) => {
               const v = getVariant(color, st);
               if (!v) return null;
               const isCurrent = st === style;
@@ -156,7 +157,12 @@ export default function ProductDetail({ slug }: { slug: string }) {
         </div>
 
         {/* Size + checkout (client) — size persists across colour swaps */}
-        <ProductActions stock={product.stock} size={size} onSizeChange={setSize} />
+        <ProductActions
+          stock={product.stock}
+          size={size}
+          onSizeChange={setSize}
+          checkoutUrl={payLinkFor(product.slug)}
+        />
 
         {/* Accordions */}
         <div className="mt-12 divide-y divide-deven-light-gray border-t border-b border-deven-light-gray">
