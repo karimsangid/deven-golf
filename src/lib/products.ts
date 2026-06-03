@@ -265,8 +265,11 @@ export const PRODUCTS: Product[] = [
     styleLabel: STYLE_LABELS.smalldog,
     category: "Golf",
     price: PRICE,
-    image: "/images/ghost-gray-smalldog-front.jpg",
-    gallery: ["/images/ghost-gray-smalldog-back.jpg"],
+    image: "/images/model-gray-smalldog.jpg",
+    gallery: [
+      "/images/ghost-gray-smalldog-front.jpg",
+      "/images/ghost-gray-smalldog-back.jpg",
+    ],
     cleanImage: true,
     stock: { S: 3 }, // final inventory 2026-06-03
     blurb: STYLE_BLURB.smalldog,
