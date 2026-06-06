@@ -1,17 +1,21 @@
 // ─────────────────────────────────────────────────────────────────────────
-// DEVEN sells through its GoDaddy Online Store. This Vercel site is the brand
-// front + storefront; the GoDaddy store handles the actual cart, checkout,
+// DEVEN sells through its GoDaddy Online Store — a FULL cart + checkout
+// (any quantity, mix sizes/colours, one payment). This Vercel site is the
+// brand front + catalogue; the GoDaddy store handles the cart, checkout,
 // payments, customer accounts, tax, shipping, and inventory.
 //
-// ▸ ONE SWITCH controls where every store link points. Today it's the live,
-//   working GoDaddy origin so no buy/account link is ever dead. The moment the
-//   store is connected to its branded subdomain in GoDaddy (shop.devenbrand.shop),
-//   change ONLY `STORE_ORIGIN` below and redeploy — every link follows.
+// ▸ The store is connected to the brand's OWN subdomain — shop.devenbrand.shop —
+//   so the shopper NEVER leaves the Deven brand and deveneapen.com is never
+//   shown. Every store link below derives from STORE_ORIGIN, so this one line is
+//   the single switch for the whole buy + account flow.
+//
+// ⚠️ GO-LIVE GATE: this now points at shop.devenbrand.shop. Do NOT deploy to
+//   prod until that subdomain is connected to the GoDaddy store (it must
+//   resolve), or every buy/account link will be dead. Until then prod stays on
+//   the prior (Pay Links) commit. Connect the subdomain in GoDaddy → then deploy.
 // ─────────────────────────────────────────────────────────────────────────
 
-// 🔁 FLIP THIS ONE LINE after the GoDaddy store is connected to the branded
-//    subdomain:  "https://deveneapen.com"  →  "https://shop.devenbrand.shop"
-export const STORE_ORIGIN = "https://deveneapen.com";
+export const STORE_ORIGIN = "https://shop.devenbrand.shop";
 
 export const STORE_URL = `${STORE_ORIGIN}/shop`;
 export const STORE_ALL = `${STORE_ORIGIN}/shop/ols/all?sortOption=descend_by_popularity`;
@@ -28,12 +32,30 @@ export const ORDERS_URL = `${STORE_ORIGIN}/m/orders`;
 export const CONTACT_EMAIL = "info@devenbrand.shop";
 
 // ─────────────────────────────────────────────────────────────────────────
-// PER-PRODUCT GODADDY PAY LINKS
-// Each variant checks out through its own GoDaddy Pay Link (GoDaddy Payments →
-// Deven LLC bank). Style + colour are baked into each link; the customer picks
-// SIZE from the link's own dropdown, so the order records the exact variant.
-// These are the live public Pay Link URLs (verified resolving 2026-06-03).
-// To add/replace a link: drop the URL here keyed by the product slug.
+// BUY FLOW → GoDaddy store cart + checkout
+// Every Vercel SKU is a variant of the single "everyday-hoodie" product on the
+// GoDaddy store. The buy button sends the shopper to that product on
+// shop.devenbrand.shop, where they pick this colour/style + size, set ANY
+// quantity, add it to the cart (mixing variants if they like), and check out —
+// the full GoDaddy cart + checkout, GoDaddy Payments → Deven's bank, all on the
+// Deven brand domain (no deveneapen.com anywhere).
+// ─────────────────────────────────────────────────────────────────────────
+
+// Optional per-slug override, for when a variant becomes its own store product
+// or gets a deep-link with pre-selected options. Empty for now → every SKU opens
+// the one hoodie product page; fill this once the subdomain is live and the
+// store's variant URL params are known (one place to add deep-linking later).
+const STORE_PRODUCT_OVERRIDES: Record<string, string> = {};
+
+// The store URL a given product slug's buy button should open.
+export function storeProductUrl(slug: string): string {
+  return STORE_PRODUCT_OVERRIDES[slug] ?? PRODUCT_URL;
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// LEGACY — per-product GoDaddy Pay Links. No longer wired into the buy button
+// (retired in favour of the full store cart above); kept ONLY for a fast
+// rollback if the subdomain cutover has to be reverted. Do not use in new code.
 // ─────────────────────────────────────────────────────────────────────────
 const PAY = "https://2a01d853-f750-426d-8a55-0b90b745946e.paylinks.godaddy.com";
 

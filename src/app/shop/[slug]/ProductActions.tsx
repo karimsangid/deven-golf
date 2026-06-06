@@ -110,12 +110,12 @@ export default function ProductActions({
         href={checkoutUrl}
         className="mt-6 flex w-full items-center justify-center bg-deven-black py-4 text-xs font-semibold tracking-[0.25em] text-white uppercase transition-colors hover:bg-deven-gold hover:text-deven-black"
       >
-        Continue to Checkout
+        Add to Bag
       </a>
 
       <p className="mt-4 text-center text-xs font-light text-deven-gray">
-        Secure DEVEN checkout · Ships in 5–7 business days · Free shipping on
-        all orders
+        Choose your quantity and check out securely · Ships in 5–7 business days
+        · Free shipping on all orders
       </p>
 
       {/* ── SIZE GUIDE MODAL ── */}

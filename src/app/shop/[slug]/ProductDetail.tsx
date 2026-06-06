@@ -16,7 +16,7 @@ import {
 } from "@/lib/products";
 import ProductGallery from "./ProductGallery";
 import ProductActions from "./ProductActions";
-import { payLinkFor } from "@/lib/store";
+import { storeProductUrl } from "@/lib/store";
 
 // ─────────────────────────────────────────────────────────────────────────
 // Interactive PDP. Selecting a colourway swaps ONLY the colour in place — the
@@ -161,7 +161,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
           stock={product.stock}
           size={size}
           onSizeChange={setSize}
-          checkoutUrl={payLinkFor(product.slug)}
+          checkoutUrl={storeProductUrl(product.slug)}
         />
 
         {/* Accordions */}
