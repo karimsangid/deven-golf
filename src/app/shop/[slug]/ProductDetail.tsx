@@ -8,6 +8,7 @@ import {
   COLOR_LABELS,
   STYLE_LABELS,
   PRODUCT_DETAIL,
+  PRICE,
   isAvailable,
   inStockSizes,
   type Color,
@@ -16,7 +17,8 @@ import {
 } from "@/lib/products";
 import ProductGallery from "./ProductGallery";
 import ProductActions from "./ProductActions";
-import { storeProductUrl } from "@/lib/store";
+import { payLinkFor } from "@/lib/store";
+import { useCart } from "@/lib/cart";
 
 // ─────────────────────────────────────────────────────────────────────────
 // Interactive PDP. Selecting a colourway swaps ONLY the colour in place — the
@@ -28,11 +30,29 @@ import { storeProductUrl } from "@/lib/store";
 export default function ProductDetail({ slug }: { slug: string }) {
   const initial = PRODUCTS.find((p) => p.slug === slug) ?? PRODUCTS[0];
 
+  const { addItem } = useCart();
+
   const [color, setColor] = useState<Color>(initial.color);
   const [style, setStyle] = useState<LogoStyle>(initial.style);
   const [size, setSize] = useState<Size | null>(null);
 
   const product = getVariant(color, style) ?? initial;
+
+  // Add the configured piece to the branded bag, then the drawer opens and
+  // "Checkout" hands off to this SKU's GoDaddy Pay Link.
+  const addToBag = () => {
+    if (!size) return;
+    addItem({
+      slug: product.slug,
+      name: product.name,
+      styleLabel: product.styleLabel,
+      colorLabel: COLOR_LABELS[product.color],
+      size,
+      price: product.price ?? PRICE,
+      image: product.image,
+      payLink: payLinkFor(product.slug),
+    });
+  };
 
   // Reflect the current SKU in the URL without a navigation (keeps refresh /
   // share / back-button honest while avoiding the full-variation reload).
@@ -161,7 +181,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
           stock={product.stock}
           size={size}
           onSizeChange={setSize}
-          checkoutUrl={storeProductUrl(product.slug)}
+          onAddToBag={addToBag}
         />
 
         {/* Accordions */}

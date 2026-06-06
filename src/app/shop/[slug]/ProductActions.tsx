@@ -21,12 +21,12 @@ export default function ProductActions({
   stock,
   size,
   onSizeChange,
-  checkoutUrl,
+  onAddToBag,
 }: {
   stock: Partial<Record<Size, number>>;
   size: Size | null;
   onSizeChange: (s: Size) => void;
-  checkoutUrl: string;
+  onAddToBag: () => void;
 }) {
   const [guideOpen, setGuideOpen] = useState(false);
 
@@ -106,16 +106,18 @@ export default function ProductActions({
         })}
       </div>
 
-      <a
-        href={checkoutUrl}
-        className="mt-6 flex w-full items-center justify-center bg-deven-black py-4 text-xs font-semibold tracking-[0.25em] text-white uppercase transition-colors hover:bg-deven-gold hover:text-deven-black"
+      <button
+        type="button"
+        onClick={onAddToBag}
+        disabled={!size}
+        className="mt-6 flex w-full items-center justify-center bg-deven-black py-4 text-xs font-semibold tracking-[0.25em] text-white uppercase transition-colors hover:bg-deven-gold hover:text-deven-black disabled:cursor-not-allowed disabled:bg-deven-light-gray disabled:text-deven-gray disabled:hover:bg-deven-light-gray disabled:hover:text-deven-gray"
       >
-        Add to Bag
-      </a>
+        {size ? "Add to Bag" : "Select Your Size"}
+      </button>
 
       <p className="mt-4 text-center text-xs font-light text-deven-gray">
-        Choose your quantity and check out securely · Ships in 5–7 business days
-        · Free shipping on all orders
+        Secure checkout · Ships in 5–7 business days · Free shipping on all
+        orders
       </p>
 
       {/* ── SIZE GUIDE MODAL ── */}

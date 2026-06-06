@@ -4,6 +4,8 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ScratchPopup from "@/components/ScratchPopup";
 import CookieConsent from "@/components/CookieConsent";
+import CartDrawer from "@/components/CartDrawer";
+import { CartProvider } from "@/lib/cart";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -93,14 +95,17 @@ export default function RootLayout({
       className={`${montserrat.variable} ${cormorant.variable} antialiased`}
     >
       <body>
-        <div className="announce-bar">
-          <span>Free Shipping on All Orders</span>
-        </div>
-        <Nav />
-        {children}
-        <Footer />
-        <ScratchPopup />
-        <CookieConsent />
+        <CartProvider>
+          <div className="announce-bar">
+            <span>Free Shipping on All Orders</span>
+          </div>
+          <Nav />
+          {children}
+          <Footer />
+          <ScratchPopup />
+          <CookieConsent />
+          <CartDrawer />
+        </CartProvider>
       </body>
     </html>
   );

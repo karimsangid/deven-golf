@@ -53,9 +53,20 @@ export function storeProductUrl(slug: string): string {
 }
 
 // ─────────────────────────────────────────────────────────────────────────
-// LEGACY — per-product GoDaddy Pay Links. No longer wired into the buy button
-// (retired in favour of the full store cart above); kept ONLY for a fast
-// rollback if the subdomain cutover has to be reverted. Do not use in new code.
+// ACTIVE CHECKOUT — per-SKU GoDaddy Pay Links.
+//
+// This is what the site's custom single-item bag checks out through (see
+// src/lib/cart.tsx + components/CartDrawer.tsx). The shopper configures one
+// piece on the branded site, then "Checkout" opens that SKU's Pay Link for
+// payment (GoDaddy Payments → Deven's bank). All 10 links below were verified
+// live (2026-06-06) — each resolves to the matching product title.
+//
+// A Pay Link is a single fixed-price checkout for ONE product, so the bag holds
+// one item at a time (no combined multi-item cart). Size + quantity are appended
+// to the link as query params by cart.tsx (GoDaddy ignores params it doesn't
+// use). The store-cart helpers above (STORE_ORIGIN / storeProductUrl) are NOT
+// wired into the buy button — they remain only for the account pages and a
+// possible future move to the full GoDaddy store.
 // ─────────────────────────────────────────────────────────────────────────
 const PAY = "https://2a01d853-f750-426d-8a55-0b90b745946e.paylinks.godaddy.com";
 
