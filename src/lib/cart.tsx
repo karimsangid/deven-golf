@@ -1,15 +1,17 @@
 "use client";
 
 // ─────────────────────────────────────────────────────────────────────────
-// DEVEN — custom single-item bag.
+// DEVEN — multi-item bag.
 //
-// The site keeps its own branded checkout experience; payment itself runs on
-// GoDaddy. Each SKU is its own GoDaddy Pay Link (a single fixed-price product
-// checkout), so the bag holds ONE configured piece at a time — pick a colour /
-// style / size, review it in the branded drawer, then "Checkout" hands off to
-// that piece's GoDaddy Pay Link. Adding a different piece replaces the current
-// selection (one item = one payment — Pay Links can't combine a multi-item
-// cart into a single payment).
+// The bag can hold several different pieces (any colour / style / size). Each
+// distinct piece is its own line (same SKU + same size = same line, quantity
+// bumps; a different size or colour is a new line).
+//
+// ⚠️ CHECKOUT REALITY: payment runs on GoDaddy Pay Links, and a Pay Link is a
+// single fixed-price product checkout — it CANNOT ring up a mixed cart in one
+// payment. So checkout is PER LINE: each piece opens its own Pay Link and is
+// paid separately. (A true one-payment multi-item cart needs the full GoDaddy
+// Online Store — the planned swap to devenbrand.shop. See cart UI for the note.)
 //
 // State is mirrored to localStorage so the bag survives a refresh / PDP hop.
 // ─────────────────────────────────────────────────────────────────────────
@@ -19,10 +21,12 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 
 export type BagItem = {
+  id: string; // `${slug}__${size}` — line identity for merge / update / remove
   slug: string;
   name: string; // colourway name, e.g. "Silver Oak"
   styleLabel: string; // "Madison Collection" | "Big Chest Logo" | "Small Shoulder Logo"
@@ -35,31 +39,39 @@ export type BagItem = {
 };
 
 type CartContextValue = {
-  item: BagItem | null;
+  items: BagItem[];
   isOpen: boolean;
-  /** Build the GoDaddy Pay Link the Checkout button opens (size + qty appended). */
-  checkoutHref: string | null;
-  addItem: (item: Omit<BagItem, "qty"> & { qty?: number }) => void;
-  setQty: (qty: number) => void;
+  count: number; // total units across all lines (for the nav badge)
+  subtotal: number; // sum of line totals (informational)
+  addItem: (item: Omit<BagItem, "id" | "qty"> & { qty?: number }) => void;
+  setQty: (id: string, qty: number) => void;
+  removeItem: (id: string) => void;
   clear: () => void;
   open: () => void;
   close: () => void;
+  /** The GoDaddy Pay Link a single line checks out through (size + qty appended). */
+  checkoutHref: (item: BagItem) => string;
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
-const STORAGE_KEY = "deven-bag-v1";
+const STORAGE_KEY = "deven-bag-v2";
 const MAX_QTY = 10;
 
+const lineId = (slug: string, size: string) => `${slug}__${size}`;
+
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [item, setItem] = useState<BagItem | null>(null);
+  const [items, setItems] = useState<BagItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [hydrated, setHydrated] = useState(false);
 
-  // Restore a saved selection on first mount (client only).
+  // Restore a saved bag on first mount (client only).
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) setItem(JSON.parse(raw) as BagItem);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) setItems(parsed as BagItem[]);
+      }
     } catch {
       /* ignore corrupt / unavailable storage */
     }
@@ -70,38 +82,79 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!hydrated) return;
     try {
-      if (item) localStorage.setItem(STORAGE_KEY, JSON.stringify(item));
+      if (items.length) localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
       else localStorage.removeItem(STORAGE_KEY);
     } catch {
       /* ignore */
     }
-  }, [item, hydrated]);
+  }, [items, hydrated]);
 
   const addItem = useCallback(
-    (next: Omit<BagItem, "qty"> & { qty?: number }) => {
-      setItem({ qty: 1, ...next });
+    (next: Omit<BagItem, "id" | "qty"> & { qty?: number }) => {
+      const id = lineId(next.slug, next.size);
+      const addQty = next.qty ?? 1;
+      setItems((cur) => {
+        const existing = cur.find((it) => it.id === id);
+        if (existing) {
+          return cur.map((it) =>
+            it.id === id
+              ? { ...it, qty: Math.min(MAX_QTY, it.qty + addQty) }
+              : it
+          );
+        }
+        return [...cur, { ...next, id, qty: Math.min(MAX_QTY, addQty) }];
+      });
       setIsOpen(true);
     },
     []
   );
 
-  const setQty = useCallback((qty: number) => {
-    setItem((cur) =>
-      cur ? { ...cur, qty: Math.max(1, Math.min(MAX_QTY, qty)) } : cur
+  const setQty = useCallback((id: string, qty: number) => {
+    setItems((cur) =>
+      cur.map((it) =>
+        it.id === id ? { ...it, qty: Math.max(1, Math.min(MAX_QTY, qty)) } : it
+      )
     );
   }, []);
 
-  const clear = useCallback(() => setItem(null), []);
+  const removeItem = useCallback((id: string) => {
+    setItems((cur) => cur.filter((it) => it.id !== id));
+  }, []);
+
+  const clear = useCallback(() => setItems([]), []);
   const open = useCallback(() => setIsOpen(true), []);
   const close = useCallback(() => setIsOpen(false), []);
 
-  const checkoutHref = item
-    ? `${item.payLink}?size=${encodeURIComponent(item.size)}&quantity=${item.qty}`
-    : null;
+  const checkoutHref = useCallback(
+    (item: BagItem) =>
+      `${item.payLink}?size=${encodeURIComponent(item.size)}&quantity=${item.qty}`,
+    []
+  );
+
+  const count = useMemo(
+    () => items.reduce((sum, it) => sum + it.qty, 0),
+    [items]
+  );
+  const subtotal = useMemo(
+    () => items.reduce((sum, it) => sum + it.price * it.qty, 0),
+    [items]
+  );
 
   return (
     <CartContext.Provider
-      value={{ item, isOpen, checkoutHref, addItem, setQty, clear, open, close }}
+      value={{
+        items,
+        isOpen,
+        count,
+        subtotal,
+        addItem,
+        setQty,
+        removeItem,
+        clear,
+        open,
+        close,
+        checkoutHref,
+      }}
     >
       {children}
     </CartContext.Provider>

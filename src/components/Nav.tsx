@@ -6,12 +6,12 @@ import { useEffect, useState } from "react";
 import { useCart } from "@/lib/cart";
 
 function BagButton({ className = "" }: { className?: string }) {
-  const { item, open } = useCart();
+  const { count, open } = useCart();
   return (
     <button
       type="button"
       onClick={open}
-      aria-label={item ? "Open bag (1 item)" : "Open bag"}
+      aria-label={count ? `Open bag (${count} item${count > 1 ? "s" : ""})` : "Open bag"}
       className={`relative text-white/80 transition-colors hover:text-white ${className}`}
     >
       <svg
@@ -28,8 +28,10 @@ function BagButton({ className = "" }: { className?: string }) {
         <path d="M6 7h12l-1 13H7L6 7Z" />
         <path d="M9 7a3 3 0 0 1 6 0" />
       </svg>
-      {item && (
-        <span className="absolute -top-1.5 -right-1.5 h-2.5 w-2.5 rounded-full bg-deven-gold ring-2 ring-deven-black" />
+      {count > 0 && (
+        <span className="absolute -top-2 -right-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-deven-gold px-1 text-[10px] font-bold text-deven-black ring-2 ring-deven-black">
+          {count}
+        </span>
       )}
     </button>
   );
