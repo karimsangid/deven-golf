@@ -1,0 +1,18 @@
+# DEVEN — Apache config for GoDaddy (cPanel) static hosting.
+# Mirrors the old next.config redirects() (server-side, unavailable in a
+# static export). 302 = temporary, matching the original permanent:false.
+
+Options -Indexes
+DirectoryIndex index.html
+
+# Legacy / bookmarked / search-indexed URLs -> live destinations
+RedirectMatch 302 "^/shop/navy-shoulder/?$" "/shop/navy-chest"
+RedirectMatch 302 "^/about/?$"               "/#collection"
+RedirectMatch 302 "^/lookbook/?$"            "/shop"
+RedirectMatch 302 "^/madison/?$"             "/shop"
+RedirectMatch 302 "^/collection/?$"          "/#collection"
+RedirectMatch 302 "^/collections/?$"         "/shop"
+RedirectMatch 302 "^/contact/?$"             "/#contact"
+
+# Branded 404 (Next emits 404.html in the export)
+ErrorDocument 404 /404.html
