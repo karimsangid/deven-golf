@@ -6,14 +6,30 @@ import { useEffect } from "react";
 import { useCart } from "@/lib/cart";
 
 // ─────────────────────────────────────────────────────────────────────────
-// Branded slide-in bag. Holds several pieces; because payment runs on GoDaddy
-// Pay Links (one product per payment), each line checks out separately — every
-// piece has its own "Checkout" button that opens that SKU's Pay Link. A note
-// makes the per-item payment explicit so it isn't a surprise.
+// Branded slide-in bag.
+//
+//  • SHOPIFY mode — one unified, multi-item Shopify cart: a single "Checkout
+//    Securely" button hands off to Shopify's brand-themed checkout (any mix of
+//    pieces, any quantity, one payment). The qty steppers re-sync the cart.
+//  • PAY-LINK mode — payment runs on GoDaddy Pay Links (one product per
+//    payment), so each line carries its own "Checkout" button.
+//
+// The drawer reads `mode` from the cart and renders the right footer + actions.
 // ─────────────────────────────────────────────────────────────────────────
 export default function CartDrawer() {
-  const { items, isOpen, subtotal, setQty, removeItem, close, checkoutHref } =
-    useCart();
+  const {
+    items,
+    isOpen,
+    mode,
+    subtotal,
+    setQty,
+    removeItem,
+    close,
+    checkoutHref,
+    checkoutUrl,
+    syncing,
+    missingSkus,
+  } = useCart();
 
   // Esc to close + lock body scroll while open.
   useEffect(() => {
@@ -30,6 +46,8 @@ export default function CartDrawer() {
   }, [isOpen, close]);
 
   const multiple = items.length > 1;
+  const isShopify = mode === "shopify";
+  const hasMissing = missingSkus.length > 0;
 
   return (
     <div
@@ -85,15 +103,19 @@ export default function CartDrawer() {
           <>
             {/* line items */}
             <div className="flex-1 divide-y divide-deven-black/10 overflow-y-auto px-6">
-              {items.map((item) => (
-                <div key={item.id} className="flex gap-4 py-6">
+              {items.map((item, i) => (
+                <div
+                  key={item.id}
+                  className="flex animate-bag-line gap-4 py-6"
+                  style={{ animationDelay: `${Math.min(i, 6) * 55}ms` }}
+                >
                   <div className="relative h-32 w-24 flex-shrink-0 overflow-hidden bg-deven-linen">
                     <Image
                       src={item.image}
                       alt={`${item.name} — ${item.styleLabel}`}
                       fill
                       sizes="96px"
-                      className="object-cover"
+                      className="object-cover transition-transform duration-500 hover:scale-105"
                     />
                   </div>
 
@@ -137,13 +159,15 @@ export default function CartDrawer() {
                       </span>
                     </div>
 
-                    {/* per-line checkout (each piece pays through its own Pay Link) */}
-                    <a
-                      href={checkoutHref(item)}
-                      className="mt-3 flex items-center justify-center bg-deven-black py-2.5 text-[11px] font-semibold tracking-[0.2em] text-white uppercase transition-colors hover:bg-deven-gold hover:text-deven-black"
-                    >
-                      Checkout · ${item.price * item.qty}
-                    </a>
+                    {/* PAY-LINK mode: each piece pays through its own Pay Link */}
+                    {!isShopify && (
+                      <a
+                        href={checkoutHref(item)}
+                        className="mt-3 flex items-center justify-center bg-deven-black py-2.5 text-[11px] font-semibold tracking-[0.2em] text-white uppercase transition-colors hover:bg-deven-gold hover:text-deven-black"
+                      >
+                        Checkout · ${item.price * item.qty}
+                      </a>
+                    )}
                     <button
                       type="button"
                       onClick={() => removeItem(item.id)}
@@ -166,13 +190,56 @@ export default function CartDrawer() {
                   ${subtotal}
                 </span>
               </div>
-              <p className="mt-2 text-xs font-light leading-relaxed text-deven-gray">
-                {multiple
-                  ? "Each piece checks out securely on its own — tap Checkout on each item to pay for it. "
-                  : "Tap Checkout to pay securely. "}
-                Free shipping on all orders · taxes calculated at checkout ·
-                payment by GoDaddy.
-              </p>
+
+              {isShopify ? (
+                <>
+                  {/* honest gap surface — a SKU not yet set up in Shopify */}
+                  {hasMissing && (
+                    <p className="mt-2 text-xs font-light leading-relaxed text-deven-gold">
+                      One piece in your bag is finishing setup and can&rsquo;t be
+                      checked out yet. Remove it to continue.
+                    </p>
+                  )}
+                  <p className="mt-2 text-xs font-light leading-relaxed text-deven-gray">
+                    Secure checkout · Free shipping on all orders · taxes
+                    calculated at checkout.
+                  </p>
+
+                  {/* ONE unified Shopify checkout */}
+                  <a
+                    href={checkoutUrl ?? undefined}
+                    aria-disabled={!checkoutUrl || syncing}
+                    onClick={(e) => {
+                      if (!checkoutUrl || syncing) e.preventDefault();
+                    }}
+                    className={`mt-4 flex w-full items-center justify-center gap-2 py-4 text-xs font-semibold tracking-[0.25em] uppercase transition-colors ${
+                      !checkoutUrl || syncing
+                        ? "cursor-not-allowed bg-deven-light-gray text-deven-gray"
+                        : "bg-deven-black text-white hover:bg-deven-gold hover:text-deven-black"
+                    }`}
+                  >
+                    {syncing ? (
+                      <>
+                        <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                        Updating bag
+                      </>
+                    ) : checkoutUrl ? (
+                      "Checkout Securely"
+                    ) : (
+                      "Checkout Unavailable"
+                    )}
+                  </a>
+                </>
+              ) : (
+                <p className="mt-2 text-xs font-light leading-relaxed text-deven-gray">
+                  {multiple
+                    ? "Each piece checks out securely on its own — tap Checkout on each item to pay for it. "
+                    : "Tap Checkout to pay securely. "}
+                  Free shipping on all orders · taxes calculated at checkout ·
+                  payment by GoDaddy.
+                </p>
+              )}
+
               <button
                 type="button"
                 onClick={close}

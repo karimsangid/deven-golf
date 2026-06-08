@@ -29,9 +29,23 @@ export default function ProductActions({
   onAddToBag: () => void;
 }) {
   const [guideOpen, setGuideOpen] = useState(false);
+  const [justAdded, setJustAdded] = useState(false);
 
   const stockOf = (s: Size) => stock[s] ?? 0;
   const available = SIZES.some((s) => stockOf(s) > 0);
+
+  // Brief on-brand confirmation after adding — resets so re-adds re-trigger it.
+  useEffect(() => {
+    if (!justAdded) return;
+    const t = setTimeout(() => setJustAdded(false), 1600);
+    return () => clearTimeout(t);
+  }, [justAdded]);
+
+  const handleAdd = () => {
+    if (!size) return;
+    onAddToBag();
+    setJustAdded(true);
+  };
 
   // Close the guide on Escape; lock body scroll while it's open.
   useEffect(() => {
@@ -108,11 +122,38 @@ export default function ProductActions({
 
       <button
         type="button"
-        onClick={onAddToBag}
+        onClick={handleAdd}
         disabled={!size}
-        className="mt-6 flex w-full items-center justify-center bg-deven-black py-4 text-xs font-semibold tracking-[0.25em] text-white uppercase transition-colors hover:bg-deven-gold hover:text-deven-black disabled:cursor-not-allowed disabled:bg-deven-light-gray disabled:text-deven-gray disabled:hover:bg-deven-light-gray disabled:hover:text-deven-gray"
+        aria-live="polite"
+        className={`mt-6 flex w-full items-center justify-center gap-2 py-4 text-xs font-semibold tracking-[0.25em] uppercase transition-colors disabled:cursor-not-allowed disabled:bg-deven-light-gray disabled:text-deven-gray disabled:hover:bg-deven-light-gray disabled:hover:text-deven-gray ${
+          justAdded
+            ? "bg-deven-gold text-deven-black"
+            : "bg-deven-black text-white hover:bg-deven-gold hover:text-deven-black"
+        }`}
       >
-        {size ? "Add to Bag" : "Select Your Size"}
+        {justAdded ? (
+          <>
+            <svg
+              viewBox="0 0 20 20"
+              className="h-3.5 w-3.5 animate-added-check"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2.5}
+              aria-hidden="true"
+            >
+              <path
+                d="M4 10.5l4 4 8-9"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            Added to Bag
+          </>
+        ) : size ? (
+          "Add to Bag"
+        ) : (
+          "Select Your Size"
+        )}
       </button>
 
       <p className="mt-4 text-center text-xs font-light text-deven-gray">
