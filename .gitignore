@@ -43,3 +43,10 @@ next-env.d.ts
 .vercel
 _ai/
 _incoming/
+.env
+.env.*
+*.local
+node_modules/
+.next/
+/dist/
+CLAUDE.md
